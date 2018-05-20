@@ -560,11 +560,8 @@ html, body, #container {
       line-height: 25px;
       overflow: hidden;
       text-overflow: ellipsis;
-      /*display: -webkit-box;*/
-      -webkit-line-clamp: 2;
-      /* autoprefixer: off */
-      -webkit-box-orient: vertical;
-      /* autoprefixer: on */ }
+      display: -webkit-box;
+      -webkit-line-clamp: 2; }
     .left-col #header .header-menu {
       font-weight: 300;
       line-height: 31px;
@@ -691,7 +688,7 @@ html, body, #container {
   font-family: "Source Code Pro", Consolas, Monaco, Menlo, Consolas, monospace; }
 
 .article-entry code {
-  /*background: #eee;*/
+  background: #eee;
   padding: 0 0.3em;
   border: none; }
 
@@ -1231,12 +1228,12 @@ pre .css ~ * .id {
       font-size: 12px; }
 
 .tools-col {
-  width: 300px;
+  width: 360px;
   height: 100%;
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 0;
+  z-index: 998;
   padding: 0;
   opacity: 0;
   -webkit-overflow-scrolling: touch;
@@ -1489,7 +1486,7 @@ pre .css ~ * .id {
   margin: -30px 0 20px 7.6923%; }
 
 .article-inner p {
-  margin: 0 0 10px; }
+  margin: 0 0 1.75em; }
 
 .article-inner {
   border-color: #d1d1d1; }
@@ -1511,7 +1508,7 @@ pre .css ~ * .id {
 .article-inner h3 {
   font-size: 19px;
   font-size: 1.1875rem;
-  line-height: 40px;
+  line-height: 1.1052631579;
   margin-top: 2.9473684211em;
   margin-bottom: 1.4736842105em; }
 
@@ -1554,20 +1551,17 @@ pre .css ~ * .id {
 .article-entry {
   line-height: 1.8em;
   padding-right: 7.6923%;
-  padding-left: 7.6923%;
-  /*customize my style*/ }
+  padding-left: 7.6923%; }
   .article-entry p {
     margin-top: 10px; }
   .article-entry p code, .article-entry li code {
     padding: 1px 3px;
     margin: 0 3px;
-    /*background: #ddd;*/
-    /*border: 1px solid #ccc;*/
+    background: #ddd;
+    border: 1px solid #ccc;
     font-family: Menlo,Monaco,"Andale Mono","lucida console","Courier New",monospace;
     word-wrap: break-word;
-    word-break: break-all;
-    font-size: 14px;
-    color: #FF0000; }
+    font-size: 14px; }
   .article-entry blockquote {
     background: #ddd;
     border-left: 5px solid #ccc;
@@ -1613,19 +1607,7 @@ pre .css ~ * .id {
     color: #574C4C;
     padding-bottom: 5px;
     border-bottom: 1px solid #ddd; }
-  .article-entry h3 {
-    margin-top: 20px;
-    font-weight: bold;
-    color: #574C4C;
-    padding-bottom: 5px;
-    border-bottom: 1px solid #ddd; }
-    .article-entry h3 div {
-      background: #00868B; }
-      .article-entry h3 div span {
-        color: white;
-        font-weight: bold;
-        margin: 20px; }
-  .article-entry h4, .article-entry h5, .article-entry h6 {
+  .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6 {
     margin-top: 20px;
     font-weight: bold;
     color: #574C4C;
@@ -1678,8 +1660,6 @@ pre .css ~ * .id {
     margin: 0; }
     .article-entry figure table tbody tr:hover {
       background: none; }
-  .article-entry .customize-img {
-    text-align: center; }
 
 #article-nav {
   margin: 0 0 20px 0;
@@ -1703,7 +1683,7 @@ pre .css ~ * .id {
 #article-nav #article-nav-older {
   float: right; }
 
-#disqus_thread, .duoshuo, .cloud-tie-wrapper, #SOHUCS, #gitment-ctn {
+#disqus_thread, .duoshuo, .cloud-tie-wrapper, #SOHUCS {
   padding: 0 30px !important;
   min-height: 20px; }
 
