@@ -91,9 +91,13 @@
 
 	function setScrollZero() {
 		var $sct = document.querySelectorAll('.tools-section');
-		$sct.forEach(function (em) {
+		for (var i = 0; i < $sct.length; i++) {
+			var em = $sct[i];
 			em.scrollTop = 0;
-		});
+		}
+		//$sct.forEach((em) => {
+		//em.scrollTop = 0
+		//})
 	}
 
 	function init() {
