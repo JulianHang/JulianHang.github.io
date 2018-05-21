@@ -560,7 +560,6 @@ html, body, #container {
       line-height: 25px;
       overflow: hidden;
       text-overflow: ellipsis;
-      /*display: -webkit-box;*/
       -webkit-line-clamp: 2;
       -webkit-box-pack: center; }
     .left-col #header .header-menu {
