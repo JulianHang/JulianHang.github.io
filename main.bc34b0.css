@@ -562,9 +562,6 @@ html, body, #container {
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-line-clamp: 2;
-      /* autoprefixer: off */
-      -webkit-box-orient: horizontal;
-      /* autoprefixer: on */
       -webkit-box-pack: center; }
     .left-col #header .header-menu {
       font-weight: 300;
