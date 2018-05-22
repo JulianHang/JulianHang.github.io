@@ -6,18 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>Archives: 2018 | 奇思妙想</title>
+  <title>尝尝markdown源码的味道 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="record my life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="奇思妙想">
-<meta property="og:url" content="http://zlia.tech/archives/2018/index.html">
+  <meta name="description" content="一切动力源于好奇为什么要写markdown的原理呢？因为markdown的语法本来就很有局限性，想要整个高大上的页面就显得很鸡肋，所以需要我们自己去定义一些语法来解析生成对应的标签。原本以为github或者google上应该有个现成什么的，至少也要有个大体的方向，可惜我是个菜鸟表示看不懂各位大神所描述的，看不懂看不懂，故打算自己看下源码，要求不高，大部分看懂就可以了，特地写了此篇文章来阐述自己对源">
+<meta name="keywords" content="markdown">
+<meta property="og:type" content="article">
+<meta property="og:title" content="尝尝markdown源码的味道">
+<meta property="og:url" content="http://zlia.tech/2018/05/23/markdown-understand/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="record my life">
+<meta property="og:description" content="一切动力源于好奇为什么要写markdown的原理呢？因为markdown的语法本来就很有局限性，想要整个高大上的页面就显得很鸡肋，所以需要我们自己去定义一些语法来解析生成对应的标签。原本以为github或者google上应该有个现成什么的，至少也要有个大体的方向，可惜我是个菜鸟表示看不懂各位大神所描述的，看不懂看不懂，故打算自己看下源码，要求不高，大部分看懂就可以了，特地写了此篇文章来阐述自己对源">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/markdown/marked-first.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/markdown/marked-internal-lexer.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/markdown/marked-internal-token.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/markdown/marked-internal-tok.png">
+<meta property="og:updated_time" content="2018-05-22T17:08:37.246Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="奇思妙想">
-<meta name="twitter:description" content="record my life">
+<meta name="twitter:title" content="尝尝markdown源码的味道">
+<meta name="twitter:description" content="一切动力源于好奇为什么要写markdown的原理呢？因为markdown的语法本来就很有局限性，想要整个高大上的页面就显得很鸡肋，所以需要我们自己去定义一些语法来解析生成对应的标签。原本以为github或者google上应该有个现成什么的，至少也要有个大体的方向，可惜我是个菜鸟表示看不懂各位大神所描述的，看不懂看不懂，故打算自己看下源码，要求不高，大部分看懂就可以了，特地写了此篇文章来阐述自己对源">
+<meta name="twitter:image" content="http://zlia.tech/assets/blogImg/markdown/marked-first.png">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -147,36 +154,68 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-markdown-understand" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/23/markdown-understand/" class="archive-article-date">
-  	<time datetime="2018-05-22T16:16:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-23</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/23/markdown-understand/">尝尝markdown源码的味道</a>
+    <h1 class="article-title" itemprop="name">
+      尝尝markdown源码的味道
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/05/23/markdown-understand/" class="archive-article-date">
+  	<time datetime="2018-05-22T16:16:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一切动力源于好奇"><a href="#一切动力源于好奇" class="headerlink" title="一切动力源于好奇"></a><div><span>一切动力源于好奇</span></div></h3><p>为什么要写markdown的原理呢？因为markdown的语法本来就很有局限性，想要整个高大上的页面就显得很鸡肋，所以需要我们自己去定义一些语法来解析生成对应的标签。原本以为github或者google上应该有个现成什么的，至少也要有个大体的方向，可惜我是个菜鸟表示看不懂各位大神所描述的，看不懂看不懂，故打算自己看下源码，要求不高，大部分看懂就可以了，特地写了此篇文章来阐述自己对源码的理解，同时也为需要的人提供一些小小的帮助，嘻嘻！<a id="more"></a></p>
+<h3 id="着手啃代码"><a href="#着手啃代码" class="headerlink" title="着手啃代码"></a><div><span>着手啃代码</span></div></h3><p>首先去github上clone个<a href="https://github.com/markedjs" target="_blank" rel="noopener">markdown源代码</a>，我在看源代码的时候喜欢先看大神写的小Demo，不知道其他大神是怎么欣赏别人文章的，好奇，也想学习学习。在项目中有个doc目录，打开它你就可以看到有个Demo目录，open it。只有100多行的代码，简单容易理解，所以建议大家也可以先看下Demo，先简单地浏览下。如果你是个有经验的前端开发者，我想你应该不会在我的文章里多呆一分钟吧，所以此篇文章的主要对象是初学者和不是从事前端开发的人员，因为我也不是个前端开发者，顶多是个业余的，惭愧惭愧，若接下来有什么理解错误的地方请谅解，若讲的不错请常来就好。你在浏览代码的过程中难免会发现有这么一个对象<code>marked</code>，为什么会是它呢？因为有这样一条语句<code>marked.parser</code>，其实就是解析的意思啦，好庸俗啊。。接着来，解析markdown语法的主要入口就是它，如果还不信的话可以在当前目录下打开index.html文件，打开后在其控制台（F12）下打印marked，会出现一个function对象，奇怪了，这是个什么鬼，双击后便可以看到另一个文件<code>marked.js</code>，这个文件在上一级目录lib下，它才是最主要的解析markdown语法的重点。回到刚才的Demo中，我们搜索下marked对象第一次出现的位置。</p>
+<p class="customize-img"><img src="/assets/blogImg/markdown/marked-first.png" alt="lexer"></p>
+<p>如果你认识lexer这个单词的话你应该就会明白这句话的意思是什么。<strong>词法分析器</strong>，实际上是根据是否匹配正则表达式从而进一步分析markdown的语法，最后组装好数据返回，这些数据主要是你用了哪些语法内容，如###之类，以及对应的值。接着来看下一步，parser方法是根据返回的数据解析成html，然后将内容innerHtml到页面上，最终的效果也就是你看到的页面。如果有同学觉得疑惑的话，你可以打开index.html页面进行调试便可以很容易的明白我所阐述的内容。</p>
+<h3 id="深入代码内部击垮敌军"><a href="#深入代码内部击垮敌军" class="headerlink" title="深入代码内部击垮敌军"></a><div><span>深入代码内部击垮敌军</span></div></h3><p>现在我们只是大体的明白了markdown原理的表面，对于我们想要自定义语法来说，还远远不够，必须要深入到代码内部去，只有这样子才能彻底击垮敌军，来看看marked.js文件中的<code>lexer</code>方法。</p>
+<p class="customize-img"><img src="/assets/blogImg/markdown/marked-internal-lexer.png" alt="internal-lexer"></p>
+<p>在lexer方法中将制表符、换行等之类的表达式用对应的空格或者指定换行表达式来代替，以防后面解析时出现错误。在lexer内部中调用了<code>token</code>方法。在这个方法中，主要做的是根据markdown语法写的内容进行正则表达式匹配，图片只是截图了其中匹配标题（#{1,6}）的方式。</p>
+<p class="customize-img"><img src="/assets/blogImg/markdown/marked-internal-token.png" alt="internal-token"></p>
+<p>匹配到对应的规则之后进行数据的封装，封装的数据主要是类型、内容、具体匹配了哪一种（Depth指的是匹配了h1、h2、h3中的哪一种）。到这里Demo中的marked.lexer方法就结束了，它返回了匹配成功后的数据封装。下一步来到<code>marked.parse</code>，将之前的数据封装传入，并构建标签分析器，专业术语我不知道，因为这一步会生成一个html，故称之为标签分析器，接着开始执行<code>tok</code>方法。</p>
+<p class="customize-img"><img src="/assets/blogImg/markdown/marked-internal-tok.png" alt="internal-tok"></p>
+<p>走下一步到<code>output</code>，根据内容参数来匹配正则表达式，当然了，这其中发生了很多事，有<code>merger</code>方法，主要用来合并相关匹配标签的正则表达；有<code>edit</code>方法，主要用来将通用的正则整合在一起。其实这两种方法都是在对正则表达式进行操作，可见作者对正则的理解很高深，至少在我看来正则知识较为难学，会让人头都脑壳痛。因为内容有可能会出现标签，如div，在escape方法中将其转换成$lt、$gt等之类的标记，防止出现解析错误造成乱码。大家有注意到格式转换后都会去调用this.render.text或者其他类似的方法，在其对应的方法中返回由标签包围的内容的字符串形式，最后在将其字符串打入到页面中即可呈现你想要的效果。若有同学想要改变标签的表现形式即可根据所需来对<code>this.render</code>中的具体方法来做修改，不妨试一试。</p>
+<h3 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a><div><span>重点关注</span></div></h3><p><code>lexe token parse output render</code></p>
+<h3 id="战后总结"><a href="#战后总结" class="headerlink" title="战后总结"></a><div><span>战后总结</span></div></h3><p>表面上说是看了源码感觉很厉害的样子，但是里面的很多细节表示没有看懂或者理解不到位甚至是理解出错，顿时感觉自己的功力和水平还远远不够，难怪说程序员就是要一直学习下去，不然连个饭碗都端不起了，惭愧惭愧。有人说要想有所成长就必须要去看别人写的源码，看多了总会让人想吐，恶心，这还是一点点的代码，要是那种一片一片的代码，我想早就炸了，希望日后加强自身的知识储备，好好努力，加油！</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -188,7 +227,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -201,66 +240,104 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2018/05/23/markdown-understand/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/06/exception-knowledge/" class="archive-article-date">
-  	<time datetime="2018-05-06T08:28:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-06</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/05/06/exception-knowledge/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">初识异常</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/06/exception-knowledge/">初识异常</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/essays//" class="article-tag-list-link color2">essays</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -283,8 +360,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
