@@ -276,11 +276,10 @@ if(true){
         if(isIndex){
             $(".pageViews").each(function(){
                 showPageViewsNum($(this),Counter);
-                addPageViewsNum($(this));
             });
         }else{
+			addPageViewsNum($(".pageViews"));
             showPageViewsNum($(".pageViews"),Counter);
-            addPageViewsNum($(".pageViews"));
         }
     }
 
