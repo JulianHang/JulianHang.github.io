@@ -1558,7 +1558,8 @@ pre .css ~ * .id {
   padding-left: 7.6923%;
   /*customize my style*/ }
   .article-entry p {
-    margin-top: 10px; }
+    margin-top: 10px;
+    word-break: break-all; }
   .article-entry p code, .article-entry li code {
     padding: 1px 3px;
     margin: 0 3px;
