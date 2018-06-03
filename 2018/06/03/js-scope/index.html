@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://zlia.tech/assets/assets/blogImg/js/execution-context.png">
 <meta property="og:image" content="http://zlia.tech/assets/assets/blogImg/js/function-detail.png">
-<meta property="og:updated_time" content="2018-06-03T12:22:44.275Z">
+<meta property="og:updated_time" content="2018-06-03T12:41:40.430Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="理解JavaScript中的作用域链">
 <meta name="twitter:description" content="安静安静的看会书都不行咦，咱们的文章标题是不是写错了。。其实是有原因的，以前没看到犀牛书以为应该是本通俗易懂的好书，不管是走到哪里都会看到有人推荐这本书。拿到这本书的时候我是很兴奋的，加上右下角又写着淘宝前端译，顿时觉得不愧是本好书！可惜啊，在看了不到两天后觉得这里头的语句何止是不通顺，甚至是读不懂，一开始以为我是不是很久没读书了，理解能力都下降了。好，继续读，天啊！大牛们这是直接翻译英文还是加上">
@@ -173,14 +173,14 @@
 
         
         <a href="/2018/06/03/js-scope/" class="archive-article-date">
-  	<time datetime="2018-06-03T12:22:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-03</time>
+  	<time datetime="2018-06-03T12:41:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-03</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="安静安静的看会书都不行"><a href="#安静安静的看会书都不行" class="headerlink" title="安静安静的看会书都不行"></a><div><span>安静安静的看会书都不行</span></div></h3><p>咦，咱们的文章标题是不是写错了。。其实是有原因的，以前没看到犀牛书以为应该是本通俗易懂的好书，不管是走到哪里都会看到有人推荐这本书。拿到这本书的时候我是很兴奋的，加上右下角又写着<code>淘宝前端译</code>，顿时觉得不愧是本好书！可惜啊，在看了不到两天后觉得这里头的语句何止是不通顺，甚至是读不懂，一开始以为我是不是很久没读书了，理解能力都下降了。好，继续读，天啊！大牛们这是直接翻译英文还是加上理解后在翻译呢，压力大的很，正好我也刚看到了作用域，身心觉得不能在放过了，要不就废了。于是，我借鉴了网上的相关知识并加上自己的理解来进行升级。</p>
+        <h3 id="安静安静的看会书都不行"><a href="#安静安静的看会书都不行" class="headerlink" title="安静安静的看会书都不行"></a><div><span>安静安静的看会书都不行</span></div></h3><p>咦，咱们的文章标题是不是写错了。。其实是有原因的，以前没看到犀牛书以为应该是本通俗易懂的好书，不管是走到哪里都会看到有人推荐这本书。拿到这本书的时候我是很兴奋的，加上右下角又写着<code>淘宝前端译</code>，顿时觉得不愧是本好书！可惜啊，在看了不到两天后觉得这里头的语句何止是不通顺，甚至是读不懂，一开始以为我是不是很久没读书了，理解能力都下降了。好，继续读，天啊！大牛们这是直接翻译英文还是加上理解后在翻译呢，压力大的很，正好我也刚看到了作用域，身心觉得不能在放过了，要不就废了。于是，我借鉴了网上的相关知识并加上自己的理解来进行升级。<a id="more"></a></p>
 <h3 id="犀牛书上关于作用域链的原话"><a href="#犀牛书上关于作用域链的原话" class="headerlink" title="犀牛书上关于作用域链的原话"></a><div><span>犀牛书上关于作用域链的原话</span></div></h3><p>在JavaScript的最顶层代码中，作用域链由一个全局对象组成。在不包含嵌套的函数体内，作用域链上有两个对象，第一个是定义函数参数和局部变量的对象，第二个是全局对象。在一个嵌套的函数体内，作用域链上至少有三个对象。当定义一个函数时，它实际上保存一个作用域链。当调用这个函数时，它创建一个新的对象来存储它的局部变量，并将这个对象添加至保存的那个作用域链上，同时创建一个新的更长的表示函数调用作用域的“链”。就这么几句话就想概括了这块的知识点，我服！不管它了，在理解这块知识点前先来介绍几个专业术语。<br><code>执行环境</code>：定义了变量或函数，决定了它们各自的行为。每个执行环境中都有一个与之关联的执行上下文对象，该环境中的所有变量和函数都由这个对象来创建。而当执行环境中的代码被执行完毕后就会进入到销毁阶段，该环境中的变量和函数也会跟随着消失。<code>全局执行环境</code>是最外围的一个执行环境，在浏览器中，它的执行上下文对象是window，因此所有的变量以及函数都由window对象来创建成属性或方法。<code>每个函数都有执行环境</code>：当一个函数被调用时，该函数就会被推入到堆栈中，由于window是最先被推入的，所以该堆栈中最底部的环境永远是window。</p>
 <p class="customize-img"><img src="/assets/assets/blogImg/js/execution-context.png" alt="执行环境">;</p>
 <p>执行环境的建立分两个阶段：<code>建立执行上下文对象</code>和<code>代码执行阶段</code>。<br><code>执行上下文对象</code>：该对象是在函数被调用时，但还未执行代码时被创建的。在该对象中主要创建了作用域链、变量、函数、参数、this的指向对象，来看个具体的例子。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> a = <span class="string">'hello'</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="comment">//something</span></span><br><span class="line">	&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -489,15 +489,15 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">markdown</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
             
             <div class="clearfix"></div>
