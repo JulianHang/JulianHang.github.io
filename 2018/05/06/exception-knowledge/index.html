@@ -9,6 +9,7 @@
   <title>初识异常 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="简介用户在运行程序的期间，往往有可能会出现各种各样的错误导致程序执行失败，其结果是用户数据丢失。出现这种情况的时候当然不能置之不理，要么就应该告诉用户该错误，要么是用户数据得到保存，否则用户流量将呈现下降的趋势。为了正确的处理错误，Java提供了一种称为：异常处理的错误捕获机制处理。该机制的任务就是将控制权从错误产生的地方转移给能够处理错误的处理器。当然了，想要正确的处理异常情况的前提是必须要研究">
+<meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初识异常">
 <meta property="og:url" content="http://zlia.tech/2018/05/06/exception-knowledge/index.html">
@@ -16,7 +17,7 @@
 <meta property="og:description" content="简介用户在运行程序的期间，往往有可能会出现各种各样的错误导致程序执行失败，其结果是用户数据丢失。出现这种情况的时候当然不能置之不理，要么就应该告诉用户该错误，要么是用户数据得到保存，否则用户流量将呈现下降的趋势。为了正确的处理错误，Java提供了一种称为：异常处理的错误捕获机制处理。该机制的任务就是将控制权从错误产生的地方转移给能够处理错误的处理器。当然了，想要正确的处理异常情况的前提是必须要研究">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/exception/throwable-hierarchy.png">
-<meta property="og:updated_time" content="2018-08-18T07:24:16.594Z">
+<meta property="og:updated_time" content="2018-08-18T07:32:30.903Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初识异常">
 <meta name="twitter:description" content="简介用户在运行程序的期间，往往有可能会出现各种各样的错误导致程序执行失败，其结果是用户数据丢失。出现这种情况的时候当然不能置之不理，要么就应该告诉用户该错误，要么是用户数据得到保存，否则用户流量将呈现下降的趋势。为了正确的处理错误，Java提供了一种称为：异常处理的错误捕获机制处理。该机制的任务就是将控制权从错误产生的地方转移给能够处理错误的处理器。当然了，想要正确的处理异常情况的前提是必须要研究">
@@ -65,11 +66,11 @@
 	        
 				<li><a href="/categories/essays">随笔</a></li>
 	        
-				<li><a href="/categories/js">js</a></li>
+				<li><a href="/categories/frontend">前端</a></li>
 	        
-				<li><a href="/categories/java">java</a></li>
+				<li><a href="/categories/rearend">后端</a></li>
 	        
-				<li><a href="/categories/mq">mq</a></li>
+				<li><a href="/categories/mq">消息队列</a></li>
 	        
 			</ul>
 		</nav>
@@ -149,11 +150,11 @@
 		        
 					<li style="width: 20%"><a href="/categories/essays">随笔</a></li>
 		        
-					<li style="width: 20%"><a href="/categories/js">js</a></li>
+					<li style="width: 20%"><a href="/categories/frontend">前端</a></li>
 		        
-					<li style="width: 20%"><a href="/categories/java">java</a></li>
+					<li style="width: 20%"><a href="/categories/rearend">后端</a></li>
 		        
-					<li style="width: 20%"><a href="/categories/mq">mq</a></li>
+					<li style="width: 20%"><a href="/categories/mq">消息队列</a></li>
 		        
 				</ul>
 			</nav>
@@ -226,13 +227,24 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/java//" class="article-tag-list-link color5">java</a>
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
         		</li>
       		
 		</ul>
@@ -488,11 +500,15 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
               </li>
             
             <div class="clearfix"></div>
