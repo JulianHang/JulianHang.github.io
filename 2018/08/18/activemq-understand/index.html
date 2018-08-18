@@ -6,23 +6,28 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>读懂Javascript中的作用域链 | 奇思妙想</title>
+  <title>ActiveMQ的简单使用 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="安静安静的看会书都不行咦，咱们的文章标题是不是写错了。。其实是有原因的，以前没看到犀牛书以为应该是本通俗易懂的好书，不管是走到哪里都会看到有人推荐这本书。拿到这本书的时候我是很兴奋的，加上右下角又写着淘宝前端译，顿时觉得不愧是本好书！可惜啊，在看了不到两天后觉得这里头的语句何止是不通顺，甚至是读不懂，一开始以为我是不是很久没读书了，理解能力都下降了。好，继续读，天啊！大牛们这是直接翻译英文还是加上">
-<meta name="keywords" content="js">
+  <meta name="description" content="接触消息队列原本一开始是打算直接从Activemq的客户端讲起的，但是忽然发现，既然对Activemq有了些许了解之后，至少应该知道消息队列是什么？或者是它的由来，可是我并不知道。我觉得更多的人更倾向于该技术怎么使用，而并不关心它为什么会出现，也很难静得下心来看它的理念以及应用场景，包括我。因为我觉得那些概念看着看着就可能让我失去了兴趣，也就果断地放弃学些了，哈哈。当然了，现在还是个小小的程序员，">
+<meta name="keywords" content="activemq">
 <meta property="og:type" content="article">
-<meta property="og:title" content="读懂Javascript中的作用域链">
-<meta property="og:url" content="http://zlia.tech/2018/06/03/js-scope/index.html">
+<meta property="og:title" content="ActiveMQ的简单使用">
+<meta property="og:url" content="http://zlia.tech/2018/08/18/activemq-understand/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="安静安静的看会书都不行咦，咱们的文章标题是不是写错了。。其实是有原因的，以前没看到犀牛书以为应该是本通俗易懂的好书，不管是走到哪里都会看到有人推荐这本书。拿到这本书的时候我是很兴奋的，加上右下角又写着淘宝前端译，顿时觉得不愧是本好书！可惜啊，在看了不到两天后觉得这里头的语句何止是不通顺，甚至是读不懂，一开始以为我是不是很久没读书了，理解能力都下降了。好，继续读，天啊！大牛们这是直接翻译英文还是加上">
+<meta property="og:description" content="接触消息队列原本一开始是打算直接从Activemq的客户端讲起的，但是忽然发现，既然对Activemq有了些许了解之后，至少应该知道消息队列是什么？或者是它的由来，可是我并不知道。我觉得更多的人更倾向于该技术怎么使用，而并不关心它为什么会出现，也很难静得下心来看它的理念以及应用场景，包括我。因为我觉得那些概念看着看着就可能让我失去了兴趣，也就果断地放弃学些了，哈哈。当然了，现在还是个小小的程序员，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://zlia.tech/assets/blogImg/js/execution-context.png">
-<meta property="og:image" content="http://zlia.tech/assets/blogImg/js/function-detail.png">
-<meta property="og:updated_time" content="2018-08-18T07:32:37.303Z">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq/download-activemq.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq/activemq-catalog.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq/start-activemq.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq/create-activemq.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq/import-activemq.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq/producer-result.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq/consumer-result.png">
+<meta property="og:updated_time" content="2018-08-18T10:51:45.840Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="读懂Javascript中的作用域链">
-<meta name="twitter:description" content="安静安静的看会书都不行咦，咱们的文章标题是不是写错了。。其实是有原因的，以前没看到犀牛书以为应该是本通俗易懂的好书，不管是走到哪里都会看到有人推荐这本书。拿到这本书的时候我是很兴奋的，加上右下角又写着淘宝前端译，顿时觉得不愧是本好书！可惜啊，在看了不到两天后觉得这里头的语句何止是不通顺，甚至是读不懂，一开始以为我是不是很久没读书了，理解能力都下降了。好，继续读，天啊！大牛们这是直接翻译英文还是加上">
-<meta name="twitter:image" content="http://zlia.tech/assets/blogImg/js/execution-context.png">
+<meta name="twitter:title" content="ActiveMQ的简单使用">
+<meta name="twitter:description" content="接触消息队列原本一开始是打算直接从Activemq的客户端讲起的，但是忽然发现，既然对Activemq有了些许了解之后，至少应该知道消息队列是什么？或者是它的由来，可是我并不知道。我觉得更多的人更倾向于该技术怎么使用，而并不关心它为什么会出现，也很难静得下心来看它的理念以及应用场景，包括我。因为我觉得那些概念看着看着就可能让我失去了兴趣，也就果断地放弃学些了，哈哈。当然了，现在还是个小小的程序员，">
+<meta name="twitter:image" content="http://zlia.tech/assets/blogImg/activemq/download-activemq.png">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -170,14 +175,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-js-scope" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-activemq-understand" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      读懂Javascript中的作用域链
+      ActiveMQ的简单使用
     </h1>
   
 
@@ -186,39 +191,43 @@
 <!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/06/03/js-scope/" class="pageViews">0</span>
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/08/18/activemq-understand/" class="pageViews">0</span>
   </a>
 
         
-        <a href="/2018/06/03/js-scope/" class="archive-article-date">
-  	<time datetime="2018-06-03T13:08:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-03</time>
+        <a href="/2018/08/18/activemq-understand/" class="archive-article-date">
+  	<time datetime="2018-08-18T10:51:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-18</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="安静安静的看会书都不行"><a href="#安静安静的看会书都不行" class="headerlink" title="安静安静的看会书都不行"></a><div><span>安静安静的看会书都不行</span></div></h3><p>咦，咱们的文章标题是不是写错了。。其实是有原因的，以前没看到犀牛书以为应该是本通俗易懂的好书，不管是走到哪里都会看到有人推荐这本书。拿到这本书的时候我是很兴奋的，加上右下角又写着<code>淘宝前端译</code>，顿时觉得不愧是本好书！可惜啊，在看了不到两天后觉得这里头的语句何止是不通顺，甚至是读不懂，一开始以为我是不是很久没读书了，理解能力都下降了。好，继续读，天啊！大牛们这是直接翻译英文还是加上理解后在翻译呢，压力大的很，正好我也刚看到了作用域，身心觉得不能在放过了，要不就废了。于是，我借鉴了网上的相关知识并加上自己的理解来进行升级。<a id="more"></a></p>
-<h3 id="犀牛书上关于作用域链的原话"><a href="#犀牛书上关于作用域链的原话" class="headerlink" title="犀牛书上关于作用域链的原话"></a><div><span>犀牛书上关于作用域链的原话</span></div></h3><p>在JavaScript的最顶层代码中，作用域链由一个全局对象组成。在不包含嵌套的函数体内，作用域链上有两个对象，第一个是定义函数参数和局部变量的对象，第二个是全局对象。在一个嵌套的函数体内，作用域链上至少有三个对象。当定义一个函数时，它实际上保存一个作用域链。当调用这个函数时，它创建一个新的对象来存储它的局部变量，并将这个对象添加至保存的那个作用域链上，同时创建一个新的更长的表示函数调用作用域的“链”。就这么几句话就想概括了这块的知识点，我服！不管它了，在理解这块知识点前先来介绍几个专业术语。</p>
+        <h3 id="接触消息队列"><a href="#接触消息队列" class="headerlink" title="接触消息队列"></a><div><span>接触消息队列</span></div></h3><p>原本一开始是打算直接从Activemq的客户端讲起的，但是忽然发现，既然对Activemq有了些许了解之后，至少应该知道消息队列是什么？或者是它的由来，可是我并不知道。我觉得更多的人更倾向于该技术怎么使用，而并不关心它为什么会出现，也很难静得下心来看它的理念以及应用场景，包括我。因为我觉得那些概念看着看着就可能让我失去了兴趣，也就果断地放弃学些了，哈哈。当然了，现在还是个小小的程序员，等升了职位后就该去考虑了，偷懒了偷懒了！不过这里我也简单地看了一下几篇<code>消息队列</code>的文章，着实不错，所以分享给各位<a href="https://blog.csdn.net/dj2008/article/details/78872889" target="_blank" rel="noopener">消息队列的使用场景</a>!</p>
+<h3 id="ActiveMQ服务端跑起来吧"><a href="#ActiveMQ服务端跑起来吧" class="headerlink" title="ActiveMQ服务端跑起来吧"></a><div><span>ActiveMQ服务端跑起来吧</span></div></h3><p>既然有客户端，那就一定要先有服务端，那我们就先让服务端跑起来吧！Acitvemq官网下载地址：<a href="http://activemq.apache.org/activemq-5155-release.html" target="_blank" rel="noopener">http://activemq.apache.org/activemq-5155-release.html</a> 。官网提供了Linux和window的版本，由于没有Linux环境故下载了window版本。</p>
+<p class="customize-img"><img src="/assets/blogImg/activemq/download-activemq.png" alt="下载AcitveMQ服务器window版本"></p>
+<p>下载好了就直接解压即可。在跑起来之前先来认识下每个目录的用处以便后续的开发：</p>
+<p class="customize-img"><img src="/assets/blogImg/activemq/activemq-catalog.png" alt="下载AcitveMQ服务器window版本"></p>
 <ul>
-<li><code>执行环境</code>：定义了变量或函数，决定了它们各自的行为。每个执行环境中都有一个与之关联的执行上下文对象，该环境中的所有变量和函数都由这个对象来创建。而当执行环境中的代码被执行完毕后就会进入到销毁阶段，该环境中的变量和函数也会跟随着消失。<code>全局执行环境</code>是最外围的一个执行环境，在浏览器中，它的执行上下文对象是window，因此所有的变量以及函数都由window对象来创建成属性或方法。<code>每个函数都有执行环境</code>：当一个函数被调用时，该函数就会被推入到堆栈中，由于window是最先被推入的，所以该堆栈中最底部的环境永远是window。</li>
+<li>bin：存放用来启动<code>服务器的脚本文件</code>，可以用普通用户或管理员的权限来启动。</li>
+<li>conf：存放<code>服务器的相关配置文件</code>、管理端的配置文件以及安全权限控制。多说几句，<code>activmemq.xml</code>是用来配置服务器相关协议的端口、地址和相关属性，还有消息存储方式以及集群方式等等。</li>
+<li>data：存放<code>消息存储的文件</code>以及日志文件。</li>
+<li>docs：ActiveMQ的相关文档。</li>
+<li>examples：服务器相关协议的客户端例子。</li>
+<li>lib：存放ActiveMQ相关jar包。</li>
+<li>webapps/webapps-demo：存放ActiveMQ管理端的相关文件。</li>
 </ul>
-<p class="customize-img"><img src="/assets/blogImg/js/execution-context.png" alt="执行环境"></p>
-<p>执行环境的建立分两个阶段：<code>建立执行上下文对象</code>和<code>代码执行阶段</code>。</p>
-<ul>
-<li><code>执行上下文对象</code>：该对象是在函数被调用时，但还未执行代码时被创建的。在该对象中主要创建了作用域链、变量、函数、参数、this的指向对象，来看个具体的例子。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> a = <span class="string">'hello'</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="comment">//something</span></span><br><span class="line">	&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>那么在调用foo(22)时，具体的建立阶段如下。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">fooEexecutionContext = &#123;</span><br><span class="line">	variableObject: &#123;</span><br><span class="line">		<span class="built_in">arguments</span>: &#123;</span><br><span class="line">			<span class="number">0</span>: <span class="number">22</span>,</span><br><span class="line">			length: <span class="number">1</span></span><br><span class="line">		&#125;,</span><br><span class="line">		i: <span class="number">22</span>,</span><br><span class="line">		b: pointer to <span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>)，//函数引用</span></span><br><span class="line"><span class="function">		<span class="title">a</span>: <span class="title">undefined</span></span></span><br><span class="line"><span class="function">	&#125;,</span></span><br><span class="line"><span class="function">	<span class="title">scopeChain</span>: </span>&#123;&#125;,</span><br><span class="line">	<span class="keyword">this</span>: &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>由此可见，在创建执行上下文对象时，除了arguments、函数、参数被赋予了具体的值之外，其他的变量默认都是undefined。建立阶段结果后就进入到了具体的代码执行阶段，在代码执行完成后，执行上下文对象经过了如下的变化。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">fooEexecutionContext = &#123;</span><br><span class="line">	variableObject: &#123;</span><br><span class="line">		<span class="built_in">arguments</span>: &#123;</span><br><span class="line">			<span class="number">0</span>: <span class="number">22</span>,</span><br><span class="line">			length: <span class="number">1</span></span><br><span class="line">		&#125;,</span><br><span class="line">		i: <span class="number">22</span>,</span><br><span class="line">		b: pointer to <span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>)，//函数引用</span></span><br><span class="line"><span class="function">		<span class="title">a</span>: '<span class="title">hello</span>'</span></span><br><span class="line"><span class="function">	&#125;,</span></span><br><span class="line"><span class="function">	<span class="title">scopeChain</span>: </span>&#123;&#125;,</span><br><span class="line">	<span class="keyword">this</span>: &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>看到这里你会知道，函数中的变量只有在具体代码的执行阶段才会被真正的赋值，这也正好解释了js当中的声明提前机制，即使变量声明在变量使用的后面依然可以打印出变量值，只不过该值是undefined。</p>
-<ul>
-<li><code>活动对象</code>：当函数被调用的时候，一个对象将会被创建，即活动对象。该活动对象之后便会作为执行上下文对象来使用。</li>
-</ul>
-<h3 id="作用域链详解"><a href="#作用域链详解" class="headerlink" title="作用域链详解"></a><div><span>作用域链详解</span></div></h3><p>上面已经解释到，当函数被调用时，创建相应的执行环境、执行上下文对象并将其添加到作用链中，其实也就是执行环境被推入到堆栈中，该作用域的底部永远都是全局的执行上下文对象，因为它是最先被加载的。以下通过图片的形式来更为形象的说明。</p>
-<p class="customize-img"><img src="/assets/blogImg/js/function-detail.png" alt="函数执行过程"></p>
-<p>声明father函数时，会创建一个预先包含全局执行上下文对象的作用域链，这个作用域链会被保存在内部的属性中。当调用father函数时，会为函数创建一个执行环境，同时构建起执行环境的带有全局执行上下文对象的作用域链。紧接着，创建该函数的执行上下文对象并将其添加到该作用域中，也就是作用域当中最终有两个执行上下文对象，若是函数当中嵌套着函数，则对象的作用域应当有三个执行上下文对象，当最顶端的执行上下文对象被执行完成后，下一个即为包含该函数的执行上下文对象，就是外部函数，就这样一直延续到全局执行上下文对象。作用域链本质上是一个指向执行上下文对象的指针列表，每调用一个不同的函数都会创建一个作用域链，其用途是保证执行环境中的变量及函数被有序访问。</p>
-<h3 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a><div><span>重点关注</span></div></h3><p><code>执行环境 执行上下文环境 函数执行过程图</code></p>
+<p>来吧！开始跑起来~进入到bin目录中并双击activemq.bat文件，若出现如下图所示则说明启动成功了！</p>
+<p class="customize-img"><img src="/assets/blogImg/activemq/start-activemq.png" alt="启动AcitveMQ服务器"></p>
+<p>这里就不带大家去看管理端长啥样了，要是有兴趣的话可以私底下去观摩观摩，管理端的默认账号密码都是<code>admin</code>。</p>
+<h3 id="开始造人了，生产者与消费者"><a href="#开始造人了，生产者与消费者" class="headerlink" title="开始造人了，生产者与消费者"></a><div><span>开始造人了，生产者与消费者</span></div></h3><p>既然服务器都搭建完成了，那么就开始着手造生产者与消费者了。先创建一个简单的Java项目，这里之所以创建的是Java项目，是因为笔者是直接通过引入ActiveMQ Jar包的方式来进行开发的。当然了，也可以用Maven来进行操作，不过鉴于有些用户不会用maven，所以干脆来个最简单的使用方式。</p>
+<p class="customize-img"><img src="/assets/blogImg/activemq/create-activemq.png" alt="创建ActiveMQ项目"></p>
+<p>啥都没有，空空如也。有用户可能会觉得还要去下载个Jar来引入，好麻烦啊，我才不想去下载，但是如果够细心的话，其实刚才在讲解ActiveMQ目录结构的时候最底下就有一个<code>activemq-all-5.9.0.jar</code>文件，一看名字就知道是ActiveMQ的所有Jar包，哈哈！将其该Jar包引入到项目中去。</p>
+<p class="customize-img"><img src="/assets/blogImg/activemq/import-activemq.png" alt="引入ActiveMQ包"></p>
+<p>Jar包引入了，那就速速开始开发吧！具体的代码内容就不做展示了，若有需要请在最下面点击<code>源码下载</code>即可到Github上获取所需。开发的差不多了，就来看看效果吧，首先启动消费者，在启动生产者，结果如图所示。</p>
+<p class="customize-img"><img src="/assets/blogImg/activemq/producer-result.png" alt="生产者结果"><br><img src="/assets/blogImg/activemq/consumer-result.png" alt="消费者结果"><br>是否感觉很简单很容易，但是越往后你就会发现越来越多坑，哈哈，就很敲代码一样！不过，这都是必经之路，否则难成大神。好了，今天的分享就到这里了~</p>
+<h3 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a><div><span>重点关注</span></div></h3><p><code>activemq.xml 生产者与消费者 ActiveMQ管理端</code></p>
+<p><a href="https://github.com/JulianHang/activemq-client.git" target="_blank" rel="noopener">源码下载</a> </p>
 
       
 
@@ -232,7 +241,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">activemq</a>
         		</li>
       		
 		</ul>
@@ -244,7 +253,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/frontend//" class="article-tag-list-link color4">frontend</a>
+        			<a href="/categories/mq//" class="article-tag-list-link color3">mq</a>
         		</li>
       		
 		</ul>
@@ -299,7 +308,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2018/06/03/js-scope/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2018/08/18/activemq-understand/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -313,18 +322,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/08/18/activemq-understand/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          ActiveMQ的简单使用
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/05/23/markdown-understand/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">尝尝markdown源码的味道</div>
+    <a href="/2018/06/03/js-scope/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">读懂Javascript中的作用域链</div>
       <i class="icon-circle-right"></i>
     </a>
   
