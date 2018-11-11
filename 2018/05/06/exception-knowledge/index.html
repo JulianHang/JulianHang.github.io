@@ -355,24 +355,26 @@
   
   
     
-    <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+    <section id="comments" style=".comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}">
       <div id="vcomment" class="comment"></div> 
 <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
 <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
 <script>
    var notify = 'false' == true ? true : false;
    var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '#vcomment',
-            notify: notify,
-            verify: verify,
-            app_id: "XFc3sns5zTUONxyoOV1c5txB-gzGzoHsz",
-            app_key: "bhjmtmQIjH4jjtQg0Q9wN9BG",
-            placeholder: "Just go go",
-            avatar:"mm"
-        });
-    }
+  
+	new Valine({
+		el: '#vcomment',
+		notify: notify,
+		verify: verify,
+		app_id: "XFc3sns5zTUONxyoOV1c5txB-gzGzoHsz",
+		app_key: "bhjmtmQIjH4jjtQg0Q9wN9BG",
+		placeholder: "扯淡吧",
+		avatar:"mm",
+		pageSize: 15
+	});
+
 </script>
     </section>
 	
@@ -524,10 +526,6 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
@@ -537,6 +535,10 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
             
             <div class="clearfix"></div>
