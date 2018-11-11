@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq-producer/connectionFac-part-6.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq-producer/connectionFac-part-7.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq-producer/connectionFac-part-8.png">
-<meta property="og:updated_time" content="2018-11-11T06:47:51.738Z">
+<meta property="og:updated_time" content="2018-11-11T07:09:02.830Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="简单喵下ActiveMQ生产者源码">
 <meta name="twitter:description" content="前提前提前提大前提！准备一份源码呗，activemq生产者的源码。何为生产者？就是发消息的源头，谁来发送消息谁就是生产者。有了生产者自然就会有消费者，今天着重看看生产者的故事，后面的几篇文章咱们都会一一进行讲解，包括服务端、消费者以及ACK模式，消息的传送机制，至于其他的内容还有待发掘，因为目前我也只是了解了部分！生产者的源码大伙可以从网上百度下，只要能跑起来就可以了，如果可以的话最好知道对方写了">
@@ -219,7 +219,8 @@
 <p class="customize-img"><img src="/assets/blogImg/activemq-producer/connectionFac-part-7.png" alt="连接对象内部操作-4"></p>
 <p>只是选择了部分代码进行讲解，因为有些代码官方并没有给出详细的说明！</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">...<span class="comment">//省略代码</span></span><br><span class="line"><span class="comment">//创建连接对象来存储连接信息，包括是否是异步发送，超时时间</span></span><br><span class="line"><span class="keyword">this</span>.info = <span class="keyword">new</span> ConnectionInfo(<span class="keyword">new</span> ConnectionId(uniqueId));</span><br><span class="line"><span class="comment">//创建连接会话对象，填充随机生成的连接ID，在同一个连接下的所有生产者消费者均采用同一个会话，多个生产者通过随机生成ID来区分</span></span><br><span class="line"><span class="keyword">this</span>.connectionSessionId = <span class="keyword">new</span> SessionId(info.getConnectionId(), -<span class="number">1</span>);</span><br><span class="line"><span class="comment">//设置监听，与服务端通信，包括发送连接信息、收发消息都会经过上面提到的链条逐一处理</span></span><br><span class="line"><span class="keyword">this</span>.transport.setTransportListener(<span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
-<h3 id="终于看到底层代码了，顺便交代下下一步"><a href="#终于看到底层代码了，顺便交代下下一步" class="headerlink" title="终于看到底层代码了，顺便交代下下一步"></a><div><span>终于看到底层代码了，顺便交代下下一步</span></div></h3><p class="customize-img"><img src="/assets/blogImg/activemq-producer/connectionFac-part-8.png" alt="连接对象内部操作-5"><br>我想大多数人都知道，实现连接底层的代码无非就是用的<code>socket</code>！好了，客户端到服务端的连接实现咱们已经阐述的差不多了，当然了，其中还有很多细节，包括涉及到模式，其实我到现在还不是很明白设计那些链条的意义都是什么？很疑惑，是出于什么情况下的考虑吗？就仿佛生产线一样，一个产品都需要经过每一个流程加工后才能到下一步，否则就是个废品！今天写的内容有点多了，怕读者不好消耗故就到此结束！下一步讲如何开启事务及几种<code>ACK</code>模式。</p>
+<h3 id="终于看到底层代码了，顺便交代下下一步"><a href="#终于看到底层代码了，顺便交代下下一步" class="headerlink" title="终于看到底层代码了，顺便交代下下一步"></a><div><span>终于看到底层代码了，顺便交代下下一步</span></div></h3><p class="customize-img"><img src="/assets/blogImg/activemq-producer/connectionFac-part-8.png" alt="连接对象内部操作-5"></p>
+<p>我想大多数人都知道，实现连接底层的代码无非就是用的<code>socket</code>！好了，客户端到服务端的连接实现咱们已经阐述的差不多了，当然了，其中还有很多细节，包括涉及到模式，其实我到现在还不是很明白设计那些链条的意义都是什么？很疑惑，是出于什么情况下的考虑吗？就仿佛生产线一样，一个产品都需要经过每一个流程加工后才能到下一步，否则就是个废品！今天写的内容大多数以图片为主，主要讲几个重要的点通过代码加注释的方式点出来，一方面是希望读者能去详细查看内部代码做更进一步的了解，另一方面是其他的内容对于今天的主题来说可有可无，感兴趣的可以去了解下！下一步讲客户端如何开启事务及几种<code>ACK</code>模式。</p>
 <h3 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a><div><span>重点关注</span></div></h3><p><code>链条</code></p>
 <p><a href="https://github.com/JulianHang/activemq-client.git" target="_blank" rel="noopener">源码下载</a> </p>
 
@@ -499,11 +500,11 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
