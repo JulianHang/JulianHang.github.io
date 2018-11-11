@@ -8,13 +8,13 @@
   <link rel="dns-prefetch" href="http://zlia.tech">
   <title>ActiveMQ的简单使用 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="接触消息队列原本一开始是打算直接从Activemq的客户端讲起的，但是忽然发现，既然对Activemq有了些许了解之后，至少应该知道消息队列是什么？或者是它的由来和一些应用场景，可是我并不知道。我觉得更多的人更倾向于该技术怎么使用，而并不关心它为什么会出现，也很难静得下心来看它的理念以及应用场景，包括我。因为我觉得那些概念看着看着就可能让我失去了兴趣，也就果断地放弃学些了，哈哈。当然了，现在还是个">
+  <meta name="description" content="接触消息队列原本一开始是打算直接从activemq的客户端讲起的，但是忽然发现，既然对activemq有了些许了解之后，至少应该知道消息队列是什么？或者是它的由来和一些应用场景，可是我并不知道。我觉得更多的人更倾向于该技术怎么使用，而并不关心它为什么会出现，也很难静得下心来看它的理念以及应用场景，包括我。因为我觉得那些概念看着看着就可能让我失去了兴趣，也就果断地放弃学些了，哈哈。当然了，现在还是个">
 <meta name="keywords" content="activemq">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ActiveMQ的简单使用">
 <meta property="og:url" content="http://zlia.tech/2018/08/18/activemq-understand/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="接触消息队列原本一开始是打算直接从Activemq的客户端讲起的，但是忽然发现，既然对Activemq有了些许了解之后，至少应该知道消息队列是什么？或者是它的由来和一些应用场景，可是我并不知道。我觉得更多的人更倾向于该技术怎么使用，而并不关心它为什么会出现，也很难静得下心来看它的理念以及应用场景，包括我。因为我觉得那些概念看着看着就可能让我失去了兴趣，也就果断地放弃学些了，哈哈。当然了，现在还是个">
+<meta property="og:description" content="接触消息队列原本一开始是打算直接从activemq的客户端讲起的，但是忽然发现，既然对activemq有了些许了解之后，至少应该知道消息队列是什么？或者是它的由来和一些应用场景，可是我并不知道。我觉得更多的人更倾向于该技术怎么使用，而并不关心它为什么会出现，也很难静得下心来看它的理念以及应用场景，包括我。因为我觉得那些概念看着看着就可能让我失去了兴趣，也就果断地放弃学些了，哈哈。当然了，现在还是个">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq/download-activemq.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq/activemq-catalog.png">
@@ -23,10 +23,10 @@
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq/import-activemq.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq/producer-result.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq/consumer-result.png">
-<meta property="og:updated_time" content="2018-08-18T11:02:12.631Z">
+<meta property="og:updated_time" content="2018-09-02T01:07:12.801Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ActiveMQ的简单使用">
-<meta name="twitter:description" content="接触消息队列原本一开始是打算直接从Activemq的客户端讲起的，但是忽然发现，既然对Activemq有了些许了解之后，至少应该知道消息队列是什么？或者是它的由来和一些应用场景，可是我并不知道。我觉得更多的人更倾向于该技术怎么使用，而并不关心它为什么会出现，也很难静得下心来看它的理念以及应用场景，包括我。因为我觉得那些概念看着看着就可能让我失去了兴趣，也就果断地放弃学些了，哈哈。当然了，现在还是个">
+<meta name="twitter:description" content="接触消息队列原本一开始是打算直接从activemq的客户端讲起的，但是忽然发现，既然对activemq有了些许了解之后，至少应该知道消息队列是什么？或者是它的由来和一些应用场景，可是我并不知道。我觉得更多的人更倾向于该技术怎么使用，而并不关心它为什么会出现，也很难静得下心来看它的理念以及应用场景，包括我。因为我觉得那些概念看着看着就可能让我失去了兴趣，也就果断地放弃学些了，哈哈。当然了，现在还是个">
 <meta name="twitter:image" content="http://zlia.tech/assets/blogImg/activemq/download-activemq.png">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
@@ -203,8 +203,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="接触消息队列"><a href="#接触消息队列" class="headerlink" title="接触消息队列"></a><div><span>接触消息队列</span></div></h3><p>原本一开始是打算直接从Activemq的客户端讲起的，但是忽然发现，既然对Activemq有了些许了解之后，至少应该知道消息队列是什么？或者是它的由来和一些应用场景，可是我并不知道。我觉得更多的人更倾向于该技术怎么使用，而并不关心它为什么会出现，也很难静得下心来看它的理念以及应用场景，包括我。因为我觉得那些概念看着看着就可能让我失去了兴趣，也就果断地放弃学些了，哈哈。当然了，现在还是个小小的程序员，等升了职位后就该去考虑了，偷懒了偷懒了！不过这里我也简单地看了一下几篇<code>消息队列</code>的文章，着实不错，有各种高级的架构啊，所以分享给各位<a href="https://blog.csdn.net/dj2008/article/details/78872889" target="_blank" rel="noopener">消息队列的使用场景</a>。有打破砂锅问到底心态的朋友可以去观望观望，定不会让你失望。<a id="more"></a></p>
-<h3 id="ActiveMQ服务端跑起来吧"><a href="#ActiveMQ服务端跑起来吧" class="headerlink" title="ActiveMQ服务端跑起来吧"></a><div><span>ActiveMQ服务端跑起来吧</span></div></h3><p>既然有客户端，那就一定要先有服务端，那我们就先让服务端跑起来吧！Acitvemq官网下载地址：<a href="http://activemq.apache.org/activemq-5155-release.html" target="_blank" rel="noopener">http://activemq.apache.org/activemq-5155-release.html</a> 。官网提供了Linux和window的版本，由于没有Linux环境故下载了window版本。</p>
+        <h3 id="接触消息队列"><a href="#接触消息队列" class="headerlink" title="接触消息队列"></a><div><span>接触消息队列</span></div></h3><p>原本一开始是打算直接从activemq的客户端讲起的，但是忽然发现，既然对activemq有了些许了解之后，至少应该知道消息队列是什么？或者是它的由来和一些应用场景，可是我并不知道。我觉得更多的人更倾向于该技术怎么使用，而并不关心它为什么会出现，也很难静得下心来看它的理念以及应用场景，包括我。因为我觉得那些概念看着看着就可能让我失去了兴趣，也就果断地放弃学些了，哈哈。当然了，现在还是个小小的程序员，等升了职位后就该去考虑了，偷懒了偷懒了！不过这里我也简单地看了一下几篇<code>消息队列</code>的文章，着实不错，有各种高级的架构啊，所以分享给各位<a href="https://blog.csdn.net/dj2008/article/details/78872889" target="_blank" rel="noopener">消息队列的使用场景</a>。有打破砂锅问到底心态的朋友可以去观望观望，定不会让你失望。<a id="more"></a></p>
+<h3 id="ActiveMQ服务端跑起来吧"><a href="#ActiveMQ服务端跑起来吧" class="headerlink" title="ActiveMQ服务端跑起来吧"></a><div><span>ActiveMQ服务端跑起来吧</span></div></h3><p>既然有客户端，那就一定要先有服务端，那我们就先让服务端跑起来吧！acitvemq官网下载地址：<a href="http://activemq.apache.org/activemq-5155-release.html" target="_blank" rel="noopener">http://activemq.apache.org/activemq-5155-release.html</a> 。官网提供了Linux和window的版本，由于没有Linux环境故下载了window版本。</p>
 <p class="customize-img"><img src="/assets/blogImg/activemq/download-activemq.png" alt="下载AcitveMQ服务器window版本"></p>
 <p>下载好了就直接解压即可。在跑起来之前先来认识下每个目录的用处以便后续的开发：</p>
 <p class="customize-img"><img src="/assets/blogImg/activemq/activemq-catalog.png" alt="下载AcitveMQ服务器window版本"></p>
@@ -322,6 +322,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2018/09/02/explain-activemq-soucecode/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          简单喵下ActiveMQ生产者源码
+        
+      </div>
+    </a>
   
   
     <a href="/2018/06/03/js-scope/" id="article-nav-older" class="article-nav-link-wrap">
@@ -514,11 +523,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
+                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
               </li>
             
             <div class="clearfix"></div>
