@@ -348,27 +348,28 @@
 
   
   
-  
-	<!-- 来必力City版安装代码 -->
-<div id="lv-container" data-id="city" data-uid="MTAyMC80MDk1Ni8xNzQ4MQ==">
-<script type="text/javascript">
-(function(d, s) {
-   var j, e = d.getElementsByTagName(s)[0];
-
-   if (typeof LivereTower === 'function') { return; }
-
-   j = d.createElement(s);
-   j.src = 'http://cdn-city.livere.com/js/embed.dist.js';
-   j.async = true;
-
-   e.parentNode.insertBefore(j, e);
-})(document, 'script');
+    
+    <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+      <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "XFc3sns5zTUONxyoOV1c5txB-gzGzoHsz",
+            app_key: "bhjmtmQIjH4jjtQg0Q9wN9BG",
+            placeholder: "Just go go",
+            avatar:"mm"
+        });
+    }
 </script>
-<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
-<iframe title="livere" src="https://was.livere.me/comment/city?id=city&refer=http://zlia.tech/2018/05/23/markdown-understand/&uid=MTAyMC80MDk1Ni8xNzQ4MQ==&site=http://zlia.tech/2018/05/23/markdown-understand/&title=尝尝markdown源码的味道" scrolling="" frameborder="0" id="lv-comment-399" style="min-width: 100%; width: 100px; min-height: 400px; overflow: auto; border: 0px; z-index: 124212; height: 800px;" ></iframe>
-</div>
-<!-- City版安装代码已完成 -->
-  
+    </section>
+	
   
 
 
@@ -517,7 +518,7 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -525,7 +526,7 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
