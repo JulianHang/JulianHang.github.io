@@ -365,27 +365,33 @@
         .comments{margin:30px;padding:10px;background:#fff}
         @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
       </style>
-      <div id="vcomment" class="comment"></div> 
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script src="https://cdnjs.cat.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+      <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
 <script>
    var notify = 'false' == true ? true : false;
    var verify = 'false' == true ? true : false;
-  
-	new Valine({
-		av: AV,
-		el: '#vcomment',
-		notify: notify,
-		verify: verify,
-		app_id: "XFc3sns5zTUONxyoOV1c5txB-gzGzoHsz",
-		app_key: "bhjmtmQIjH4jjtQg0Q9wN9BG",
-		placeholder: "扯淡吧",
-		avatar:"",
-		pageSize: 15
-	});
-
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "XFc3sns5zTUONxyoOV1c5txB-gzGzoHsz",
+            app_key: "bhjmtmQIjH4jjtQg0Q9wN9BG",
+            placeholder: "扯淡吧",
+            avatar: "",
+            avatar_cdn: "",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
 </script>
     </section>
 	
@@ -541,15 +547,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
             
             <div class="clearfix"></div>
