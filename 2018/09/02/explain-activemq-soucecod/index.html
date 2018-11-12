@@ -12,7 +12,7 @@
 <meta name="keywords" content="activemq">
 <meta property="og:type" content="article">
 <meta property="og:title" content="简单喵下ActiveMQ生产者源码">
-<meta property="og:url" content="http://zlia.tech/2018/09/02/explain-activemq-soucecode/index.html">
+<meta property="og:url" content="http://zlia.tech/2018/09/02/explain-activemq-soucecod/index.html">
 <meta property="og:site_name" content="奇思妙想">
 <meta property="og:description" content="前提前提前提大前提！准备一份源码呗，activemq生产者的源码。何为生产者？就是发消息的源头，谁来发送消息谁就是生产者。有了生产者自然就会有消费者，今天着重看看生产者的故事，后面的几篇文章咱们都会一一进行讲解，包括服务端、消费者以及ACK模式，消息的传送机制，至于其他的内容还有待发掘，因为目前我也只是了解了部分！生产者的源码大伙可以从网上百度下，只要能跑起来就可以了，如果可以的话最好知道对方写了">
 <meta property="og:locale" content="zh-Hans">
@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq-producer/connectionFac-part-6.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq-producer/connectionFac-part-7.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq-producer/connectionFac-part-8.png">
-<meta property="og:updated_time" content="2018-11-11T07:09:02.830Z">
+<meta property="og:updated_time" content="2018-11-12T02:53:33.596Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="简单喵下ActiveMQ生产者源码">
 <meta name="twitter:description" content="前提前提前提大前提！准备一份源码呗，activemq生产者的源码。何为生产者？就是发消息的源头，谁来发送消息谁就是生产者。有了生产者自然就会有消费者，今天着重看看生产者的故事，后面的几篇文章咱们都会一一进行讲解，包括服务端、消费者以及ACK模式，消息的传送机制，至于其他的内容还有待发掘，因为目前我也只是了解了部分！生产者的源码大伙可以从网上百度下，只要能跑起来就可以了，如果可以的话最好知道对方写了">
@@ -176,7 +176,7 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-explain-activemq-soucecode" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-explain-activemq-soucecod" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -192,11 +192,11 @@
 <!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/09/02/explain-activemq-soucecode/" class="pageViews">0</span>
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/09/02/explain-activemq-soucecod/" class="pageViews">0</span>
   </a>
 
         
-        <a href="/2018/09/02/explain-activemq-soucecode/" class="archive-article-date">
+        <a href="/2018/09/02/explain-activemq-soucecod/" class="archive-article-date">
   	<time datetime="2018-09-02T01:00:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-02</time>
 </a>
         
@@ -303,7 +303,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2018/09/02/explain-activemq-soucecode/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2018/09/02/explain-activemq-soucecod/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -537,11 +537,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
+                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
               </li>
             
             <div class="clearfix"></div>
