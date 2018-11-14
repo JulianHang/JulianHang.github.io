@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zlia.tech/"/>
-  <updated>2018-11-14T13:52:06.092Z</updated>
+  <updated>2018-11-14T13:54:27.006Z</updated>
   <id>http://zlia.tech/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>busuanzi-latest-notice</title>
+    <title>不蒜子更换域名通告</title>
     <link href="http://zlia.tech/2018/11/14/busuanzi-latest-notice/"/>
     <id>http://zlia.tech/2018/11/14/busuanzi-latest-notice/</id>
     <published>2018-11-14T13:52:06.000Z</published>
-    <updated>2018-11-14T13:52:06.092Z</updated>
+    <updated>2018-11-14T13:54:27.006Z</updated>
     
     <content type="html"><![CDATA[<h3 id="想要告诉不知道的人"><a href="#想要告诉不知道的人" class="headerlink" title="想要告诉不知道的人"></a><div><span>想要告诉不知道的人</span></div></h3><p>你有博客吗？有的话继续往下看，没有的话就再见吧！有博客的人都是有故事的…废话不多说了，由于博客中会用到文章阅读量与网站访问人数的统计，我这边引用的是<code>不蒜子</code>插件。前几天发现控制台不断报与不蒜子相关的404错误，一看就知道肯定有蹊跷，果然，<code>原来它域名更改了</code>！官网都贴出了通告了！<a id="more"></a></p><p class="customize-img"><img src="/assets/blogImg/notice/busuanzi/busuanzi-1.png" alt="不蒜子更换域名通告"></p><p>作者的博客采用的主题为<code>yilia</code>，故这里贴出该主题的解决办法，其实就改个域名重新发布就OK了。</p><p>只需更改该目录下的<code>after-footer.ejs</code>文件即可。</p><p class="customize-img"><img src="/assets/blogImg/notice/busuanzi/busuanzi-2.png" alt="文件目录"></p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script <span class="keyword">async</span> src=<span class="string">"//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js••"</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure><p>更改为</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script <span class="keyword">async</span> src=<span class="string">"//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure><p class="customize-img"><img src="/assets/blogImg/notice/busuanzi/busuanzi-3.png" alt="更改域名"></p>]]></content>
     
