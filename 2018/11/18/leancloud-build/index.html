@@ -6,18 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>Archives | 奇思妙想</title>
+  <title>搭建基于leancloud的评论系统 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="record my life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="奇思妙想">
-<meta property="og:url" content="http://zlia.tech/archives/index.html">
+  <meta name="description" content="博客都有个评论系统没啥好说的，但凡是个博客都应该有个评论系统。一开始找了个多说还是啥来着，要填写备案信息，好扯，只好绕路。又换了一个，来必力,搜了好几篇文章，都说不错不错，实际上给我的体验一般般，至少它的管理页面让我觉得不爽，当然了，我还是尝试了一波，因为懒，哈哈，结果居然不行！网上的一篇篇博客都TM是复制粘贴的，很难看出谁才是原创作者，没啥意思，真不知道是为了什么？别人的博客可以参考，复制就过分">
+<meta name="keywords" content="leancloud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建基于leancloud的评论系统">
+<meta property="og:url" content="http://zlia.tech/2018/11/18/leancloud-build/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="record my life">
+<meta property="og:description" content="博客都有个评论系统没啥好说的，但凡是个博客都应该有个评论系统。一开始找了个多说还是啥来着，要填写备案信息，好扯，只好绕路。又换了一个，来必力,搜了好几篇文章，都说不错不错，实际上给我的体验一般般，至少它的管理页面让我觉得不爽，当然了，我还是尝试了一波，因为懒，哈哈，结果居然不行！网上的一篇篇博客都TM是复制粘贴的，很难看出谁才是原创作者，没啥意思，真不知道是为了什么？别人的博客可以参考，复制就过分">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/leancloud/leancloud-build-1.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/leancloud/leancloud-build-2.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/leancloud/leancloud-build-3.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/leancloud/leancloud-build-4.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/leancloud/leancloud-build-5.png">
+<meta property="og:updated_time" content="2018-11-18T07:12:35.118Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="奇思妙想">
-<meta name="twitter:description" content="record my life">
+<meta name="twitter:title" content="搭建基于leancloud的评论系统">
+<meta name="twitter:description" content="博客都有个评论系统没啥好说的，但凡是个博客都应该有个评论系统。一开始找了个多说还是啥来着，要填写备案信息，好扯，只好绕路。又换了一个，来必力,搜了好几篇文章，都说不错不错，实际上给我的体验一般般，至少它的管理页面让我觉得不爽，当然了，我还是尝试了一波，因为懒，哈哈，结果居然不行！网上的一篇篇博客都TM是复制粘贴的，很难看出谁才是原创作者，没啥意思，真不知道是为了什么？别人的博客可以参考，复制就过分">
+<meta name="twitter:image" content="http://zlia.tech/assets/blogImg/leancloud/leancloud-build-1.png">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -165,31 +173,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-leancloud-build" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/18/leancloud-build/" class="archive-article-date">
-  	<time datetime="2018-11-18T07:11:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-18</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/18/leancloud-build/">搭建基于leancloud的评论系统</a>
+    <h1 class="article-title" itemprop="name">
+      搭建基于leancloud的评论系统
     </h1>
   
 
@@ -201,8 +192,39 @@
       <i class="icon-smile icon"></i> 阅读数：<span id="/2018/11/18/leancloud-build/" class="pageViews">0</span>
   </a>
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/11/18/leancloud-build/" class="archive-article-date">
+  	<time datetime="2018-11-18T07:11:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="博客都有个评论系统"><a href="#博客都有个评论系统" class="headerlink" title="博客都有个评论系统"></a><div><span>博客都有个评论系统</span></div></h3><p>没啥好说的，但凡是个博客都应该有个评论系统。一开始找了个<code>多说</code>还是啥来着，要填写备案信息，好扯，只好绕路。又换了一个，<code>来必力</code>,搜了好几篇文章，都说不错不错，实际上给我的体验一般般，至少它的管理页面让我觉得不爽，当然了，我还是尝试了一波，因为懒，哈哈，结果居然不行！网上的一篇篇博客都TM是复制粘贴的，很难看出谁才是原创作者，没啥意思，真不知道是为了什么？别人的博客可以参考，复制就过分了，把我给气的，所以我的博客并没有放到百度的搜索库中，只有谷歌才能搜到，我宁愿别人没有看到自己的博客，也不想看着自己的成果被人一个个吞噬。后面又看了几篇文章，发现<code>leanCloud</code>这个评论系统是做的真可以，不是我吹牛，不管是文档还是管理端都很符合我的要求，脑子里一下子决定就是它了！当然了，它也没白白让我失望，花了2个晚上的时间就基本搞定了，体验真的好，它是免费的，啥都不用做，就只需要注册登录进去配置内容即可。</p>
+<h3 id="动手开始干吧"><a href="#动手开始干吧" class="headerlink" title="动手开始干吧"></a><div><span>动手开始干吧</span></div></h3><p>因为我搭建该评论系统的时候也是参照着别人写好的博客来操作，关键是你提问作者还会准时回答的你，让我很佩服，更加重了我要搭建此评论系统的决心，真的赞！所以这里就贴出两个我觉得很好的博客文章，从零开始搭建的一个教程吧，它们是基于<code>yilia</code>主题来搭建的，因为我的博客应用的便是该主题。这两篇文章加起来刚好很完整，有代码层面的也有配置层面的，当然了，如果你看不懂也是可以在下方进行评论的，我就是其中的一个留言者！</p>
+<p><a href="https://www.xxwhite.com/2017/Valine.html" target="_blank" rel="noopener">yilia主题配置leancloud</a></p>
+<p><a href="https://panjunwen.com/valine-admin-document/" target="_blank" rel="noopener">leancloud管理端配置</a></p>
+<p><code>这里我在补充一些关键信息，也是非常重要的内容</code>，当初就是该错误让我找不到方向，上面提到的文章的作者也没能给我很好的回答，要是你仔细看评论的话可能会发现我留下的足迹，哈哈，整了2天都是因为该问题，都想放弃了，不够真心觉得它不错所以又拾起来了。按照上面提供的文章配置完毕后，你应该会在你的管理端中发现有这样子的内容，请看截图！</p>
+<p class="customize-img"><img src="/assets/blogImg/leancloud/leancloud-build-1.png" alt="leancloud管理端"></p>
+<p>当初配置完毕后就是少了<code>Comment Count</code>这两张表导致控制台一直报<code>https://xfc3sns5.api.lncld.net/1.1/classes/Comment?····</code>错误，我就想不通了，咋就这样子呢，有人让我创建一个，但我总得知道这表的数据结构吧，我去哪里找呢，肯定不好找，还是找了有一段时间，不好找，于是于是，报着尝试的心里将<code>原有的应用删除掉重新建了一个</code>，果然果然，这两张表有了，是<code>系统帮我们已经创建好的</code>，也就是说之所以第一次没生成成功是因为<code>leancloud</code>系统内部的原因，当然了你看不到内部有啥原因，只是存粹的猜测而已，反正第二次是成功了，开心开心，将内容重新发布后就可以了，控制台也没有报错了，哇！有兴趣的同学可以看下我的博客哈，菜鸟一枚，只为了提高自己来幸福自己！</p>
+<p><a href="http://zlia.tech/">zlia博客</a></p>
+<p>最后的最后，我简单截下我配置后的效果图，里头也加上了评论邮箱通知功能。</p>
+<p class="customize-img"><img src="/assets/blogImg/leancloud/leancloud-build-2.png" alt="配置leancloud管理端-2"></p>
+<p class="customize-img"><img src="/assets/blogImg/leancloud/leancloud-build-3.png" alt="配置leancloud管理端-3"></p>
+<p class="customize-img"><img src="/assets/blogImg/leancloud/leancloud-build-4.png" alt="配置leancloud管理端-4"></p>
+<p class="customize-img"><img src="/assets/blogImg/leancloud/leancloud-build-5.png" alt="配置leancloud管理端-5"></p>
+<p>截的图是相对比较重要的内容，其他像部署库和应用key参考提供的两篇文章就可以解决了，很简单。</p>
+<h3 id="早点实现你想做的事"><a href="#早点实现你想做的事" class="headerlink" title="早点实现你想做的事"></a><div><span>早点实现你想做的事</span></div></h3><p>为啥会是这个小标题呢？好像跟博客没啥毛关系呢，其实是由于搭建了评论系统而进一步完善了博客，基本的东西都拥有了，倘若若干年后我在来回顾自己所写的博客文章，一定会越看越笑，就仿佛吃了蜜一样开心，一步一个脚印建立起来的，很有成就感！我想每个搭建博客的作者都应该会有这样子的感想吧。所以早点去做自己想做的事你就可以早点看到体验到什么叫做成功的人生，哈哈！无奈，感慨了一把！</p>
+<h3 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a><div><span>重点关注</span></div></h3><p><a href="https://www.xxwhite.com/2017/Valine.html" target="_blank" rel="noopener">yilia主题配置leancloud</a> <a href="https://panjunwen.com/valine-admin-document/" target="_blank" rel="noopener">leancloud管理端配置</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -214,7 +236,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -227,359 +249,143 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2018/11/18/leancloud-build/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/14/busuanzi-latest-notice/" class="archive-article-date">
-  	<time datetime="2018-11-14T13:52:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-14</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/11/14/busuanzi-latest-notice/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">不蒜子更换域名通告</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/14/busuanzi-latest-notice/">不蒜子更换域名通告</a>
-    </h1>
+  
   
 
+  
 
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+  
 
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/11/14/busuanzi-latest-notice/" class="pageViews">0</span>
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">notice</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/essays//" class="article-tag-list-link color2">essays</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+  
   
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/02/explain-activemq-soucecod/" class="archive-article-date">
-  	<time datetime="2018-09-02T01:00:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-02</time>
-</a>
-        </div>
-    	 
+    <section id="comments" class="comments">
+	  <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "JoYcsWmKGGeDS1gi583VdmYm-gzGzoHsz",
+            app_key: "F9y6cyWlw9WVSFOEw3rnxfXY",
+            placeholder: "扯淡吧",
+            avatar: "",
+            avatar_cdn: "",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+	
+</script>
+    </section>
+	
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/02/explain-activemq-soucecod/">简单喵下ActiveMQ生产者源码</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/09/02/explain-activemq-soucecod/" class="pageViews">0</span>
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">activemq</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/mq//" class="article-tag-list-link color3">mq</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/18/activemq-understand/" class="archive-article-date">
-  	<time datetime="2018-08-18T10:51:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/18/activemq-understand/">ActiveMQ的简单使用</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/08/18/activemq-understand/" class="pageViews">0</span>
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">activemq</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/mq//" class="article-tag-list-link color3">mq</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/03/js-scope/" class="archive-article-date">
-  	<time datetime="2018-06-03T13:08:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/03/js-scope/">读懂Javascript中的作用域链</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/06/03/js-scope/" class="pageViews">0</span>
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/frontend//" class="article-tag-list-link color4">frontend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/23/markdown-understand/" class="archive-article-date">
-  	<time datetime="2018-05-22T16:16:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/23/markdown-understand/">尝尝markdown源码的味道</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/05/23/markdown-understand/" class="pageViews">0</span>
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">markdown</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/essays//" class="article-tag-list-link color2">essays</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/06/exception-knowledge/" class="archive-article-date">
-  	<time datetime="2018-05-06T08:28:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/06/exception-knowledge/">初识异常</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/05/06/exception-knowledge/" class="pageViews">0</span>
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -603,8 +409,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
