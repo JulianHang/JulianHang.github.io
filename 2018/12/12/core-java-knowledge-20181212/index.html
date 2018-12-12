@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="奇思妙想">
 <meta property="og:description" content="java jdk-8u191-windows-x64 ：Java SE 8的第191次更新  OpenJDK：Java SE的一个免费的开源实现，不包含浏览器集成或JavaFX（用于图形化界面）  从Java 7开始，数字字面量加下划线：1_000_000，Java编译器会去除这些下划线  Double.isNaN(x)：判断是否是非数值  整型值和布尔值之间不能进行相互转换  Character">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-12T15:32:43.938Z">
+<meta property="og:updated_time" content="2018-12-12T15:39:54.271Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="每日知识点20181212">
 <meta name="twitter:description" content="java jdk-8u191-windows-x64 ：Java SE 8的第191次更新  OpenJDK：Java SE的一个免费的开源实现，不包含浏览器集成或JavaFX（用于图形化界面）  从Java 7开始，数字字面量加下划线：1_000_000，Java编译器会去除这些下划线  Double.isNaN(x)：判断是否是非数值  整型值和布尔值之间不能进行相互转换  Character">
@@ -213,11 +213,13 @@
 </ul>
 <a id="more"></a>
 <ul>
-<li><p>15.0/2=?  <code>--&gt;</code> 7.5</p>
+<li><p>15.0/2=?  <code>:</code> 7.5</p>
 </li>
-<li><p>int <code>--&gt;</code> float：int包含的位数比float所能够表达的位数多，在转换过程中可能会丢失一定的精度</p>
+<li><p>int -&gt; float<code>：</code>int包含的位数比float所能够表达的位数多，在转换过程中可能会丢失一定的精度</p>
 </li>
 <li><p>数值类型之间的转换优先级<code>：</code>double &gt; float &gt; long &gt; int</p>
+</li>
+<li><p>(byte)300：44<br>300(int 32bits):0000 0000 0001 0010 1100，而byte字节只有8个bits，所以最终取得后8位，即为44</p>
 </li>
 </ul>
 
@@ -540,19 +542,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -560,7 +554,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
               </li>
             
             <div class="clearfix"></div>
