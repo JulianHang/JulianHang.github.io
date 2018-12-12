@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zlia.tech/"/>
-  <updated>2018-12-12T14:40:05.075Z</updated>
+  <updated>2018-12-12T14:45:41.126Z</updated>
   <id>http://zlia.tech/</id>
   
   <author>
@@ -21,16 +21,16 @@
     <link href="http://zlia.tech/2018/12/12/core-java-knowledge-20181212/"/>
     <id>http://zlia.tech/2018/12/12/core-java-knowledge-20181212/</id>
     <published>2018-12-12T14:40:05.000Z</published>
-    <updated>2018-12-12T14:40:05.075Z</updated>
+    <updated>2018-12-12T14:45:41.126Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ol><li><p class="customize-img"><img src="/assets/blogImg/daliy-konwledge-point/20181212/1.png" alt="jdk下载版本说明">：Java SE 8的第191次更新</p></li><li><p>OpenJDK：Java SE的一个免费的开源实现，不包含浏览器集成或JavaFX（用于图形化界面）</p></li><li><p>从Java 7开始，数字字面量加下划线：1_000_000，Java编译器会去除这些下划线</p></li><li><p>Double.isNaN(x)：判断是否是非数值</p></li><li><p>整型值和布尔值之间不能进行相互转换</p></li><li><p>Character.isJavaIdentifierStart：指定的字符是否允许作为Java标识符的首字母</p></li><li><p>Character.isJavaIdentifierPart：指定的字符是否允许作为Java标识符的一部分</p></li><li><p>15.0/2=?  ==&gt; 7.5</p></li><li><p>int -&gt; float：int包含的位数比float所能够表达的位数多，在转换过程中可能会丢失一定的精度</p></li></ol>]]></content>
+    <content type="html"><![CDATA[<h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul><li><p>jdk-8u191-windows-x64：Java SE 8的第191次更新</p></li><li><p>OpenJDK：Java SE的一个免费的开源实现，不包含浏览器集成或JavaFX（用于图形化界面）</p></li><li><p>从Java 7开始，数字字面量加下划线：1_000_000，Java编译器会去除这些下划线</p></li><li><p>Double.isNaN(x)：判断是否是非数值</p></li><li><p>整型值和布尔值之间不能进行相互转换</p></li><li><p>Character.isJavaIdentifierStart：指定的字符是否允许作为Java标识符的首字母</p></li><li><p>Character.isJavaIdentifierPart：指定的字符是否允许作为Java标识符的一部分</p></li><li><p>15.0/2=?  ==&gt; 7.5</p></li><li><p>int -&gt; float：int包含的位数比float所能够表达的位数多，在转换过程中可能会丢失一定的精度</p></li></ul>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h3 id=&quot;java&quot;&gt;&lt;a href=&quot;#java&quot; class=&quot;headerlink&quot; title=&quot;java&quot;&gt;&lt;/a&gt;&lt;div&gt;&lt;span&gt;java&lt;/span&gt;&lt;/div&gt;&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p class=&quot;customize-img&quot;&gt;&lt;img sr
+        &lt;h3 id=&quot;java&quot;&gt;&lt;a href=&quot;#java&quot; class=&quot;headerlink&quot; title=&quot;java&quot;&gt;&lt;/a&gt;&lt;div&gt;&lt;span&gt;java&lt;/span&gt;&lt;/div&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;jdk-8u191-windows-x64：Java SE
       
     
     </summary>
