@@ -200,14 +200,20 @@
 </li>
 <li><p>String.join(“/“,”a”,”b”,”c”)：a/b/c.</p>
 </li>
-<li><p><code>字符串常量</code>是共享的，而+或substring等操作产生的结果并不是共享的.</p>
+<li><p><code>字符串常量</code>是共享的，而+或substring等操作产生的结果并不是共享的，所以会导致拼接后的结果随便相同，但引用的地址却不是同一个.</p>
 </li>
 <li><p>Scanner in = new Scanner(System.in),String name = in.next(); //该方法以空格为分隔符，即空格符的之间的内容需要多次获取.</p>
 </li>
 <li><p>上面的读取控制台输入不适合密码，毕竟事明文，所以可采用Console类.但是Console不能在Eclipse或ide中的控制台使用，会报错.必须使用原始控制台，如在终端中编译运行Java代码即可使用.</p>
 </li>
+<li><p>float用<code>24</code>位来表示精确度，int用<code>32</code>位来表示精确度，故当将int转换成float时可能会丢失精度.</p>
+</li>
+<li><p>如果将一个类声明为final，只有其中的方法自动地成为final，而不包括域.</p>
+</li>
+<li><p>编译器对带有文件分割符和扩展名.java的文件进行操作，而java解释器加载类（带有分隔符）.</p>
+</li>
 </ul>
-
+        
       
 
       
@@ -227,6 +233,17 @@
 	</div>
 
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
         <p class="article-more-link">
@@ -1029,7 +1046,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 zlia
+    		&copy; 2019 zlia
 			<span id="busuanzi_container_site_uv"> view <span id="busuanzi_value_site_uv"></span> times</span>
     	</div>
       	<div class="footer-right">
@@ -1183,15 +1200,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">markdown</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
             
             <div class="clearfix"></div>

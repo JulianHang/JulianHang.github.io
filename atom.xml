@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zlia.tech/"/>
-  <updated>2018-12-13T16:18:38.556Z</updated>
+  <updated>2019-01-16T15:02:26.246Z</updated>
   <id>http://zlia.tech/</id>
   
   <author>
@@ -21,20 +21,34 @@
     <link href="http://zlia.tech/2018/12/14/core-java-knowledge-20181213/"/>
     <id>http://zlia.tech/2018/12/14/core-java-knowledge-20181213/</id>
     <published>2018-12-13T16:18:38.000Z</published>
-    <updated>2018-12-13T16:18:38.556Z</updated>
+    <updated>2019-01-16T15:02:26.246Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul><li><p>s.substring(a,b)的长度：b-a.</p></li><li><p>String.join(“/“,”a”,”b”,”c”)：a/b/c.</p></li><li><p><code>字符串常量</code>是共享的，而+或substring等操作产生的结果并不是共享的.</p></li><li><p>Scanner in = new Scanner(System.in),String name = in.next(); //该方法以空格为分隔符，即空格符的之间的内容需要多次获取.</p></li><li><p>上面的读取控制台输入不适合密码，毕竟事明文，所以可采用Console类.但是Console不能在Eclipse或ide中的控制台使用，会报错.必须使用原始控制台，如在终端中编译运行Java代码即可使用.</p></li></ul>]]></content>
+    <content type="html"><![CDATA[<h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul><li><p>s.substring(a,b)的长度：b-a.</p></li><li><p>String.join(“/“,”a”,”b”,”c”)：a/b/c.</p></li><li><p><code>字符串常量</code>是共享的，而+或substring等操作产生的结果并不是共享的，所以会导致拼接后的结果随便相同，但引用的地址却不是同一个.</p></li><li><p>Scanner in = new Scanner(System.in),String name = in.next(); //该方法以空格为分隔符，即空格符的之间的内容需要多次获取.</p></li><li><p>上面的读取控制台输入不适合密码，毕竟事明文，所以可采用Console类.但是Console不能在Eclipse或ide中的控制台使用，会报错.必须使用原始控制台，如在终端中编译运行Java代码即可使用.</p></li><li><p>float用<code>24</code>位来表示精确度，int用<code>32</code>位来表示精确度，故当将int转换成float时可能会丢失精度.</p></li><li><p>如果将一个类声明为final，只有其中的方法自动地成为final，而不包括域.</p></li><li><p>编译器对带有文件分割符和扩展名.java的文件进行操作，而java解释器加载类（带有分隔符）.</p></li></ul><a id="more"></a><ul><li><p>最好不要读取在初始化块后面的域</p></li><li><p>自动装箱：<code>Integer.valueOf(int i)</code>.自动装箱规范要求boolean、byte、char&lt;=127，介于-128~127之间的short和int被包装到固定的对象中.在Integer.valueOf(int i)中[-128,127]区间的Integer对象已经被初始化好了，每次调用只会从缓存中取，如果越过了这个区间则会创建新的对象，所以会导致超过了这个区间的Integer对象不相等.</p></li><li><p>装箱和拆箱是<code>编译器</code>认可的，而不是虚拟机.编译器在生成类的字节码时，插入必要的方法调用.虚拟机只是执行这些字节码.</p></li><li><p>整型数组类型int[]可以被转换成Object，但不能转换成对象数组Object[].</p></li><li><p><code>invoke</code>方法访问对象中的静态方法时，第一个参数可以被忽略，即可以将它设置为null.</p></li><li><p>在Java8中接口可以有默认方法和静态方法.</p></li></ul>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;h3 id=&quot;java&quot;&gt;&lt;a href=&quot;#java&quot; class=&quot;headerlink&quot; title=&quot;java&quot;&gt;&lt;/a&gt;&lt;div&gt;&lt;span&gt;java&lt;/span&gt;&lt;/div&gt;&lt;/h3&gt;&lt;ul&gt;
+      &lt;h3 id=&quot;java&quot;&gt;&lt;a href=&quot;#java&quot; class=&quot;headerlink&quot; title=&quot;java&quot;&gt;&lt;/a&gt;&lt;div&gt;&lt;span&gt;java&lt;/span&gt;&lt;/div&gt;&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;s.substring(a,b)的长度：b-a.&lt;/p&gt;
-
-      
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;String.join(“/“,”a”,”b”,”c”)：a/b/c.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;字符串常量&lt;/code&gt;是共享的，而+或substring等操作产生的结果并不是共享的，所以会导致拼接后的结果随便相同，但引用的地址却不是同一个.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Scanner in = new Scanner(System.in),String name = in.next(); //该方法以空格为分隔符，即空格符的之间的内容需要多次获取.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;上面的读取控制台输入不适合密码，毕竟事明文，所以可采用Console类.但是Console不能在Eclipse或ide中的控制台使用，会报错.必须使用原始控制台，如在终端中编译运行Java代码即可使用.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;float用&lt;code&gt;24&lt;/code&gt;位来表示精确度，int用&lt;code&gt;32&lt;/code&gt;位来表示精确度，故当将int转换成float时可能会丢失精度.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;如果将一个类声明为final，只有其中的方法自动地成为final，而不包括域.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;编译器对带有文件分割符和扩展名.java的文件进行操作，而java解释器加载类（带有分隔符）.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
     
     </summary>
+    
+      <category term="rearend" scheme="http://zlia.tech/categories/rearend/"/>
     
     
       <category term="daily-konwledge-point" scheme="http://zlia.tech/tags/daily-konwledge-point/"/>
