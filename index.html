@@ -206,14 +206,7 @@
 </li>
 <li><p>一个类型变量或通配符可以有多个限定.限定类型用&amp;分隔，而逗号用来分隔类型变量.</p>
 </li>
-<li><p>对于编译器来说，用方法名+参数列表来确定一个方法签名.而对于虚拟机来说，用参数类型+返回类型来确定一个方法，编译器不允许开发者编码出方法名一致，返回值却不同的方法，而它自己却可以自动生成这种操作（产生两个仅返回类型不同的方法字节码）并交给虚拟机来处理.这种操作在泛型中称为<code>桥方法</code>，它主要用来避免类型变量擦除所带来的多态灾难.</p>
-</li>
 </ul>
-<p class="customize-img"><img src="/assets/blogImg/daliy-konwledge-point/20190217/generic-method.png" alt="桥方法"></p>
-<ul>
-<li>运行时类型查询只适用于原始类型.意思是泛型不支持类型检查.</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//该类型检查会得到一个编译器错误</span></span><br><span class="line"><span class="keyword">if</span>(a <span class="keyword">instanceof</span> Test&lt;String&gt;)&#123;</span><br><span class="line">    <span class="comment">//something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         
       
 
