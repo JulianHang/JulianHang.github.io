@@ -6,18 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>Tag: java | 奇思妙想</title>
+  <title>core-java-knowledge-20190211 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="record my life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="奇思妙想">
-<meta property="og:url" content="http://zlia.tech/tags/java/index.html">
+  <meta name="description" content="java 在同一个catch语句中可以捕获多个不存在子类关系的异常  12345try&amp;#123;    //&amp;#125;catch(FileNotFoundException | UnknowHostException e)&amp;#123;    //&amp;#125;  java中原来有提供断言，学到了学到了.  泛型类、泛型方法  一个类型变量或通配符可以有多个限定.限定类型用&amp;amp;分隔，而逗号用">
+<meta name="keywords" content="daily-konwledge-point-java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="core-java-knowledge-20190211">
+<meta property="og:url" content="http://zlia.tech/2019/02/24/core-java-knowledge-20190211/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="record my life">
+<meta property="og:description" content="java 在同一个catch语句中可以捕获多个不存在子类关系的异常  12345try&amp;#123;    //&amp;#125;catch(FileNotFoundException | UnknowHostException e)&amp;#123;    //&amp;#125;  java中原来有提供断言，学到了学到了.  泛型类、泛型方法  一个类型变量或通配符可以有多个限定.限定类型用&amp;amp;分隔，而逗号用">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/daliy-konwledge-point/20190217/generic-method.png">
+<meta property="og:updated_time" content="2019-02-24T04:09:16.571Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="奇思妙想">
-<meta name="twitter:description" content="record my life">
+<meta name="twitter:title" content="core-java-knowledge-20190211">
+<meta name="twitter:description" content="java 在同一个catch语句中可以捕获多个不存在子类关系的异常  12345try&amp;#123;    //&amp;#125;catch(FileNotFoundException | UnknowHostException e)&amp;#123;    //&amp;#125;  java中原来有提供断言，学到了学到了.  泛型类、泛型方法  一个类型变量或通配符可以有多个限定.限定类型用&amp;amp;分隔，而逗号用">
+<meta name="twitter:image" content="http://zlia.tech/assets/blogImg/daliy-konwledge-point/20190217/generic-method.png">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -165,31 +169,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-core-java-knowledge-20190211" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/06/exception-knowledge/" class="archive-article-date">
-  	<time datetime="2018-05-06T08:28:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/06/exception-knowledge/">初识异常</a>
+    <h1 class="article-title" itemprop="name">
+      core-java-knowledge-20190211
     </h1>
   
 
@@ -198,23 +185,68 @@
 <!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/05/06/exception-knowledge/" class="pageViews">0</span>
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/02/24/core-java-knowledge-20190211/" class="pageViews">0</span>
   </a>
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/02/24/core-java-knowledge-20190211/" class="archive-article-date">
+  	<time datetime="2019-02-24T04:09:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul>
+<li>在同一个catch语句中可以捕获多个<code>不存在子类关系</code>的异常</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;<span class="keyword">catch</span>(FileNotFoundException | UnknowHostException e)&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>java中原来有提供<code>断言</code>，学到了学到了.</p>
+</li>
+<li><p>泛型类、泛型方法</p>
+</li>
+<li><p>一个类型变量或通配符可以有多个限定.限定类型用&amp;分隔，而逗号用来分隔类型变量.</p>
+</li>
+<li><p>对于编译器来说，用方法名+参数列表来确定一个方法签名.而对于虚拟机来说，用参数类型+返回类型来确定一个方法，编译器不允许开发者编码出方法名一致，返回值却不同的方法，而它自己却可以自动生成这种操作（产生两个仅返回类型不同的方法字节码）并交给虚拟机来处理.这种操作在泛型中称为<code>桥方法</code>，它主要用来避免类型变量擦除所带来的多态灾难.</p>
+</li>
+</ul>
+<p class="customize-img"><img src="/assets/blogImg/daliy-konwledge-point/20190217/generic-method.png" alt="桥方法"></p>
+<ul>
+<li>运行时类型查询只适用于原始类型.意思是泛型不支持类型检查.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//该类型检查会得到一个编译器错误</span></span><br><span class="line"><span class="keyword">if</span>(a <span class="keyword">instanceof</span> Test&lt;String&gt;)&#123;</span><br><span class="line">    <span class="comment">//something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<ul>
+<li><p>不能使用像new T()、new T[]、T.class这样子表达式中的类型变量.</p>
+</li>
+<li><p>泛型类的静态上下文中类型变量无效.</p>
+</li>
+<li><p>不能抛出或捕获泛型类的实例.</p>
+</li>
+<li><p>带有超类型限定的通配符可以向泛型对象写入，带有子类型限定的通配符可以从泛型对象读取.</p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">daily-konwledge-point-java</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -227,17 +259,143 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/02/24/core-java-knowledge-20190211/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2019/02/24/core-java-knowledge-20181216/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">每日知识点20181216</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
+  
+
+  
+
+  
+  
     
+    <section id="comments" class="comments">
+	  <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "JoYcsWmKGGeDS1gi583VdmYm-gzGzoHsz",
+            app_key: "F9y6cyWlw9WVSFOEw3rnxfXY",
+            placeholder: "扯淡吧",
+            avatar: "",
+            avatar_cdn: "",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+	
+</script>
+    </section>
+	
+  
 
 
           </div>
@@ -261,9 +419,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

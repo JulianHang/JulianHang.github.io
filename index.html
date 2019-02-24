@@ -167,6 +167,223 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-core-java-knowledge-20190211" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/24/core-java-knowledge-20190211/">core-java-knowledge-20190211</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/02/24/core-java-knowledge-20190211/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2019/02/24/core-java-knowledge-20190211/" class="archive-article-date">
+  	<time datetime="2019-02-24T04:09:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul>
+<li>在同一个catch语句中可以捕获多个<code>不存在子类关系</code>的异常</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;<span class="keyword">catch</span>(FileNotFoundException | UnknowHostException e)&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>java中原来有提供<code>断言</code>，学到了学到了.</p>
+</li>
+<li><p>泛型类、泛型方法</p>
+</li>
+<li><p>一个类型变量或通配符可以有多个限定.限定类型用&amp;分隔，而逗号用来分隔类型变量.</p>
+</li>
+<li><p>对于编译器来说，用方法名+参数列表来确定一个方法签名.而对于虚拟机来说，用参数类型+返回类型来确定一个方法，编译器不允许开发者编码出方法名一致，返回值却不同的方法，而它自己却可以自动生成这种操作（产生两个仅返回类型不同的方法字节码）并交给虚拟机来处理.这种操作在泛型中称为<code>桥方法</code>，它主要用来避免类型变量擦除所带来的多态灾难.</p>
+</li>
+</ul>
+<p class="customize-img"><img src="/assets/blogImg/daliy-konwledge-point/20190217/generic-method.png" alt="桥方法"></p>
+<ul>
+<li>运行时类型查询只适用于原始类型.意思是泛型不支持类型检查.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//该类型检查会得到一个编译器错误</span></span><br><span class="line"><span class="keyword">if</span>(a <span class="keyword">instanceof</span> Test&lt;String&gt;)&#123;</span><br><span class="line">    <span class="comment">//something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">daily-konwledge-point-java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/24/core-java-knowledge-20190211/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-core-java-knowledge-20181216" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/24/core-java-knowledge-20181216/">每日知识点20181216</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/02/24/core-java-knowledge-20181216/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2019/02/24/core-java-knowledge-20181216/" class="archive-article-date">
+  	<time datetime="2019-02-24T04:08:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul>
+<li><p>Arrays.deepToString(a)：打印二维数组.</p>
+</li>
+<li><p>Java8开始时间使用Date类，日期使用<code>LocalDate</code>类.</p>
+</li>
+<li><p>包内的类不能引用默认包中的类.</p>
+</li>
+<li><p>内部类可以是私有类（private），而常规类只可以具有包可见性（default）或公有可见性（public）.</p>
+</li>
+<li><p>内部类不能有static方法.</p>
+</li>
+<li><p>局部类不能用public或private访问说明符进行声明.</p>
+</li>
+</ul>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">daily-konwledge-point-java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/24/core-java-knowledge-20181216/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-core-java-knowledge-20181213" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -943,99 +1160,10 @@
 
 
   
-    <article id="post-exception-knowledge" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/06/exception-knowledge/">初识异常</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/05/06/exception-knowledge/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2018/05/06/exception-knowledge/" class="archive-article-date">
-  	<time datetime="2018-05-06T08:28:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a><div><span>简介</span></div></h3><p>用户在运行程序的期间，往往有可能会出现各种各样的错误导致程序执行失败，其结果是用户数据丢失。出现这种情况的时候当然不能置之不理，要么就应该告诉用户该错误，要么是用户数据得到保存，否则用户流量将呈现下降的趋势。为了正确的处理错误，Java提供了一种称为：<code>异常处理的错误捕获机制处理</code>。该机制的任务就是将控制权从错误产生的地方转移给能够处理错误的处理器。当然了，想要正确的处理异常情况的前提是必须要研究程序中哪些地方会出现问题和错误。
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/06/exception-knowledge/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
@@ -1184,10 +1312,6 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
@@ -1196,15 +1320,19 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">

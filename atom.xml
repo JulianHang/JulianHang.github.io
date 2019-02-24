@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zlia.tech/"/>
-  <updated>2019-01-16T15:16:43.511Z</updated>
+  <updated>2019-02-24T04:09:16.571Z</updated>
   <id>http://zlia.tech/</id>
   
   <author>
@@ -15,6 +15,81 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>core-java-knowledge-20190211</title>
+    <link href="http://zlia.tech/2019/02/24/core-java-knowledge-20190211/"/>
+    <id>http://zlia.tech/2019/02/24/core-java-knowledge-20190211/</id>
+    <published>2019-02-24T04:09:16.000Z</published>
+    <updated>2019-02-24T04:09:16.571Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul><li>在同一个catch语句中可以捕获多个<code>不存在子类关系</code>的异常</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;<span class="keyword">catch</span>(FileNotFoundException | UnknowHostException e)&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li><p>java中原来有提供<code>断言</code>，学到了学到了.</p></li><li><p>泛型类、泛型方法</p></li><li><p>一个类型变量或通配符可以有多个限定.限定类型用&amp;分隔，而逗号用来分隔类型变量.</p></li><li><p>对于编译器来说，用方法名+参数列表来确定一个方法签名.而对于虚拟机来说，用参数类型+返回类型来确定一个方法，编译器不允许开发者编码出方法名一致，返回值却不同的方法，而它自己却可以自动生成这种操作（产生两个仅返回类型不同的方法字节码）并交给虚拟机来处理.这种操作在泛型中称为<code>桥方法</code>，它主要用来避免类型变量擦除所带来的多态灾难.</p></li></ul><p class="customize-img"><img src="/assets/blogImg/daliy-konwledge-point/20190217/generic-method.png" alt="桥方法"></p><ul><li>运行时类型查询只适用于原始类型.意思是泛型不支持类型检查.</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//该类型检查会得到一个编译器错误</span></span><br><span class="line"><span class="keyword">if</span>(a <span class="keyword">instanceof</span> Test&lt;String&gt;)&#123;</span><br><span class="line">    <span class="comment">//something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><a id="more"></a><ul><li><p>不能使用像new T()、new T[]、T.class这样子表达式中的类型变量.</p></li><li><p>泛型类的静态上下文中类型变量无效.</p></li><li><p>不能抛出或捕获泛型类的实例.</p></li><li><p>带有超类型限定的通配符可以向泛型对象写入，带有子类型限定的通配符可以从泛型对象读取.</p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;java&quot;&gt;&lt;a href=&quot;#java&quot; class=&quot;headerlink&quot; title=&quot;java&quot;&gt;&lt;/a&gt;&lt;div&gt;&lt;span&gt;java&lt;/span&gt;&lt;/div&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;在同一个catch语句中可以捕获多个&lt;code&gt;不存在子类关系&lt;/code&gt;的异常&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;//&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;span class=&quot;keyword&quot;&gt;catch&lt;/span&gt;(FileNotFoundException | UnknowHostException e)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;//&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;java中原来有提供&lt;code&gt;断言&lt;/code&gt;，学到了学到了.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;泛型类、泛型方法&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;一个类型变量或通配符可以有多个限定.限定类型用&amp;amp;分隔，而逗号用来分隔类型变量.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;对于编译器来说，用方法名+参数列表来确定一个方法签名.而对于虚拟机来说，用参数类型+返回类型来确定一个方法，编译器不允许开发者编码出方法名一致，返回值却不同的方法，而它自己却可以自动生成这种操作（产生两个仅返回类型不同的方法字节码）并交给虚拟机来处理.这种操作在泛型中称为&lt;code&gt;桥方法&lt;/code&gt;，它主要用来避免类型变量擦除所带来的多态灾难.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p class=&quot;customize-img&quot;&gt;&lt;img src=&quot;/assets/blogImg/daliy-konwledge-point/20190217/generic-method.png&quot; alt=&quot;桥方法&quot;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;运行时类型查询只适用于原始类型.意思是泛型不支持类型检查.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//该类型检查会得到一个编译器错误&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(a &lt;span class=&quot;keyword&quot;&gt;instanceof&lt;/span&gt; Test&amp;lt;String&amp;gt;)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;//something&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="rearend" scheme="http://zlia.tech/categories/rearend/"/>
+    
+    
+      <category term="daily-konwledge-point-java" scheme="http://zlia.tech/tags/daily-konwledge-point-java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>每日知识点20181216</title>
+    <link href="http://zlia.tech/2019/02/24/core-java-knowledge-20181216/"/>
+    <id>http://zlia.tech/2019/02/24/core-java-knowledge-20181216/</id>
+    <published>2019-02-24T04:08:59.000Z</published>
+    <updated>2019-02-24T04:08:59.355Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul><li><p>Arrays.deepToString(a)：打印二维数组.</p></li><li><p>Java8开始时间使用Date类，日期使用<code>LocalDate</code>类.</p></li><li><p>包内的类不能引用默认包中的类.</p></li><li><p>内部类可以是私有类（private），而常规类只可以具有包可见性（default）或公有可见性（public）.</p></li><li><p>内部类不能有static方法.</p></li><li><p>局部类不能用public或private访问说明符进行声明.</p></li></ul><a id="more"></a><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Father</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">(<span class="keyword">final</span> <span class="keyword">boolean</span> flag)</span></span>&#123;</span><br><span class="line">        <span class="class"><span class="keyword">class</span> <span class="title">FatherInner</span></span>&#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">inner</span><span class="params">()</span></span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(flag)&#123;</span><br><span class="line">                    System.out.println(flag);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>该段代码编译后生成Father.class与Father$1FatherInner.class文件.反编译Father$1FatherInner.class后：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Father</span>$1<span class="title">Inner</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> Father$<span class="number">1</span>Inner(Father var1,<span class="keyword">boolean</span> var2)&#123;</span><br><span class="line">        <span class="keyword">this</span>.<span class="keyword">this</span>$<span class="number">0</span> = var1;</span><br><span class="line">        <span class="keyword">this</span>.val$flag = var2;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">inner</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.val$flag)&#123;</span><br><span class="line">            System.out.println(<span class="keyword">this</span>.val$flag)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">boolean</span> val$flag;</span><br><span class="line">    <span class="keyword">final</span> Father <span class="keyword">this</span>$<span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>由于构造器的名字与类名相同，而匿名类没有类名，所以匿名类不能有构造器.</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;java&quot;&gt;&lt;a href=&quot;#java&quot; class=&quot;headerlink&quot; title=&quot;java&quot;&gt;&lt;/a&gt;&lt;div&gt;&lt;span&gt;java&lt;/span&gt;&lt;/div&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Arrays.deepToString(a)：打印二维数组.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Java8开始时间使用Date类，日期使用&lt;code&gt;LocalDate&lt;/code&gt;类.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;包内的类不能引用默认包中的类.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;内部类可以是私有类（private），而常规类只可以具有包可见性（default）或公有可见性（public）.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;内部类不能有static方法.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;局部类不能用public或private访问说明符进行声明.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="rearend" scheme="http://zlia.tech/categories/rearend/"/>
+    
+    
+      <category term="daily-konwledge-point-java" scheme="http://zlia.tech/tags/daily-konwledge-point-java/"/>
+    
+  </entry>
   
   <entry>
     <title>每日知识点20181213</title>
