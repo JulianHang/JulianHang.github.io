@@ -17,7 +17,7 @@
 <meta property="og:description" content="简介用户在运行程序的期间，往往有可能会出现各种各样的错误导致程序执行失败，其结果是用户数据丢失。出现这种情况的时候当然不能置之不理，要么就应该告诉用户该错误，要么是用户数据得到保存，否则用户流量将呈现下降的趋势。为了正确的处理错误，Java提供了一种称为：异常处理的错误捕获机制处理。该机制的任务就是将控制权从错误产生的地方转移给能够处理错误的处理器。当然了，想要正确的处理异常情况的前提是必须要研究">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/exception/throwable-hierarchy.png">
-<meta property="og:updated_time" content="2018-12-13T15:00:32.520Z">
+<meta property="og:updated_time" content="2019-04-07T05:17:13.864Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初识异常">
 <meta name="twitter:description" content="简介用户在运行程序的期间，往往有可能会出现各种各样的错误导致程序执行失败，其结果是用户数据丢失。出现这种情况的时候当然不能置之不理，要么就应该告诉用户该错误，要么是用户数据得到保存，否则用户流量将呈现下降的趋势。为了正确的处理错误，Java提供了一种称为：异常处理的错误捕获机制处理。该机制的任务就是将控制权从错误产生的地方转移给能够处理错误的处理器。当然了，想要正确的处理异常情况的前提是必须要研究">
@@ -218,7 +218,6 @@
 </blockquote>
 <p>一个方法有可能要声明多个受查异常类型，那么就必须在方法的首部列出所有的异常类，每个异常类之间用逗号隔开。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> tech.zlia.exception.knowledge;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.EOFException;</span><br><span class="line"><span class="keyword">import</span> java.io.FileNotFoundException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAnimation</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">drawImage</span><span class="params">(<span class="keyword">int</span> i)</span> <span class="keyword">throws</span> FileNotFoundException , EOFException </span>&#123;</span><br><span class="line">		<span class="comment">//do anything</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h3 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a><div><span>重点关注</span></div></h3><p><code>Throwable RuntimeException IOException 受查异常 非受查异常</code></p>
-<p><a href="https://github.com/JulianHang/core-java-i/tree/master/src/tech/zlia/knowledge/exception" target="_blank" rel="noopener">源码下载</a> </p>
 
       
 
@@ -547,11 +546,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
