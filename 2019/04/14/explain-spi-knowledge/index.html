@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/essays/spi/example-spi-1.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/essays/spi/example-spi-2.png">
-<meta property="og:updated_time" content="2019-04-14T05:01:40.980Z">
+<meta property="og:updated_time" content="2019-04-14T05:19:23.945Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="我叫spi，新成员">
 <meta name="twitter:description" content="自我介绍Spi，Service Provider Interface，是java提供的一套用来被第三方实现或扩展的API，它可以用来启用框架扩展或替换相应的组件。简单来说就是我提供标准，你按照我的标准提供实现就可以了，当然了，这个实现可以是可以有多个，你想选择哪个都可以，不过前提是你要知道所有的实现才能选择，这操作属于java中的策略模式，而所有的实现都被放在一个配置文件中，所以Spi基本上就是一">
@@ -210,7 +210,7 @@
 <p><code>请注意</code>，创建META-INF/service目录后最好看一下目录结构，<code>META-INF是一个目录，而service是它的子目录，这不是只有一层目录</code>，当时就被自己给坑了。</p>
 <p class="customize-img"><img src="/assets/blogImg/essays/spi/example-spi-2.png" alt="Spi例子-2"></p>
 <p>看了以上的内容咱们顺便在说下Spi的优缺点，不对，优点就是一开始说的解耦，将业务代码分离，简单说下缺点吧。看到上面的截图中采用的是ServiceLoader类来加载实现类，源码当中采用的是懒加载的方式，只有当我们去遍历配置文件中的实现类时才会一一实例化，缺点很明显，<code>只能通过遍历的方式去获取每个实现类，若你不想用某个实现类，它最终还是会被实例化，这势必造成了资源的浪费</code>，没有提供通过传入某个参数来获取到指定的实现类，不够灵活。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><div><span>总结</span></div></h3><p>网上有人说很多框架当中使用了Spi机制，比如JDBC加载不同的类型数据库的驱动、不同的日志实现类、Dubbo，虽然这些我都没有看过，但解耦是每个程序都需要的，这也奠定了Spi的重要性。<br>加油自己，加油每一个人。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><div><span>总结</span></div></h3><p>网上有人说很多框架当中使用了Spi机制，比如JDBC加载不同的类型数据库的驱动、不同的日志实现类、Dubbo，虽然这些我都没有看过，但解耦是每个程序都需要的，这也奠定了Spi的重要性。Spi的缺点很明显，<code>可以在它的基础上在包装一层，这部分例子我从其他地方拷贝了过来，挺实用的，而正好是后期完善的，所以上面的截图中并没有显示这些内容，不过我已经放到了github上了</code>，有兴趣可以看看。最后加油自己，加油每一个人。</p>
 <p><a href="https://github.com/JulianHang/little-mvn-project.git" target="_blank" rel="noopener">源码下载</a> </p>
 
       
@@ -537,11 +537,11 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -553,15 +553,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">markdown</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
               </li>
             
             <div class="clearfix"></div>

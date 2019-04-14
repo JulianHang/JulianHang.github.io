@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zlia.tech/"/>
-  <updated>2019-04-14T05:03:29.551Z</updated>
+  <updated>2019-04-14T05:19:50.510Z</updated>
   <id>http://zlia.tech/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://zlia.tech/2019/04/14/core-java-knowledge-20190226/"/>
     <id>http://zlia.tech/2019/04/14/core-java-knowledge-20190226/</id>
     <published>2019-04-14T05:02:06.000Z</published>
-    <updated>2019-04-14T05:03:29.551Z</updated>
+    <updated>2019-04-14T05:19:50.510Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul><li><p>java Test &lt; 1.txt表示将1.txt中的内容作为其前面命令的输入.</p></li><li><p>java Test &gt; 1.txt表示将Test的结果输出到1.txt中.</p></li><li><p>双端队列，可以在头部和尾部添加或删除元素，但不支持在队列中间添加元素.</p></li><li><p>coll1.retainAll(coll2)：会从coll1中删除所有未在coll2中出现的元素.</p></li><li><p>方法引用所引用的方法的参数列表必须要和函数式接口中抽象方法的参数列表相同（完全一致），构造引用也是如此.</p></li><li><p>方法引用所引用的方法的的返回值必须要和函数式接口中抽象方法的返回值相同（完全一致），构造引用也是如此.</p></li><li><p>Optional作用：它在值不存在的情况下会使用替代物，而只有值存在的情况下才会使用这个值.</p><a id="more"></a></li><li><p>大家都推荐看核心技术卷1和卷2，为啥我觉得写的不是很通俗易懂呢？很多知识点的内容并没有讲的很明确，比如泛型、通配符这块。</p></li><li><p>对象序列化时序列号的作用是为了标识之前保存过的对象。如一个带有序列号为1的对象之前就被序列化过，那么另外的对象引用了该对象，此时只要在其中保存该对象的序列号即可，就可以引用到该对象.</p></li><li><p>Path类中的normalize方法将移除所有冗余的.和..部件。例如：规范化后/home/cay/../fred/./myprog将产生/home/cay/fred/myprog.</p></li><li><p>通过cmd命令来打包java程序时，可通过jar cvfe TestDemo.jar TestDemo TestDemo.class的方式完成，加上<code>e</code>参数可以在MANIFEST.MF文件中加入<code>Main-Class</code>来指定执行jar包时运行的类，俗称启   动类，如运行java -jar TestDemo.jar时，则会自动去跑TestDemo这个类.</p></li><li><p>p.resolve(q)按照下列规则返回一个路径：</p><ul><li>如果q是绝对路径，则结果就是q.</li><li>否则，根据文件系统的规则，将p后面跟着q作为结果.</li></ul></li><li><p>p.resolveSibling(q)：通过解析指定路径的父路径产生其兄弟路径.</p></li><li><p>Files.createDirectory(path)：其中，路径中除最后一个部件外，其他部分都必须是已存在的。要创建路径中的中间目录，应该使用Files.createDirectories(path).</p></li><li><p>内存映射文件：将一个文件或文件的一部分映射到内存中，然后这个文件就可以当作是内存数组一样地访问，比传统的文件操作要快很多.</p></li><li><p>buffer.flip()是将写模式转成读模式.</p></li><li><p>channel.lock()、channel.tryLock()：第一个调用会阻塞直至可获得锁，而第二个调用将立即返回，要么返回锁，要么在锁不可获得的情况下返回null.</p></li></ul>]]></content>
+    <content type="html"><![CDATA[<h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul><li><p>java Test &lt; 1.txt表示将1.txt中的内容作为其前面命令的输入.</p></li><li><p>java Test &gt; 1.txt表示将Test的结果输出到1.txt中.</p></li><li><p>双端队列，可以在头部和尾部添加或删除元素，但不支持在队列中间添加元素.</p></li><li><p>coll1.retainAll(coll2)：会从coll1中删除所有未在coll2中出现的元素.</p></li><li><p>方法引用所引用的方法的参数列表必须要和函数式接口中抽象方法的参数列表相同（完全一致），构造引用也是如此.</p></li><li><p>方法引用所引用的方法的的返回值必须要和函数式接口中抽象方法的返回值相同（完全一致），构造引用也是如此.</p><a id="more"></a></li><li><p>Optional作用：它在值不存在的情况下会使用替代物，而只有值存在的情况下才会使用这个值.</p></li><li><p>大家都推荐看核心技术卷1和卷2，为啥我觉得写的不是很通俗易懂呢？很多知识点的内容并没有讲的很明确，比如泛型、通配符这块。</p></li><li><p>对象序列化时序列号的作用是为了标识之前保存过的对象。如一个带有序列号为1的对象之前就被序列化过，那么另外的对象引用了该对象，此时只要在其中保存该对象的序列号即可，就可以引用到该对象.</p></li><li><p>Path类中的normalize方法将移除所有冗余的.和..部件。例如：规范化后/home/cay/../fred/./myprog将产生/home/cay/fred/myprog.</p></li><li><p>通过cmd命令来打包java程序时，可通过jar cvfe TestDemo.jar TestDemo TestDemo.class的方式完成，加上<code>e</code>参数可以在MANIFEST.MF文件中加入<code>Main-Class</code>来指定执行jar包时运行的类，俗称启   动类，如运行java -jar TestDemo.jar时，则会自动去跑TestDemo这个类.</p></li><li><p>p.resolve(q)按照下列规则返回一个路径：</p><ul><li>如果q是绝对路径，则结果就是q.</li><li>否则，根据文件系统的规则，将p后面跟着q作为结果.</li></ul></li><li><p>p.resolveSibling(q)：通过解析指定路径的父路径产生其兄弟路径.</p></li><li><p>Files.createDirectory(path)：其中，路径中除最后一个部件外，其他部分都必须是已存在的。要创建路径中的中间目录，应该使用Files.createDirectories(path).</p></li><li><p>内存映射文件：将一个文件或文件的一部分映射到内存中，然后这个文件就可以当作是内存数组一样地访问，比传统的文件操作要快很多.</p></li><li><p>buffer.flip()是将写模式转成读模式.</p></li><li><p>channel.lock()、channel.tryLock()：第一个调用会阻塞直至可获得锁，而第二个调用将立即返回，要么返回锁，要么在锁不可获得的情况下返回null.</p></li></ul>]]></content>
     
     <summary type="html">
     
@@ -39,8 +39,6 @@
 &lt;li&gt;&lt;p&gt;方法引用所引用的方法的参数列表必须要和函数式接口中抽象方法的参数列表相同（完全一致），构造引用也是如此.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;方法引用所引用的方法的的返回值必须要和函数式接口中抽象方法的返回值相同（完全一致），构造引用也是如此.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Optional作用：它在值不存在的情况下会使用替代物，而只有值存在的情况下才会使用这个值.&lt;/p&gt;
     
     </summary>
     
@@ -56,9 +54,9 @@
     <link href="http://zlia.tech/2019/04/14/explain-spi-knowledge/"/>
     <id>http://zlia.tech/2019/04/14/explain-spi-knowledge/</id>
     <published>2019-04-14T05:01:40.000Z</published>
-    <updated>2019-04-14T05:01:40.980Z</updated>
+    <updated>2019-04-14T05:19:23.945Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="自我介绍"><a href="#自我介绍" class="headerlink" title="自我介绍"></a><div><span>自我介绍</span></div></h3><p>Spi，Service Provider Interface，是java提供的一套用来被第三方实现或扩展的API，它可以用来启用框架扩展或替换相应的组件。简单来说就是我提供标准，你按照我的标准提供实现就可以了，当然了，这个实现可以是可以有多个，你想选择哪个都可以，不过前提是你要知道所有的实现才能选择，这操作属于java中的策略模式，而所有的实现都被放在一个配置文件中，所以Spi基本上就是一个<code>接口</code> + <code>策略模式</code> + <code>配置文件</code>组合而成的动态加载机制。在面向对象的设计里，模块之间基于接口编程，模块之间不对实现类硬编码，在不同的场景下需要动态的指明实现类，这就需要一个服务发现的机制，Spi提供这样子的一个机制，为某个接口寻找服务实现的机制，将硬编码移到程序之外，也就是配置文件中，Spi的核心思想就是<code>解耦</code>。<a id="more"></a></p><h3 id="模拟Spi"><a href="#模拟Spi" class="headerlink" title="模拟Spi"></a><div><span>模拟Spi</span></div></h3><p>既然是标准，那么肯定有一些必须要遵守的规范：</p><ol><li>定义服务接口与服务接口的实现类，若是jar包则要在jar包的META-INF/services目录下创建一个以<code>接口全限定名</code>为文件名的文本文件，该文本文件的内容即<code>服务接口实现类的全限定名</code>。</li><li>该jar包记得加入到classpath中。</li><li>服务接口的实现类必须有一个不带参数的构造方法，即默认的构造方法。</li></ol><p>接下来看几个截图，具体的代码实现已经上传到github上了，有兴趣的读者可以看看，菜鸟级别的水平不要见怪！</p><p class="customize-img"><img src="/assets/blogImg/essays/spi/example-spi-1.png" alt="Spi例子-1"></p><p><code>请注意</code>，创建META-INF/service目录后最好看一下目录结构，<code>META-INF是一个目录，而service是它的子目录，这不是只有一层目录</code>，当时就被自己给坑了。</p><p class="customize-img"><img src="/assets/blogImg/essays/spi/example-spi-2.png" alt="Spi例子-2"></p><p>看了以上的内容咱们顺便在说下Spi的优缺点，不对，优点就是一开始说的解耦，将业务代码分离，简单说下缺点吧。看到上面的截图中采用的是ServiceLoader类来加载实现类，源码当中采用的是懒加载的方式，只有当我们去遍历配置文件中的实现类时才会一一实例化，缺点很明显，<code>只能通过遍历的方式去获取每个实现类，若你不想用某个实现类，它最终还是会被实例化，这势必造成了资源的浪费</code>，没有提供通过传入某个参数来获取到指定的实现类，不够灵活。</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><div><span>总结</span></div></h3><p>网上有人说很多框架当中使用了Spi机制，比如JDBC加载不同的类型数据库的驱动、不同的日志实现类、Dubbo，虽然这些我都没有看过，但解耦是每个程序都需要的，这也奠定了Spi的重要性。<br>加油自己，加油每一个人。</p><p><a href="https://github.com/JulianHang/little-mvn-project.git" target="_blank" rel="noopener">源码下载</a> </p>]]></content>
+    <content type="html"><![CDATA[<h3 id="自我介绍"><a href="#自我介绍" class="headerlink" title="自我介绍"></a><div><span>自我介绍</span></div></h3><p>Spi，Service Provider Interface，是java提供的一套用来被第三方实现或扩展的API，它可以用来启用框架扩展或替换相应的组件。简单来说就是我提供标准，你按照我的标准提供实现就可以了，当然了，这个实现可以是可以有多个，你想选择哪个都可以，不过前提是你要知道所有的实现才能选择，这操作属于java中的策略模式，而所有的实现都被放在一个配置文件中，所以Spi基本上就是一个<code>接口</code> + <code>策略模式</code> + <code>配置文件</code>组合而成的动态加载机制。在面向对象的设计里，模块之间基于接口编程，模块之间不对实现类硬编码，在不同的场景下需要动态的指明实现类，这就需要一个服务发现的机制，Spi提供这样子的一个机制，为某个接口寻找服务实现的机制，将硬编码移到程序之外，也就是配置文件中，Spi的核心思想就是<code>解耦</code>。<a id="more"></a></p><h3 id="模拟Spi"><a href="#模拟Spi" class="headerlink" title="模拟Spi"></a><div><span>模拟Spi</span></div></h3><p>既然是标准，那么肯定有一些必须要遵守的规范：</p><ol><li>定义服务接口与服务接口的实现类，若是jar包则要在jar包的META-INF/services目录下创建一个以<code>接口全限定名</code>为文件名的文本文件，该文本文件的内容即<code>服务接口实现类的全限定名</code>。</li><li>该jar包记得加入到classpath中。</li><li>服务接口的实现类必须有一个不带参数的构造方法，即默认的构造方法。</li></ol><p>接下来看几个截图，具体的代码实现已经上传到github上了，有兴趣的读者可以看看，菜鸟级别的水平不要见怪！</p><p class="customize-img"><img src="/assets/blogImg/essays/spi/example-spi-1.png" alt="Spi例子-1"></p><p><code>请注意</code>，创建META-INF/service目录后最好看一下目录结构，<code>META-INF是一个目录，而service是它的子目录，这不是只有一层目录</code>，当时就被自己给坑了。</p><p class="customize-img"><img src="/assets/blogImg/essays/spi/example-spi-2.png" alt="Spi例子-2"></p><p>看了以上的内容咱们顺便在说下Spi的优缺点，不对，优点就是一开始说的解耦，将业务代码分离，简单说下缺点吧。看到上面的截图中采用的是ServiceLoader类来加载实现类，源码当中采用的是懒加载的方式，只有当我们去遍历配置文件中的实现类时才会一一实例化，缺点很明显，<code>只能通过遍历的方式去获取每个实现类，若你不想用某个实现类，它最终还是会被实例化，这势必造成了资源的浪费</code>，没有提供通过传入某个参数来获取到指定的实现类，不够灵活。</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><div><span>总结</span></div></h3><p>网上有人说很多框架当中使用了Spi机制，比如JDBC加载不同的类型数据库的驱动、不同的日志实现类、Dubbo，虽然这些我都没有看过，但解耦是每个程序都需要的，这也奠定了Spi的重要性。Spi的缺点很明显，<code>可以在它的基础上在包装一层，这部分例子我从其他地方拷贝了过来，挺实用的，而正好是后期完善的，所以上面的截图中并没有显示这些内容，不过我已经放到了github上了</code>，有兴趣可以看看。最后加油自己，加油每一个人。</p><p><a href="https://github.com/JulianHang/little-mvn-project.git" target="_blank" rel="noopener">源码下载</a> </p>]]></content>
     
     <summary type="html">
     
