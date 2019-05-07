@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zlia.tech/"/>
-  <updated>2019-04-14T05:19:50.510Z</updated>
+  <updated>2019-04-15T02:58:41.968Z</updated>
   <id>http://zlia.tech/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://zlia.tech/2019/04/14/core-java-knowledge-20190226/"/>
     <id>http://zlia.tech/2019/04/14/core-java-knowledge-20190226/</id>
     <published>2019-04-14T05:02:06.000Z</published>
-    <updated>2019-04-14T05:19:50.510Z</updated>
+    <updated>2019-04-15T02:58:41.968Z</updated>
     
     <content type="html"><![CDATA[<h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul><li><p>java Test &lt; 1.txt表示将1.txt中的内容作为其前面命令的输入.</p></li><li><p>java Test &gt; 1.txt表示将Test的结果输出到1.txt中.</p></li><li><p>双端队列，可以在头部和尾部添加或删除元素，但不支持在队列中间添加元素.</p></li><li><p>coll1.retainAll(coll2)：会从coll1中删除所有未在coll2中出现的元素.</p></li><li><p>方法引用所引用的方法的参数列表必须要和函数式接口中抽象方法的参数列表相同（完全一致），构造引用也是如此.</p></li><li><p>方法引用所引用的方法的的返回值必须要和函数式接口中抽象方法的返回值相同（完全一致），构造引用也是如此.</p><a id="more"></a></li><li><p>Optional作用：它在值不存在的情况下会使用替代物，而只有值存在的情况下才会使用这个值.</p></li><li><p>大家都推荐看核心技术卷1和卷2，为啥我觉得写的不是很通俗易懂呢？很多知识点的内容并没有讲的很明确，比如泛型、通配符这块。</p></li><li><p>对象序列化时序列号的作用是为了标识之前保存过的对象。如一个带有序列号为1的对象之前就被序列化过，那么另外的对象引用了该对象，此时只要在其中保存该对象的序列号即可，就可以引用到该对象.</p></li><li><p>Path类中的normalize方法将移除所有冗余的.和..部件。例如：规范化后/home/cay/../fred/./myprog将产生/home/cay/fred/myprog.</p></li><li><p>通过cmd命令来打包java程序时，可通过jar cvfe TestDemo.jar TestDemo TestDemo.class的方式完成，加上<code>e</code>参数可以在MANIFEST.MF文件中加入<code>Main-Class</code>来指定执行jar包时运行的类，俗称启   动类，如运行java -jar TestDemo.jar时，则会自动去跑TestDemo这个类.</p></li><li><p>p.resolve(q)按照下列规则返回一个路径：</p><ul><li>如果q是绝对路径，则结果就是q.</li><li>否则，根据文件系统的规则，将p后面跟着q作为结果.</li></ul></li><li><p>p.resolveSibling(q)：通过解析指定路径的父路径产生其兄弟路径.</p></li><li><p>Files.createDirectory(path)：其中，路径中除最后一个部件外，其他部分都必须是已存在的。要创建路径中的中间目录，应该使用Files.createDirectories(path).</p></li><li><p>内存映射文件：将一个文件或文件的一部分映射到内存中，然后这个文件就可以当作是内存数组一样地访问，比传统的文件操作要快很多.</p></li><li><p>buffer.flip()是将写模式转成读模式.</p></li><li><p>channel.lock()、channel.tryLock()：第一个调用会阻塞直至可获得锁，而第二个调用将立即返回，要么返回锁，要么在锁不可获得的情况下返回null.</p></li></ul>]]></content>
     
