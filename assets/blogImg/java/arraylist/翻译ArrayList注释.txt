@@ -1,0 +1,25 @@
+实现List接口的可变数组类。
+实现List接口的所有可选操作，允许存放所有元素，包括null。
+除了实现List接口外，该类还提供了操作数组大小的方法，内部实现通过数组来存储列表。该类大体上和Vector相似，除了它是线程不安全之外。
+
+size、isEmpty、get、set、iterator、listIterator操作的时间复杂度是个常量O(1)。
+add操作的时间复杂度是O(n)。
+其他操作的时间复杂度呈现线性。
+恒定因子，也就是上面提到的常量比LinkedList类还低。
+
+每个ArrayList对象都有一个容量。该容量是用来存储元素的数组大小。
+它始终和列表大小一样大。当有元素被添加到ArrayList时，它的容量会
+自动增加。除了添加元素会花费时间成本这个事实外，并没有具体说明增长策略的详情。
+
+应用可以在添加许多元素之前通过调用ensureCapacity方法来增加ArrayList对象的容量。
+它可能会减少增量再分配的次数。
+
+注意该实现不是线程安全。如果多个线程同时访问一个ArrayList对象，至少会有一个线程会修改列表结构，所以它必须在外部控制线程安全。
+（结构修改是指添加或修改一个或多个元素，或者明确的调整数组大小）一般通过一些对象来包装list来完成线程安全。
+如果外部对象不存在，应该使用Collections.synchronizedList来包裹ArrayList对象。该方法最好在ArrayList创建时调用，为了防止偶然性的访问ArrayList。
+
+调用iterator和listIterator返回iterators（迭代器），迭代器被称为fail-fast:当iterator（迭代器）被创建后，无论何时以何种方式（除了iterator自身之外，例如add、remove）修改ArrayList结构都会抛出一个异常。因此，面对并发修改，迭代器则会快速失败，而不是在未来的未确定时间冒任意、非确定性行为的风险。
+
+注意itertor(迭代器)无法保证快速失败。因此，编写一个依赖于此异常的程序以确保其正确性是错误的：迭代器的快速失败行为仅应用于检测bug。
+
+该类是Java Collections Framework的一个成员。
