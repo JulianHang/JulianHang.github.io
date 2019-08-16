@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/arraylist/arraylist-comment-5.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/arraylist/arraylist-comment-6.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/arraylist/arraylist-comment-7.png">
-<meta property="og:updated_time" content="2019-08-16T08:08:04.511Z">
+<meta property="og:updated_time" content="2019-08-16T08:16:05.643Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="探索ArrayList底层实现">
 <meta name="twitter:description" content="背景想进步，想学习了，反正面试都要问的，还不如早点看了好。探索ArrayList源代码是基于JDK1.8版本的，相比以前的版本不知道有没有优化，毕竟没看过之前版本的底层代码。 简单说明下一般看底层代码前我都习惯先阅读下该类的注释说明，也不知道在哪里养成的习惯。相信大家都写过应用代码，既然写过，那也深知注释对于一个使用者来说是多么的重要，决定了它是否能够正确的使用，所以这是一个好习惯。 阅读注释 看">
@@ -285,7 +285,7 @@
 </li>
 <li><p>在构建ArrayList对象时，最好能预先设置容量大小，以免减少后期扩容花费的时间。</p>
 </li>
-<li><p>ArrayList容量的临界值是最大值 - 8，这个数字8是因为在数组中除了存储元素之外还会存储数组的长度，而这些数据都在内存中，不同操作系统对内存<br>的分配可能有所差异，减去8更多的是为了防止内存溢出。</p>
+<li><p>ArrayList容量的临界值是最大值 - 8，这个数字8是因为在数组中除了存储元素之外还会存储数组的长度，而这些数据都在内存中，不同操作系统对内存的分配可能有所差异，减去8更多的是为了防止内存溢出。</p>
 </li>
 <li><p>ArrayList的Iterator迭代器中的forEachRemaining方法只能调用一次，且在该方法中不能调用remove方法</p>
 </li>
@@ -616,11 +616,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
+                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -632,11 +632,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
+                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
               </li>
              
               <li class="article-tag-list-item">
