@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>Archives: 2018/9 | 奇思妙想</title>
+  <title>探索ArrayListSpliterator底层实现 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="record my life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="奇思妙想">
-<meta property="og:url" content="http://zlia.tech/archives/2018/09/index.html">
+  <meta name="description" content="前言上次看ArrayList底层机制时把ArrayListSpliterator放了放，现在回过头来具体看看实现。 简单粗暴直接上代码吧！ 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="探索ArrayListSpliterator底层实现">
+<meta property="og:url" content="http://zlia.tech/2019/08/28/explain-arraylist-spliterator-sourcecode/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="record my life">
+<meta property="og:description" content="前言上次看ArrayList底层机制时把ArrayListSpliterator放了放，现在回过头来具体看看实现。 简单粗暴直接上代码吧！ 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-28T09:53:49.526Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="奇思妙想">
-<meta name="twitter:description" content="record my life">
+<meta name="twitter:title" content="探索ArrayListSpliterator底层实现">
+<meta name="twitter:description" content="前言上次看ArrayList底层机制时把ArrayListSpliterator放了放，现在回过头来具体看看实现。 简单粗暴直接上代码吧！ 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -165,31 +167,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-explain-arraylist-spliterator-sourcecode" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/02/explain-activemq-soucecod/" class="archive-article-date">
-  	<time datetime="2018-09-02T01:00:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-02</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/02/explain-activemq-soucecod/">简单喵下ActiveMQ生产者源码</a>
+    <h1 class="article-title" itemprop="name">
+      探索ArrayListSpliterator底层实现
     </h1>
   
 
@@ -198,46 +183,200 @@
 <!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/09/02/explain-activemq-soucecod/" class="pageViews">0</span>
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/08/28/explain-arraylist-spliterator-sourcecode/" class="pageViews">0</span>
   </a>
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/08/28/explain-arraylist-spliterator-sourcecode/" class="archive-article-date">
+  	<time datetime="2019-08-28T09:53:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>上次看ArrayList底层机制时把<code>ArrayListSpliterator</code>放了放，现在回过头来具体看看实现。</p>
+<h3 id="简单粗暴"><a href="#简单粗暴" class="headerlink" title="简单粗暴"></a><div><span>简单粗暴</span></div></h3><p>直接上代码吧！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayListSpliterator</span>&lt;<span class="title">E</span>&gt; <span class="keyword">implements</span> <span class="title">Spliterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//指向当前集合对象</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ArrayList&lt;E&gt; list;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//当前索引，可能被trySplit和tryAdvance操作修改</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> index;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//结束索引，未使用前为-1，使用后为list的size</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> fence;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过与modCount比较来判断集合是否被修改，初始值与modCount相等</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> expectedModCount;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 初始化参数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> list 当前集合</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> origin 起始索引</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> fence 结束索引</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> expectedModCount </span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    ArrayListSpliterator(ArrayList&lt;E&gt; list, <span class="keyword">int</span> origin, <span class="keyword">int</span> fence,</span><br><span class="line">                         <span class="keyword">int</span> expectedModCount) &#123;</span><br><span class="line">        <span class="keyword">this</span>.list = list; <span class="comment">// OK if null unless traversed</span></span><br><span class="line">        <span class="keyword">this</span>.index = origin;</span><br><span class="line">        <span class="keyword">this</span>.fence = fence;</span><br><span class="line">        <span class="keyword">this</span>.expectedModCount = expectedModCount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取结束索引</span></span><br><span class="line"><span class="comment">     * 初始化expectedModCount与fence参数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 结束索引</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getFence</span><span class="params">()</span> </span>&#123; <span class="comment">// initialize fence to size on first use</span></span><br><span class="line">        <span class="keyword">int</span> hi; <span class="comment">// (a specialized variant appears in method forEach)</span></span><br><span class="line">        ArrayList&lt;E&gt; lst;</span><br><span class="line">        <span class="keyword">if</span> ((hi = fence) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> ((lst = list) == <span class="keyword">null</span>)</span><br><span class="line">                hi = fence = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                expectedModCount = lst.modCount;</span><br><span class="line">                hi = fence = lst.size;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> hi;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在当前切割迭代器的基础上再次拆分一个新的迭代器</span></span><br><span class="line"><span class="comment">     * 若切割迭代器是可以拆分的，会返回新的一个切割迭代器，两个迭代器平分原先迭代器中的元素</span></span><br><span class="line"><span class="comment">     * 若切割迭代器无法拆分的话，则返回null</span></span><br><span class="line"><span class="comment">     * 拆分后原先迭代器必须修改起始索引，因为它的元素被拆分了（index = mid）</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 新的切割迭代器或null</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ArrayListSpliterator&lt;E&gt; <span class="title">trySplit</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> hi = getFence(), lo = index, mid = (lo + hi) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> (lo &gt;= mid) ? <span class="keyword">null</span> : <span class="comment">// divide range in half unless too small</span></span><br><span class="line">            <span class="keyword">new</span> ArrayListSpliterator&lt;E&gt;(list, lo, index = mid,</span><br><span class="line">                                        expectedModCount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 若存在剩余元素，则对其下一个元素执行指定动作，并返回true</span></span><br><span class="line"><span class="comment">     * 若不存在剩余元素，则返回false</span></span><br><span class="line"><span class="comment">     * 该方法是对单独元素进行操作</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> action 若存在剩余元素，执行指定动作</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 是否存在剩余元素</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">tryAdvance</span><span class="params">(Consumer&lt;? <span class="keyword">super</span> E&gt; action)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (action == <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">        <span class="keyword">int</span> hi = getFence(), i = index;</span><br><span class="line">        <span class="keyword">if</span> (i &lt; hi) &#123;</span><br><span class="line">            index = i + <span class="number">1</span>;</span><br><span class="line">            <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>) E e = (E)list.elementData[i];</span><br><span class="line">            action.accept(e);</span><br><span class="line">            <span class="keyword">if</span> (list.modCount != expectedModCount)</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 遍历剩余元素，并执行指定动作</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> action 若存在剩余元素，执行指定动作</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">forEachRemaining</span><span class="params">(Consumer&lt;? <span class="keyword">super</span> E&gt; action)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i, hi, mc; <span class="comment">// hoist accesses and checks from loop</span></span><br><span class="line">        ArrayList&lt;E&gt; lst; Object[] a;</span><br><span class="line">        <span class="keyword">if</span> (action == <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">        <span class="keyword">if</span> ((lst = list) != <span class="keyword">null</span> &amp;&amp; (a = lst.elementData) != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> ((hi = fence) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                mc = lst.modCount;</span><br><span class="line">                hi = lst.size;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                mc = expectedModCount;</span><br><span class="line">            <span class="keyword">if</span> ((i = index) &gt;= <span class="number">0</span> &amp;&amp; (index = hi) &lt;= a.length) &#123;</span><br><span class="line">                <span class="keyword">for</span> (; i &lt; hi; ++i) &#123;</span><br><span class="line">                    <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>) E e = (E) a[i];</span><br><span class="line">                    action.accept(e);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (lst.modCount == mc)</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取切割迭代器的元素个数</span></span><br><span class="line"><span class="comment">     * 计算结束索引与起始索引之间的元素个数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 切割迭代器的元素个数 </span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">estimateSize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">long</span>) (getFence() - index);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取切割迭代器的特征值</span></span><br><span class="line"><span class="comment">     * ArrayList底层实现是数组，故是有序、有实际大小、可重复、可存入null、属于非线程安全、在遍历时可添加修改替换元素</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">characteristics</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Spliterator.ORDERED | Spliterator.SIZED | Spliterator.SUBSIZED;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li><p>分割迭代器可以单个(tryAdvance)或顺序（多个）遍历元素.</p>
+</li>
+<li><p>分割迭代器可拆分成若干个小型的分割迭代器来并行操作元素.</p>
+</li>
+<li><p>分割迭代器属于非线程安全.</p>
+</li>
+<li><p>ArrayListSpliterator属于后期绑定与快速失败的分割迭代器.</p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">activemq</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/mq//" class="article-tag-list-link color3">mq</a>
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/08/28/explain-arraylist-spliterator-sourcecode/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2019/08/21/explain-vector-sourcecode/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">探索Vector的底层实现</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
+  
+
+  
+
+  
+  
     
+    <section id="comments" class="comments">
+	  <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "JoYcsWmKGGeDS1gi583VdmYm-gzGzoHsz",
+            app_key: "F9y6cyWlw9WVSFOEw3rnxfXY",
+            placeholder: "扯淡吧",
+            avatar: "",
+            avatar_cdn: "",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+	
+</script>
+    </section>
+	
+  
 
 
           </div>
@@ -261,8 +400,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
