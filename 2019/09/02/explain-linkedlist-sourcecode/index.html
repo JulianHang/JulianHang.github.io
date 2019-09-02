@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/linkedlist/linkedlist-comment-5.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/linkedlist/linkedlist-comment-6.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/linkedlist/linkedlist-data-structure.png">
-<meta property="og:updated_time" content="2019-09-02T06:59:49.258Z">
+<meta property="og:updated_time" content="2019-09-02T07:04:07.272Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="探索LinkedList底层实现">
 <meta name="twitter:description" content="前言老样子，还是先看注释！本来以为能收获点什么干货，结果注释与ArrayList的注释基本相同，有点尴尬…LinkedList的源码是基于JDK1.8。 开干先上LinkedList类的注释，在深入到类中详细说明属性与方法。">
@@ -234,18 +234,18 @@
 <ul>
 <li>队列中的方法简单说明下：</li>
 </ul>
-<p><code>peek</code>、<code>peekFirst</code>、<code>elements</code>方法都是<code>获取首部节点</code>，但若是空链表的话，前两者不会抛出异常（返回null），最后一个会。</p>
-<p><code>peekLast</code>方法是<code>获取尾部节点</code>。</p>
-<p><code>poll</code>、<code>pollFirst</code>、<code>remove</code>、<code>pop</code>方法都是<code>删除并首部节点</code>，但若是空链表的话，前两者不会抛出异常（返回null），后两者会。</p>
-<p><code>pollLast</code>方法是<code>删除并获取尾部节点</code>。</p>
-<p><code>offer</code>与<code>offerLast</code>方法都是<code>添加指定节点到尾部</code>，没啥区别。</p>
-<p><code>offerFirst</code>、<code>push</code>方法是<code>添加指定节点到首部</code>，两者的区别在于有无返回值。</p>
+<p>peek、peekFirst、elements方法都是<code>获取首部节点</code>，但若是空链表的话，前两者不会抛出异常（返回null），最后一个会。</p>
+<p>peekLast方法是<code>获取尾部节点</code>。</p>
+<p>poll、pollFirst、remove、pop方法都是<code>删除并首部节点</code>，但若是空链表的话，前两者不会抛出异常（返回null），后两者会。</p>
+<p>pollLast方法是<code>删除并获取尾部节点</code>。</p>
+<p>offer与offerLast方法都是<code>添加指定节点到尾部</code>，没啥区别。</p>
+<p>offerFirst、push方法是<code>添加指定节点到首部</code>，两者的区别在于有无返回值。</p>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
 <li><p>LinkedList允许存放Null。</p>
 </li>
 <li><p>LinkedList内部通过链表实现，属于非线程安全。</p>
 </li>
-<li><p>LinkedList充分利用了内存空间，不存在扩容机制</p>
+<li><p>LinkedList充分利用了内存空间，不存在扩容机制。</p>
 </li>
 <li><p>ArrayList具有<code>iterator</code>与<code>listIterator</code>，虽然LinkedList也有这两个方法，但实际上这两个方法的内部实现都是调用的<code>listIterator</code>。</p>
 </li>
@@ -572,7 +572,7 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -580,7 +580,7 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -588,19 +588,19 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
             
             <div class="clearfix"></div>
