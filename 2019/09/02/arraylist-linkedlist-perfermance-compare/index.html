@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/arraylist-compare-linkedlist/arraylist-compare-linkedlist-4.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/arraylist-compare-linkedlist/arraylist-compare-linkedlist-5.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/arraylist-compare-linkedlist/arraylist-compare-linkedlist-6.png">
-<meta property="og:updated_time" content="2019-09-02T15:44:31.362Z">
+<meta property="og:updated_time" content="2019-09-02T15:51:13.322Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ArrayList与LinkedList的性能比较">
 <meta name="twitter:description" content="前言我们都知道ArrayList适合查询/替换、LinkedList适合添加/删除，造成这样子的原因也在于它们底层的实现。光说这些理论似乎大家都会，所以准备用更加具体的例子来证明它，也能更好地比较这两者之间的性能关系。在测试具体场景前，简单说明下环境配置，window环境下：内存8个G；JDK8；i7处理器。 测试场景分别准备1w、5w、10w、50w、100w条数据，也就是说数据类别有上面这几种">
@@ -244,20 +244,22 @@
 <ul>
 <li>随机位置/索引获取元素/节点。</li>
 </ul>
-<p class="customize-img"><img src="/assets/blogImg/java/arraylist-compare-linkedlist/arraylist-compare-linkedlist-5.png" alt="ArrayList注释-5"><br>同上。</p>
+<p class="customize-img"><img src="/assets/blogImg/java/arraylist-compare-linkedlist/arraylist-compare-linkedlist-5.png" alt="ArrayList注释-5"></p>
+<p>同上。</p>
 <ul>
 <li>随机位置/索引替换元素/节点。</li>
 </ul>
-<p class="customize-img"><img src="/assets/blogImg/java/arraylist-compare-linkedlist/arraylist-compare-linkedlist-6.png" alt="ArrayList注释-6"><br>同上。</p>
+<p class="customize-img"><img src="/assets/blogImg/java/arraylist-compare-linkedlist/arraylist-compare-linkedlist-6.png" alt="ArrayList注释-6"></p>
+<p>同上。</p>
 <h3 id="测试结果分析"><a href="#测试结果分析" class="headerlink" title="测试结果分析"></a><div><span>测试结果分析</span></div></h3><p>以上的测试方式较为简单，没有考虑其他太多的因素，所以不要纠结于具体的时间，而是要了解它们的性能趋势。从测试结果来看，可以得到更为具体的结论：</p>
 <ul>
-<li><p>在首部添加/删除元素/节点过程中，随着数据量的不断增大，LinkedList明显要比ArrayList优秀很多，而对于尾部添加/删除，两者则差别不大。</p>
+<li><p><code>在首部添加/删除元素/节点过程中</code>，随着数据量的不断增大，<code>LinkedList明显要比ArrayList优秀很多</code>，<code>而对于尾部添加/删除</code>，<code>两者则差别不大</code>。</p>
 </li>
 <li><p>在随机插入/删除/获取/替换元素/节点过程中，随着数据量的不断增大，ArrayList明显要比LinkedList优秀很多！</p>
 </li>
 </ul>
 <h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a><div><span>结论</span></div></h3><ul>
-<li><p>ArrayList比LinkedList更能适应大多数情况。</p>
+<li><p><code>ArrayList比LinkedList更能适应大多数情况</code>。</p>
 </li>
 <li><p>频繁在首部添加/删除元素/节点，不需要过多的访问，可能更适合LinkedList。</p>
 </li>
@@ -587,19 +589,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -607,7 +605,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
             
             <div class="clearfix"></div>
