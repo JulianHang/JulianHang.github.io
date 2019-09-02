@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="奇思妙想">
 <meta property="og:description" content="java String v = map.putIfAbsent(“a”, “1”)：若map中不存在指定的key值(a)，则使用指定的key(a)和指定的value(1)进行填充，但此时返回的数据是旧值，所以是null，即v=null，当你真正调用map.get(“a”)时才返回指定的value值，即1.  String v = map.computeIfAbsent(“a”, “1”)：若map">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-08T05:40:33.375Z">
+<meta property="og:updated_time" content="2019-08-29T00:26:29.038Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="每日知识点20190415">
 <meta name="twitter:description" content="java String v = map.putIfAbsent(“a”, “1”)：若map中不存在指定的key值(a)，则使用指定的key(a)和指定的value(1)进行填充，但此时返回的数据是旧值，所以是null，即v=null，当你真正调用map.get(“a”)时才返回指定的value值，即1.  String v = map.computeIfAbsent(“a”, “1”)：若map">
@@ -238,7 +238,7 @@
 </li>
 <li><p>系统类加载器用于加载应用类，查找类路径中的目录或者jar/zip文件里查找这些类.</p>
 </li>
-<li><p>对泛型上下限的理解：<br>  先说个前提，在类型参数确定的情况是可以add具体的对象及子类，个人理解而已.<br>  假设： 苹果 extends 水果、香蕉 extends 水果、其他<br>  <code>? extends 水果</code>：可以指定类型参数为<code>水果或水果的子类</code>，所以<code>类型参数可能是水果也可能是苹果也可能是香蕉</code>，不能确定具体的类型参数，更别说要添加什么类型的对象了，所以是不允许add操作，但是不管类型参数是什么，总之它就是水果，水果是它的最大类型参数，得出结论<code>该语句不能add，但是可以确定返回值</code>.<br>  <code>? super 水果</code>：可以指定类型参数为<code>水果或水果的父类或Object</code>，因为编译器不知道你传入的类型参数是什么，所以不能add水果的父类，否则很容易造成类型参数与值不匹配，但至少有一点是确定的，不管你传入的类型参数是什么，它的子类都有水果，所以不管你传入的类型参数是什么，它都可以添加水果及水果的子类，毕竟水果是确定的一个最小类型参数，但是对于返回值就要看最大类型参数，那就是Object，得出结论<code>该语句能add指定类型参数及子类，但是返回值是Object</code>.<br>  无意中想到的一个快速理解的语句：<code>能不能add看最小类型参数确定没，就能add，没确定就不能，返回值是什么看最大类型参数是什么那返回值就是什么</code>.</p>
+<li><p>对泛型上下限的理解：<br>  先说个前提，在类型参数确定的情况是可以add具体的对象及子类，个人理解而已.<br>  假设： 苹果 extends 水果、香蕉 extends 水果、其他<br>  <code>? extends 水果</code>：可以指定类型参数为<code>水果或水果的子类</code>，所以<code>类型参数可能是水果也可能是苹果也可能是香蕉</code>，不能确定具体的类型参数，更别说要添加什么类型的对象了，所以是不允许add操作，但是不管类型参数是什么，总之它就是水果，水果是它的最大类型参数，得出结论<code>该语句不能add，但是可以确定返回值是水果</code>.<br>  <code>? super 水果</code>：可以指定类型参数为<code>水果或水果的父类或Object</code>，因为编译器不知道你传入的类型参数是什么，所以不能add水果的父类，否则很容易造成类型参数与值不匹配，但至少有一点是确定的，不管你传入的类型参数是什么，它的子类都有水果，所以不管你传入的类型参数是什么，它都可以添加水果及水果的子类，毕竟水果是确定的一个最小类型参数，但是对于返回值就要看最大类型参数，那就是Object，得出结论<code>该语句能add指定类型参数及子类，但是返回值是Object</code>.<br>  无意中想到的一个快速理解的语句：<code>能不能add看最小类型参数确定没，就能add，没确定就不能，返回值是什么看最大类型参数是什么那返回值就是什么</code>.</p>
 </li>
 </ul>
 
@@ -567,6 +567,10 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
@@ -579,7 +583,7 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -587,15 +591,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">markdown</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
             
             <div class="clearfix"></div>
