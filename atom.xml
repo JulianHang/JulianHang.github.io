@@ -194,6 +194,43 @@
   </entry>
   
   <entry>
+    <title>每日知识点20181212</title>
+    <link href="http://zlia.tech/2019/06/25/thinking-in-java-knowledge-20190609/"/>
+    <id>http://zlia.tech/2019/06/25/thinking-in-java-knowledge-20190609/</id>
+    <published>2019-06-25T11:52:32.000Z</published>
+    <updated>2019-09-02T16:00:37.220Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul><li><p>javadoc只能为public和protected成员进行文档注释，private和默认权限的注释则会被忽略掉，不过可以用-private进行标记，以便把private成员的注释耶包括在内.</p></li><li><p>int x = Character.digit(‘c’, 16)：是把16进制的c转为10进制，结果是12，16进制中a、b、c、d、e、f分别代表10、11、12、13、14、15.</p></li><li><p>计算机中计算都是采用补码计算的。在计算机中的机器字长的最高位表示正负，0为正数，1为负数。正数的原码、反码和补码都一样，都等于原码。负数的反码就是在原码的基础上符号位不变其余位按位取反，负数的补码就是在反码的基础上+1.值得注意的是，计算机将数值10000000表示为最大负数-128.推荐大家看下为什么计算机中要采用补码来储存数据，这是我搜索当中觉得不错的一篇文章-<a href="https://blog.csdn.net/weixin_44734925/article/details/88432355" target="_blank" rel="noopener">为什么计算机采用补码形式进行数据的表示</a>.</p></li><li><p>对于byte或short值进行移位运算，得到的可能不是正确的结果。它们会被转换成int类型，在进行移位操作，然后被<code>截断</code>，赋值给原来的类型.如short i = -1; i &gt;&gt;&gt;= 10; 因为i是short类型，所以会被截断，最终的结果是-1.</p></li><li><p>Math.round：四舍五入.</p></li><li><p>如果在返回void的方法中没有return语句，那么在该方法的结尾处会有一个隐式的return.</p></li><li><p>对于一类中的成员最好使用private访问权限修饰符。若你直接让外部类去访问该属性，有一天如果想要改变获取该属性的方式，那外部类岂不是也要跟着修改，所以最好的方式是用private修改该属性，同时提供具有public修饰符的方法，该方法主要用来获取该属性，至于怎么获取就是你说了算，外部类只要调用该方法即可，即使哪一天获取属性的方式变化了，也只需要修改方法的内部代码即可，外部类的调用方法还是不变.</p></li></ul><a id="more"></a><ul><li><p>当实现某个接口时，并不需要实现嵌套在其内部的任何接口.</p></li><li><p>当某个外围类的对象创建了一个内部类对象时，此内部类对象必定会秘密地捕获一个指向那个外围类对象的引用.</p></li><li><p>看到这个程序的时候一开始我是不能理解的，后面仔细想想好像很有道理！先不用管为什么要这么写，看就完事了！</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> a;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> <span class="keyword">extends</span> <span class="title">B</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> B b;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">A</span><span class="params">(B b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.b = b;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">a</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(name);<span class="comment">//compile ok</span></span><br><span class="line">        System.out.println(b.name);<span class="comment">//compile error</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> b;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">B</span> </span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> String name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul><p>一开始我想着没问题啊，怎么会报错呢？后面一想想，这是两个事情啊！不能混为一谈.<code>name</code>是在访问A类中的变量，按照<code>protected</code>权限来说是可以访问的，但是对于另外一个对象<code>b</code>自身来说，若是在该类里面去访问name是没问题的，但是借助其他类来访问b对象，让b对象去访问name是不可取的，因为A类与b对象没有任何的关系，<code>b.name</code>就是去访问b类中的name变量，不好意思，它只对子类或同包访问，而A类都不是，可以考虑下若b = new C()，而C类正好继承B，这种多态场景下是不是更好理解一些.</p><ul><li><code>高级for循环</code>，只要是<code>实现了Iterable</code>类都可以使用高级for循环，实际上它底层是调用的迭代器的<code>hasNext</code>与<code>next</code>方法，当然这些是编译器帮你做的，不用我们操心了，于是我又很好奇的尝试了数组，不知道它底层有没有实现Iterable，因为它也是可以使用高级for循环，结果不太一样，也是编译器帮你做的，只不过是假的高级for循环，最终被编译成了普通的for循环了.</li></ul><p class="customize-img"><img src="/assets/blogImg/daliy-konwledge-point/20190812/for-1.png" alt="高级for-1"><br>很简单，以上是源码.</p><p class="customize-img"><img src="/assets/blogImg/daliy-konwledge-point/20190812/for-1.png" alt="高级for-1"><br>以上是编译后的字节码文件，不信你编一个试试.</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;java&quot;&gt;&lt;a href=&quot;#java&quot; class=&quot;headerlink&quot; title=&quot;java&quot;&gt;&lt;/a&gt;&lt;div&gt;&lt;span&gt;java&lt;/span&gt;&lt;/div&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;javadoc只能为public和protected成员进行文档注释，private和默认权限的注释则会被忽略掉，不过可以用-private进行标记，以便把private成员的注释耶包括在内.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;int x = Character.digit(‘c’, 16)：是把16进制的c转为10进制，结果是12，16进制中a、b、c、d、e、f分别代表10、11、12、13、14、15.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;计算机中计算都是采用补码计算的。在计算机中的机器字长的最高位表示正负，0为正数，1为负数。正数的原码、反码和补码都一样，都等于原码。负数的反码就是在原码的基础上符号位不变其余位按位取反，负数的补码就是在反码的基础上+1.值得注意的是，计算机将数值10000000表示为最大负数-128.推荐大家看下为什么计算机中要采用补码来储存数据，这是我搜索当中觉得不错的一篇文章-&lt;a href=&quot;https://blog.csdn.net/weixin_44734925/article/details/88432355&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;为什么计算机采用补码形式进行数据的表示&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;对于byte或short值进行移位运算，得到的可能不是正确的结果。它们会被转换成int类型，在进行移位操作，然后被&lt;code&gt;截断&lt;/code&gt;，赋值给原来的类型.如short i = -1; i &amp;gt;&amp;gt;&amp;gt;= 10; 因为i是short类型，所以会被截断，最终的结果是-1.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Math.round：四舍五入.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;如果在返回void的方法中没有return语句，那么在该方法的结尾处会有一个隐式的return.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;对于一类中的成员最好使用private访问权限修饰符。若你直接让外部类去访问该属性，有一天如果想要改变获取该属性的方式，那外部类岂不是也要跟着修改，所以最好的方式是用private修改该属性，同时提供具有public修饰符的方法，该方法主要用来获取该属性，至于怎么获取就是你说了算，外部类只要调用该方法即可，即使哪一天获取属性的方式变化了，也只需要修改方法的内部代码即可，外部类的调用方法还是不变.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="rearend" scheme="http://zlia.tech/categories/rearend/"/>
+    
+    
+      <category term="daily-konwledge-point-java" scheme="http://zlia.tech/tags/daily-konwledge-point-java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>推荐初级程序员书单</title>
     <link href="http://zlia.tech/2019/06/08/primary-programmer-book-list/"/>
     <id>http://zlia.tech/2019/06/08/primary-programmer-book-list/</id>
@@ -544,28 +581,6 @@
     <summary type="html">
     
       &lt;h3 id=&quot;前提&quot;&gt;&lt;a href=&quot;#前提&quot; class=&quot;headerlink&quot; title=&quot;前提&quot;&gt;&lt;/a&gt;&lt;div&gt;&lt;span&gt;前提&lt;/span&gt;&lt;/div&gt;&lt;/h3&gt;&lt;p&gt;前提前提大前提！准备一份源码呗，activemq生产者的源码。何为生产者？就是发消息的源头，谁来发送消息谁就是生产者。有了生产者自然就会有消费者，今天着重看看生产者的故事，后面的几篇文章咱们都会一一进行讲解，包括服务端、消费者以及&lt;code&gt;ACK&lt;/code&gt;模式，&lt;code&gt;消息的传送机制&lt;/code&gt;，至于其他的内容还有待发掘，因为目前我也只是了解了部分！生产者的源码大伙可以从网上百度下，只要能跑起来就可以了，如果可以的话最好知道对方写了什么，对代码有个简单的理解，否则下面讲解的内容可能跟你的需求会有很大的出入，也帮助不了你哈，另一方面也是浪费了作者的苦心啦！自我迷恋中，切勿当真，哈哈。最好最好或者你有兴趣的话，可以clone下我的代码，里面都添加了对应的注释，&lt;a href=&quot;https://github.com/JulianHang/activemq-client.git&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;源码下载&lt;/a&gt;。最后一个前提，作者使用的代码工具是&lt;code&gt;IDEA&lt;/code&gt;，采用DEBUG模式来查看源码，所以读者对工具的操作最好有个简单的了解。好了，不啰嗦了！
-    
-    </summary>
-    
-      <category term="mq" scheme="http://zlia.tech/categories/mq/"/>
-    
-    
-      <category term="activemq" scheme="http://zlia.tech/tags/activemq/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ActiveMQ的简单使用</title>
-    <link href="http://zlia.tech/2018/08/18/activemq-understand/"/>
-    <id>http://zlia.tech/2018/08/18/activemq-understand/</id>
-    <published>2018-08-18T10:51:45.000Z</published>
-    <updated>2018-09-02T01:07:12.801Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="接触消息队列"><a href="#接触消息队列" class="headerlink" title="接触消息队列"></a><div><span>接触消息队列</span></div></h3><p>原本一开始是打算直接从activemq的客户端讲起的，但是忽然发现，既然对activemq有了些许了解之后，至少应该知道消息队列是什么？或者是它的由来和一些应用场景，可是我并不知道。我觉得更多的人更倾向于该技术怎么使用，而并不关心它为什么会出现，也很难静得下心来看它的理念以及应用场景，包括我。因为我觉得那些概念看着看着就可能让我失去了兴趣，也就果断地放弃学些了，哈哈。当然了，现在还是个小小的程序员，等升了职位后就该去考虑了，偷懒了偷懒了！不过这里我也简单地看了一下几篇<code>消息队列</code>的文章，着实不错，有各种高级的架构啊，所以分享给各位<a href="https://blog.csdn.net/dj2008/article/details/78872889" target="_blank" rel="noopener">消息队列的使用场景</a>。有打破砂锅问到底心态的朋友可以去观望观望，定不会让你失望。<a id="more"></a></p><h3 id="ActiveMQ服务端跑起来吧"><a href="#ActiveMQ服务端跑起来吧" class="headerlink" title="ActiveMQ服务端跑起来吧"></a><div><span>ActiveMQ服务端跑起来吧</span></div></h3><p>既然有客户端，那就一定要先有服务端，那我们就先让服务端跑起来吧！acitvemq官网下载地址：<a href="http://activemq.apache.org/activemq-5155-release.html" target="_blank" rel="noopener">http://activemq.apache.org/activemq-5155-release.html</a> 。官网提供了Linux和window的版本，由于没有Linux环境故下载了window版本。</p><p class="customize-img"><img src="/assets/blogImg/activemq/download-activemq.png" alt="下载AcitveMQ服务器window版本"></p><p>下载好了就直接解压即可。在跑起来之前先来认识下每个目录的用处以便后续的开发：</p><p class="customize-img"><img src="/assets/blogImg/activemq/activemq-catalog.png" alt="下载AcitveMQ服务器window版本"></p><ul><li>bin：存放用来启动<code>服务器的脚本文件</code>，可以用普通用户或管理员的权限来启动。</li><li>conf：存放<code>服务器的相关配置文件</code>、管理端的配置文件以及安全权限控制。多说几句，<code>activmemq.xml</code>是用来配置服务器相关协议的端口、地址和相关属性，还有消息存储方式以及集群方式等等。</li><li>data：存放<code>消息存储的文件</code>以及日志文件。</li><li>docs：ActiveMQ的相关文档。</li><li>examples：服务器相关协议的客户端例子。</li><li>lib：存放ActiveMQ相关jar包。</li><li>webapps/webapps-demo：存放ActiveMQ管理端的相关文件。</li></ul><p>来吧！开始跑起来~进入到bin目录中并双击activemq.bat文件，若出现如下图所示则说明启动成功了！</p><p class="customize-img"><img src="/assets/blogImg/activemq/start-activemq.png" alt="启动AcitveMQ服务器"></p><p>这里就不带大家去看管理端长啥样了，要是有兴趣的话可以私底下去观摩观摩，管理端的默认账号密码都是<code>admin</code>。</p><h3 id="开始造人了，生产者与消费者"><a href="#开始造人了，生产者与消费者" class="headerlink" title="开始造人了，生产者与消费者"></a><div><span>开始造人了，生产者与消费者</span></div></h3><p>既然服务器都搭建完成了，那么就开始着手造生产者与消费者了。先创建一个简单的Java项目，这里之所以创建的是Java项目，是因为笔者是直接通过引入ActiveMQ Jar包的方式来进行开发的。当然了，也可以用Maven来进行操作，不过鉴于有些用户不会用maven，所以干脆来个最简单的使用方式。</p><p class="customize-img"><img src="/assets/blogImg/activemq/create-activemq.png" alt="创建ActiveMQ项目"></p><p>啥都没有，空空如也。有用户可能会觉得还要去下载个Jar来引入，好麻烦啊，我才不想去下载，但是如果够细心的话，其实刚才在讲解ActiveMQ目录结构的时候最底下就有一个<code>activemq-all-5.9.0.jar</code>文件，一看名字就知道是ActiveMQ的所有Jar包，哈哈！将其该Jar包引入到项目中去。</p><p class="customize-img"><img src="/assets/blogImg/activemq/import-activemq.png" alt="引入ActiveMQ包"></p><p>Jar包引入了，那就速速开始开发吧！具体的代码内容就不做展示了，若有需要请在最下面点击<code>源码下载</code>即可到Github上获取所需。开发的差不多了，就来看看效果吧，首先启动消费者，在启动生产者，结果如图所示。</p><p class="customize-img"><img src="/assets/blogImg/activemq/producer-result.png" alt="生产者结果"><br><img src="/assets/blogImg/activemq/consumer-result.png" alt="消费者结果"></p><p>是否感觉很简单很容易，但是越往后你就会发现越来越多坑，哈哈，就很敲代码一样！不过，这都是必经之路，否则难成大神。好了，今天的分享就到这里了~</p><h3 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a><div><span>重点关注</span></div></h3><p><code>activemq.xml 生产者与消费者 ActiveMQ管理端</code></p><p><a href="https://github.com/JulianHang/activemq-client.git" target="_blank" rel="noopener">源码下载</a> </p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;接触消息队列&quot;&gt;&lt;a href=&quot;#接触消息队列&quot; class=&quot;headerlink&quot; title=&quot;接触消息队列&quot;&gt;&lt;/a&gt;&lt;div&gt;&lt;span&gt;接触消息队列&lt;/span&gt;&lt;/div&gt;&lt;/h3&gt;&lt;p&gt;原本一开始是打算直接从activemq的客户端讲起的，但是忽然发现，既然对activemq有了些许了解之后，至少应该知道消息队列是什么？或者是它的由来和一些应用场景，可是我并不知道。我觉得更多的人更倾向于该技术怎么使用，而并不关心它为什么会出现，也很难静得下心来看它的理念以及应用场景，包括我。因为我觉得那些概念看着看着就可能让我失去了兴趣，也就果断地放弃学些了，哈哈。当然了，现在还是个小小的程序员，等升了职位后就该去考虑了，偷懒了偷懒了！不过这里我也简单地看了一下几篇&lt;code&gt;消息队列&lt;/code&gt;的文章，着实不错，有各种高级的架构啊，所以分享给各位&lt;a href=&quot;https://blog.csdn.net/dj2008/article/details/78872889&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;消息队列的使用场景&lt;/a&gt;。有打破砂锅问到底心态的朋友可以去观望观望，定不会让你失望。
     
     </summary>
     
