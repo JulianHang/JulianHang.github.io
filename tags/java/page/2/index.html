@@ -6,20 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>每日知识点20181213 | 奇思妙想</title>
+  <title>Tag: java | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="java s.substring(a,b)的长度：b-a.  String.join(“/“,”a”,”b”,”c”)：a/b/c.  字符串常量是共享的，而+或substring等操作产生的结果并不是共享的，所以会导致拼接后的结果随便相同，但引用的地址却不是同一个.  Scanner in = new Scanner(System.in),String name = in.next(); //该">
-<meta name="keywords" content="daily-konwledge-point-java">
-<meta property="og:type" content="article">
-<meta property="og:title" content="每日知识点20181213">
-<meta property="og:url" content="http://zlia.tech/2018/12/14/core-java-knowledge-20181213/index.html">
+  <meta name="description" content="record my life">
+<meta property="og:type" content="website">
+<meta property="og:title" content="奇思妙想">
+<meta property="og:url" content="http://zlia.tech/tags/java/page/2/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="java s.substring(a,b)的长度：b-a.  String.join(“/“,”a”,”b”,”c”)：a/b/c.  字符串常量是共享的，而+或substring等操作产生的结果并不是共享的，所以会导致拼接后的结果随便相同，但引用的地址却不是同一个.  Scanner in = new Scanner(System.in),String name = in.next(); //该">
+<meta property="og:description" content="record my life">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-26T10:38:17.699Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="每日知识点20181213">
-<meta name="twitter:description" content="java s.substring(a,b)的长度：b-a.  String.join(“/“,”a”,”b”,”c”)：a/b/c.  字符串常量是共享的，而+或substring等操作产生的结果并不是共享的，所以会导致拼接后的结果随便相同，但引用的地址却不是同一个.  Scanner in = new Scanner(System.in),String name = in.next(); //该">
+<meta name="twitter:title" content="奇思妙想">
+<meta name="twitter:description" content="record my life">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -167,14 +165,31 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-core-java-knowledge-20181213" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      每日知识点20181213
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2018/05/06/exception-knowledge/" class="archive-article-date">
+  	<time datetime="2018-05-06T08:28:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-06</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2018/05/06/exception-knowledge/">初识异常</a>
     </h1>
   
 
@@ -183,71 +198,23 @@
 <!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/12/14/core-java-knowledge-20181213/" class="pageViews">0</span>
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/05/06/exception-knowledge/" class="pageViews">0</span>
   </a>
 
-        
-        <a href="/2018/12/14/core-java-knowledge-20181213/" class="archive-article-date">
-  	<time datetime="2018-12-13T16:18:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul>
-<li><p>s.substring(a,b)的长度：b-a.</p>
-</li>
-<li><p>String.join(“/“,”a”,”b”,”c”)：a/b/c.</p>
-</li>
-<li><p><code>字符串常量</code>是共享的，而+或substring等操作产生的结果并不是共享的，所以会导致拼接后的结果随便相同，但引用的地址却不是同一个.</p>
-</li>
-<li><p>Scanner in = new Scanner(System.in),String name = in.next(); //该方法以空格为分隔符，即空格符的之间的内容需要多次获取.</p>
-</li>
-<li><p>上面的读取控制台输入不适合密码，毕竟是明文，所以可采用Console类.但是Console不能在Eclipse或ide中的控制台使用，会报错.必须使用原始控制台，如在终端中编译运行Java代码即可使用.</p>
-</li>
-<li><p>float用<code>24</code>位来表示精确度，int用<code>32</code>位来表示精确度，故当将int转换成float时可能会丢失精度.</p>
-</li>
-<li><p>如果将一个类声明为final，只有其中的方法自动地成为final，而不包括域.</p>
-</li>
-<li><p>编译器对带有文件分割符和扩展名.java的文件进行操作，而java解释器加载类（带有分隔符）.</p>
-</li>
-</ul>
-<a id="more"></a>
-<ul>
-<li><p>最好不要读取在初始化块后面的域</p>
-</li>
-<li><p>自动装箱：<code>Integer.valueOf(int i)</code>.自动装箱规范要求boolean、byte、char&lt;=127，介于-128~127之间的short和int被包装到固定的对象中.在Integer.valueOf(int i)中[-128,127]区间的Integer对象已经被初始化好了，每次调用只会从缓存中取，如果越过了这个区间则会创建新的对象，所以会导致超过了这个区间的Integer对象不相等.</p>
-</li>
-<li><p>装箱和拆箱是<code>编译器</code>认可的，而不是虚拟机.编译器在生成类的字节码时，插入必要的方法调用.虚拟机只是执行这些字节码.</p>
-</li>
-<li><p>整型数组类型int[]可以被转换成Object，但不能转换成对象数组Object[].</p>
-</li>
-<li><p><code>invoke</code>方法访问对象中的静态方法时，第一个参数可以被忽略，即可以将它设置为null.</p>
-</li>
-<li><p>在Java8中接口可以有默认方法和静态方法.</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">daily-konwledge-point-java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -260,151 +227,20 @@
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2018/12/14/core-java-knowledge-20181213/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2019/02/24/core-java-knowledge-20181216/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          每日知识点20181216
-        
-      </div>
-    </a>
   
   
-    <a href="/2018/12/12/core-java-knowledge-20181212/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">每日知识点20181212</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
-  
     
-    <section id="comments" class="comments">
-	  <style>
-        .comments{margin:30px;padding:10px;background:#fff}
-        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-      </style>
-      <div id="vcomment" class="comment"></div>
-<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
-<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-   new Valine({
-            av: AV,
-            el: '#vcomment',
-            notify: notify,
-            verify: verify,
-            app_id: "JoYcsWmKGGeDS1gi583VdmYm-gzGzoHsz",
-            app_key: "F9y6cyWlw9WVSFOEw3rnxfXY",
-            placeholder: "扯淡吧",
-            avatar: "",
-            avatar_cdn: "",
-            pageSize: 15
-    });
-    if(window.location.hash){
-        var checkExist = setInterval(function() {
-           if ($(window.location.hash).length) {
-              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
-              clearInterval(checkExist);
-           }
-        }, 100);
-    }
-	
-</script>
-    </section>
-	
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/tags/java/">&laquo; Prev</a><a class="page-number" href="/tags/java/">1</a><span class="page-number current">2</span>
+    </nav>
   
 
 
@@ -429,9 +265,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
