@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://zlia.tech">
   <title>探索CopyOnWriteArrayList底层实现 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="简单介绍由于CopyOnWriteArrayList的注释并不是很多，所以在这里简单的说明下，它属于线程安全，底层是通过生成数组的新副本来实现的，也就是在修改列表元素/结构的情况会生成新副本。简单地说，它是ArrayList的一个变体！ 开干开始进入到看源码的时间吧！ 数据结构1234567891011121314151617181920212223242526272829303132333435">
+  <meta name="description" content="简单介绍由于CopyOnWriteArrayList的注释并不是很多，所以在这里简单的说明下，它属于线程安全，底层是通过生成数组的新副本来实现的，也就是在修改列表元素/结构的情况会生成新副本。简单地说，它是ArrayList的一个变体！探索CopyOnWriteArrayList源代码是基于JDK1.8版本的。 开干开始进入到看源码的时间吧！ 数据结构12345678910111213141516">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="探索CopyOnWriteArrayList底层实现">
 <meta property="og:url" content="http://zlia.tech/2019/09/05/explain-copyonwritearraylist-sourcecode/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="简单介绍由于CopyOnWriteArrayList的注释并不是很多，所以在这里简单的说明下，它属于线程安全，底层是通过生成数组的新副本来实现的，也就是在修改列表元素/结构的情况会生成新副本。简单地说，它是ArrayList的一个变体！ 开干开始进入到看源码的时间吧！ 数据结构1234567891011121314151617181920212223242526272829303132333435">
+<meta property="og:description" content="简单介绍由于CopyOnWriteArrayList的注释并不是很多，所以在这里简单的说明下，它属于线程安全，底层是通过生成数组的新副本来实现的，也就是在修改列表元素/结构的情况会生成新副本。简单地说，它是ArrayList的一个变体！探索CopyOnWriteArrayList源代码是基于JDK1.8版本的。 开干开始进入到看源码的时间吧！ 数据结构12345678910111213141516">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-05T10:22:02.675Z">
+<meta property="og:updated_time" content="2019-09-06T06:08:32.916Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="探索CopyOnWriteArrayList底层实现">
-<meta name="twitter:description" content="简单介绍由于CopyOnWriteArrayList的注释并不是很多，所以在这里简单的说明下，它属于线程安全，底层是通过生成数组的新副本来实现的，也就是在修改列表元素/结构的情况会生成新副本。简单地说，它是ArrayList的一个变体！ 开干开始进入到看源码的时间吧！ 数据结构1234567891011121314151617181920212223242526272829303132333435">
+<meta name="twitter:description" content="简单介绍由于CopyOnWriteArrayList的注释并不是很多，所以在这里简单的说明下，它属于线程安全，底层是通过生成数组的新副本来实现的，也就是在修改列表元素/结构的情况会生成新副本。简单地说，它是ArrayList的一个变体！探索CopyOnWriteArrayList源代码是基于JDK1.8版本的。 开干开始进入到看源码的时间吧！ 数据结构12345678910111213141516">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -195,7 +195,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a><div><span>简单介绍</span></div></h3><p>由于<code>CopyOnWriteArrayList</code>的<code>注释</code>并不是很多，所以在这里简单的说明下，它属于线程安全，底层是通过<code>生成数组的新副本</code>来实现的，也就是在修改列表元素/结构的情况会生成新副本。简单地说，它是ArrayList的一个变体！</p>
+        <h3 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a><div><span>简单介绍</span></div></h3><p>由于<code>CopyOnWriteArrayList</code>的<code>注释</code>并不是很多，所以在这里简单的说明下，它属于线程安全，底层是通过<code>生成数组的新副本</code>来实现的，也就是在修改列表元素/结构的情况会生成新副本。简单地说，它是ArrayList的一个变体！探索<code>CopyOnWriteArrayList</code>源代码是基于<code>JDK1.8</code>版本的。</p>
 <h3 id="开干"><a href="#开干" class="headerlink" title="开干"></a><div><span>开干</span></div></h3><p>开始进入到看源码的时间吧！</p>
 <h4 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//支持随机访问，可克隆，可序列化</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CopyOnWriteArrayList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">RandomAccess</span>, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//序列号</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">8673264195747942595L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//目前先知道是锁就行了，后续会有新文章来进行详细说明</span></span><br><span class="line">    <span class="comment">//保证同一个时间内只有一个线程能访问，</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">transient</span> ReentrantLock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//保证变量的可见性，但无法保证原子性</span></span><br><span class="line">    <span class="comment">//至于什么是可见性、原子性，较为难理解，况且也不是本章的重点，加上作者对其的理解还不够，所以后续才会出文章去做详细说明</span></span><br><span class="line">    <span class="comment">//该数组用于存放元素</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">volatile</span> Object[] array;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//相比于ArrayList，为什么没有了size、modCount成员属性呢？</span></span><br><span class="line">    <span class="comment">//因为每次添加/删除元素时，都会生成数组的新副本，也就是说新副本代替了size的作用</span></span><br><span class="line">    <span class="comment">//modCount在ArrayList中主要用于在迭代器的结构修改判断中，而CopyOnWriteArrayList的迭代器中不支持结构修改，为什么不支持呢？</span></span><br><span class="line">    <span class="comment">//源码中并未提到为什么不支持，以下主要是自我的理解</span></span><br><span class="line">    <span class="comment">//结构修改中必然涉及到加锁，若对迭代器加锁了，要是对它进行遍历上千条数据，那其他线程就不用执行了，所以迭代器万不可加锁！</span></span><br><span class="line">    <span class="comment">//不能加锁，那对于结构的修改势必会造成并发访问的问题，所以目前是没有提供支持，纯属个人理解！</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//JDK1.8并未有该类的相关注释，偏向底层，目前作者只知道它是跟锁有关联的，若想知道可自行百度</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> sun.misc.Unsafe UNSAFE;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> lockOffset;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            UNSAFE = sun.misc.Unsafe.getUnsafe();</span><br><span class="line">            Class&lt;?&gt; k = CopyOnWriteArrayList.class;</span><br><span class="line">            lockOffset = UNSAFE.objectFieldOffset</span><br><span class="line">                (k.getDeclaredField(<span class="string">"lock"</span>));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Error(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
@@ -313,6 +313,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2019/09/06/explain-stack-sourcecode/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          探索Stack底层实现-JDK1.8
+        
+      </div>
+    </a>
   
   
     <a href="/2019/09/02/arraylist-linkedlist-perfermance-compare/" id="article-nav-older" class="article-nav-link-wrap">
@@ -557,11 +566,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
+                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
               </li>
              
               <li class="article-tag-list-item">

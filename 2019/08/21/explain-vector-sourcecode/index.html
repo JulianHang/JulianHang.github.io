@@ -8,23 +8,23 @@
   <link rel="dns-prefetch" href="http://zlia.tech">
   <title>探索Vector的底层实现 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="背景上周发布了探索ArrayList的底层实现，趁热打铁！实际上ArrayList与Vector的实现上非常相似，代码基本上都是一样的，还是老样子，先看注释，我能说注释都差不多一样吗。 阅读注释 Vector内部是通过动态数组实现的。">
+  <meta name="description" content="背景上周发布了探索ArrayList的底层实现，趁热打铁！实际上ArrayList与Vector的实现上非常相似，代码基本上都是一样的，还是老样子，先看注释，我能说注释都差不多一样吗。探索Vector源代码是基于JDK1.8的。 阅读注释 Vector内部是通过动态数组实现的。">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="探索Vector的底层实现">
 <meta property="og:url" content="http://zlia.tech/2019/08/21/explain-vector-sourcecode/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="背景上周发布了探索ArrayList的底层实现，趁热打铁！实际上ArrayList与Vector的实现上非常相似，代码基本上都是一样的，还是老样子，先看注释，我能说注释都差不多一样吗。 阅读注释 Vector内部是通过动态数组实现的。">
+<meta property="og:description" content="背景上周发布了探索ArrayList的底层实现，趁热打铁！实际上ArrayList与Vector的实现上非常相似，代码基本上都是一样的，还是老样子，先看注释，我能说注释都差不多一样吗。探索Vector源代码是基于JDK1.8的。 阅读注释 Vector内部是通过动态数组实现的。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/vector/vector-comment-1.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/vector/vector-comment-2.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/vector/vector-comment-3.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/vector/vector-comment-4.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/vector/vector-comment-5.png">
-<meta property="og:updated_time" content="2019-08-28T15:17:03.374Z">
+<meta property="og:updated_time" content="2019-09-06T06:09:18.565Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="探索Vector的底层实现">
-<meta name="twitter:description" content="背景上周发布了探索ArrayList的底层实现，趁热打铁！实际上ArrayList与Vector的实现上非常相似，代码基本上都是一样的，还是老样子，先看注释，我能说注释都差不多一样吗。 阅读注释 Vector内部是通过动态数组实现的。">
+<meta name="twitter:description" content="背景上周发布了探索ArrayList的底层实现，趁热打铁！实际上ArrayList与Vector的实现上非常相似，代码基本上都是一样的，还是老样子，先看注释，我能说注释都差不多一样吗。探索Vector源代码是基于JDK1.8的。 阅读注释 Vector内部是通过动态数组实现的。">
 <meta name="twitter:image" content="http://zlia.tech/assets/blogImg/java/vector/vector-comment-1.png">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
@@ -201,7 +201,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a><div><span>背景</span></div></h3><p>上周发布了<a href="http://zlia.tech/2019/08/16/explain-arraylist-sourcecode/">探索ArrayList的底层实现</a>，趁热打铁！实际上<code>ArrayList</code>与<code>Vector</code>的实现上非常相似，代码基本上都是一样的，还是老样子，先看注释，我能说注释都差不多一样吗。</p>
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a><div><span>背景</span></div></h3><p>上周发布了<a href="http://zlia.tech/2019/08/16/explain-arraylist-sourcecode/">探索ArrayList的底层实现</a>，趁热打铁！实际上<code>ArrayList</code>与<code>Vector</code>的实现上非常相似，代码基本上都是一样的，还是老样子，先看注释，我能说注释都差不多一样吗。探索<code>Vector</code>源代码是基于<code>JDK1.8</code>的。</p>
 <h4 id="阅读注释"><a href="#阅读注释" class="headerlink" title="阅读注释"></a>阅读注释</h4><p class="customize-img"><img src="/assets/blogImg/java/vector/vector-comment-1.png" alt="Vector注释-1"></p>
 <p>Vector内部是通过动态数组实现的。</p>
 <a id="more"></a>
@@ -613,11 +613,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
+                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
               </li>
              
               <li class="article-tag-list-item">

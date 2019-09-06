@@ -6,23 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>我叫Spi，新成员 | 奇思妙想</title>
+  <title>探索Stack底层实现-JDK1.8 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="自我介绍Spi，Service Provider Interface，是java提供的一套用来被第三方实现或扩展的API，它可以用来启用框架扩展或替换相应的组件。简单来说就是我提供标准，你按照我的标准提供实现就可以了，当然了，这个实现可以是可以有多个，你想选择哪个都可以，不过前提是你要知道所有的实现才能选择，这操作属于java中的策略模式，而所有的实现都被放在一个配置文件中，所以Spi基本上就是一">
+  <meta name="description" content="简单介绍Stack类就一百多行代码，简单说明下。它的特性是后进先出（LIFO），继承了Vector类，大部分的操作都是使用Vector中的方法。在注释中，作者提醒我们若要使用后进先出的栈操作，应该优先使用Deque，这么说来，该类已经被放弃了，早在JDK1.0的时候它就出现了，是有点老了！我们说过Vector属于相对线程安全，所以Stack也是相对线程安全！探索Stack源代码是基于JDK1.8的">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我叫Spi，新成员">
-<meta property="og:url" content="http://zlia.tech/2019/04/14/explain-spi-knowledge/index.html">
+<meta property="og:title" content="探索Stack底层实现-JDK1.8">
+<meta property="og:url" content="http://zlia.tech/2019/09/06/explain-stack-sourcecode/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="自我介绍Spi，Service Provider Interface，是java提供的一套用来被第三方实现或扩展的API，它可以用来启用框架扩展或替换相应的组件。简单来说就是我提供标准，你按照我的标准提供实现就可以了，当然了，这个实现可以是可以有多个，你想选择哪个都可以，不过前提是你要知道所有的实现才能选择，这操作属于java中的策略模式，而所有的实现都被放在一个配置文件中，所以Spi基本上就是一">
+<meta property="og:description" content="简单介绍Stack类就一百多行代码，简单说明下。它的特性是后进先出（LIFO），继承了Vector类，大部分的操作都是使用Vector中的方法。在注释中，作者提醒我们若要使用后进先出的栈操作，应该优先使用Deque，这么说来，该类已经被放弃了，早在JDK1.0的时候它就出现了，是有点老了！我们说过Vector属于相对线程安全，所以Stack也是相对线程安全！探索Stack源代码是基于JDK1.8的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://zlia.tech/assets/blogImg/essays/spi/example-spi-1.png">
-<meta property="og:image" content="http://zlia.tech/assets/blogImg/essays/spi/example-spi-2.png">
-<meta property="og:updated_time" content="2019-06-08T06:12:29.709Z">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/java/stack/stack-data-structure.png">
+<meta property="og:updated_time" content="2019-09-06T06:10:06.834Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我叫Spi，新成员">
-<meta name="twitter:description" content="自我介绍Spi，Service Provider Interface，是java提供的一套用来被第三方实现或扩展的API，它可以用来启用框架扩展或替换相应的组件。简单来说就是我提供标准，你按照我的标准提供实现就可以了，当然了，这个实现可以是可以有多个，你想选择哪个都可以，不过前提是你要知道所有的实现才能选择，这操作属于java中的策略模式，而所有的实现都被放在一个配置文件中，所以Spi基本上就是一">
-<meta name="twitter:image" content="http://zlia.tech/assets/blogImg/essays/spi/example-spi-1.png">
+<meta name="twitter:title" content="探索Stack底层实现-JDK1.8">
+<meta name="twitter:description" content="简单介绍Stack类就一百多行代码，简单说明下。它的特性是后进先出（LIFO），继承了Vector类，大部分的操作都是使用Vector中的方法。在注释中，作者提醒我们若要使用后进先出的栈操作，应该优先使用Deque，这么说来，该类已经被放弃了，早在JDK1.0的时候它就出现了，是有点老了！我们说过Vector属于相对线程安全，所以Stack也是相对线程安全！探索Stack源代码是基于JDK1.8的">
+<meta name="twitter:image" content="http://zlia.tech/assets/blogImg/java/stack/stack-data-structure.png">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -170,14 +169,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-explain-spi-knowledge" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-explain-stack-sourcecode" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      我叫Spi，新成员
+      探索Stack底层实现-JDK1.8
     </h1>
   
 
@@ -186,32 +185,25 @@
 <!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/04/14/explain-spi-knowledge/" class="pageViews">0</span>
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/09/06/explain-stack-sourcecode/" class="pageViews">0</span>
   </a>
 
         
-        <a href="/2019/04/14/explain-spi-knowledge/" class="archive-article-date">
-  	<time datetime="2019-04-14T05:01:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-14</time>
+        <a href="/2019/09/06/explain-stack-sourcecode/" class="archive-article-date">
+  	<time datetime="2019-09-06T06:10:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-06</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="自我介绍"><a href="#自我介绍" class="headerlink" title="自我介绍"></a><div><span>自我介绍</span></div></h3><p>Spi，Service Provider Interface，是java提供的一套用来被第三方实现或扩展的API，它可以用来启用框架扩展或替换相应的组件。简单来说就是我提供标准，你按照我的标准提供实现就可以了，当然了，这个实现可以是可以有多个，你想选择哪个都可以，不过前提是你要知道所有的实现才能选择，这操作属于java中的策略模式，而所有的实现都被放在一个配置文件中，所以Spi基本上就是一个<code>接口</code> + <code>策略模式</code> + <code>配置文件</code>组合而成的动态加载机制。在面向对象的设计里，模块之间基于接口编程，模块之间不对实现类硬编码，在不同的场景下需要动态的指明实现类，这就需要一个服务发现的机制，Spi提供这样子的一个机制，为某个接口寻找服务实现的机制，将硬编码移到程序之外，也就是配置文件中，Spi的核心思想就是<code>解耦</code>。<a id="more"></a></p>
-<h3 id="模拟Spi"><a href="#模拟Spi" class="headerlink" title="模拟Spi"></a><div><span>模拟Spi</span></div></h3><p>既然是标准，那么肯定有一些必须要遵守的规范：</p>
-<ol>
-<li>定义服务接口与服务接口的实现类，若是jar包则要在jar包的META-INF/services目录下创建一个以<code>接口全限定名</code>为文件名的文本文件，该文本文件的内容即<code>服务接口实现类的全限定名</code>。</li>
-<li>该jar包记得加入到classpath中。</li>
-<li>服务接口的实现类必须有一个不带参数的构造方法，即默认的构造方法。</li>
-</ol>
-<p>接下来看几个截图，具体的代码实现已经上传到github上了，有兴趣的读者可以看看，菜鸟级别的水平不要见怪！</p>
-<p class="customize-img"><img src="/assets/blogImg/essays/spi/example-spi-1.png" alt="Spi例子-1"></p>
-<p><code>请注意</code>，创建META-INF/service目录后最好看一下目录结构，<code>META-INF是一个目录，而service是它的子目录，这不是只有一层目录</code>，当时就被自己给坑了。</p>
-<p class="customize-img"><img src="/assets/blogImg/essays/spi/example-spi-2.png" alt="Spi例子-2"></p>
-<p>看了以上的内容咱们顺便在说下Spi的优缺点，不对，优点就是一开始说的解耦，将业务代码分离，简单说下缺点吧。看到上面的截图中采用的是ServiceLoader类来加载实现类，源码当中采用的是懒加载的方式，只有当我们去遍历配置文件中的实现类时才会一一实例化，缺点很明显，<code>只能通过遍历的方式去获取每个实现类，若你不想用某个实现类，它最终还是会被实例化，这势必造成了资源的浪费</code>，没有提供通过传入某个参数来获取到指定的实现类，不够灵活。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><div><span>总结</span></div></h3><p>网上有人说很多框架当中使用了Spi机制，比如JDBC加载不同的类型数据库的驱动、不同的日志实现类、Dubbo，虽然这些我都没有看过，但解耦是每个程序都需要的，这也奠定了Spi的重要性。Spi的缺点很明显，<code>可以在它的基础上在包装一层，这部分例子我从其他地方拷贝了过来，挺实用的，而正好是后期完善的，所以上面的截图中并没有显示这些内容，不过我已经放到了github上了</code>，有兴趣可以看看。最后加油自己，加油每一个人。</p>
-<p><a href="https://github.com/JulianHang/little-mvn-project.git" target="_blank" rel="noopener">源码下载</a> </p>
+        <h3 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a><div><span>简单介绍</span></div></h3><p><code>Stack</code>类就一百多行代码，简单说明下。它的特性是<code>后进先出（LIFO）</code>，继承了Vector类，大部分的操作都是使用Vector中的方法。在注释中，作者提醒我们若要使用后进先出的栈操作，应该优先使用<code>Deque</code>，这么说来，该类已经被放弃了，早在JDK1.0的时候它就出现了，是有点老了！我们说过Vector属于相对线程安全，所以Stack也是相对线程安全！探索<code>Stack</code>源代码是基于<code>JDK1.8</code>的。</p>
+<h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a><div><span>源码</span></div></h3><p>该类的代码不多，就不做分类了，不过为了方便理解，提供了它的数据结构图。</p>
+<p class="customize-img"><img src="/assets/blogImg/java/stack/stack-data-structure.png" alt="Stack数据结构图"></p>
+<p>说是后进先出，实际上它还是能通过调用Vector中的方法来破除该原则！该图只是告诉大家什么是<code>后进先出</code>。</p>
+<a id="more"></a>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Stack</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">Vector</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//初始化参数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Stack</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** </span></span><br><span class="line"><span class="comment">     * 添加指定元素到栈的顶层</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> item 指定元素</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 指定元素</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> E <span class="title">push</span><span class="params">(E item)</span> </span>&#123;</span><br><span class="line">        addElement(item);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> item;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 移除栈的顶层元素</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 被移除的顶层元素</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> E <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        E obj;</span><br><span class="line">        <span class="keyword">int</span> len = size();</span><br><span class="line"></span><br><span class="line">        obj = peek();</span><br><span class="line">        removeElementAt(len - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取栈的顶层元素</span></span><br><span class="line"><span class="comment">     * 若为空数组，则抛出异常</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> E <span class="title">peek</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = size();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (len == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> EmptyStackException();</span><br><span class="line">        <span class="keyword">return</span> elementAt(len - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 判断数组是否为空</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 数组是否为空</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">empty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> size() == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 反向遍历获取指定元素的索引，返回指定元素的索引与顶层元素的索引之间的差值</span></span><br><span class="line"><span class="comment">     * 若未找到指定元素则返回-1</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> o 指定元素</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 差值</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">int</span> <span class="title">search</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = lastIndexOf(o);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (i &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> size() - i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="重点"><a href="#重点" class="headerlink" title="重点"></a><div><span>重点</span></div></h3><p><code>使用Deque代替Stack</code> <code>严格上说并不满足后进先出原则</code></p>
 
       
 
@@ -237,7 +229,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/essays//" class="article-tag-list-link color2">essays</a>
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
         		</li>
       		
 		</ul>
@@ -292,7 +284,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/04/14/explain-spi-knowledge/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/09/06/explain-stack-sourcecode/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -306,18 +298,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/04/14/core-java-knowledge-20190226/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          每日知识点20190226
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/04/07/explain-qps-knowledge/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">我叫QPS，初次见面</div>
+    <a href="/2019/09/05/explain-copyonwritearraylist-sourcecode/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">探索CopyOnWriteArrayList底层实现</div>
       <i class="icon-circle-right"></i>
     </a>
   
