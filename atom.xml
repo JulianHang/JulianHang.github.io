@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zlia.tech/"/>
-  <updated>2019-09-06T06:10:06.834Z</updated>
+  <updated>2019-09-11T08:27:44.872Z</updated>
   <id>http://zlia.tech/</id>
   
   <author>
@@ -15,6 +15,51 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>初识二叉树</title>
+    <link href="http://zlia.tech/2019/09/11/explain-binarytree/"/>
+    <id>http://zlia.tech/2019/09/11/explain-binarytree/</id>
+    <published>2019-09-11T08:27:44.000Z</published>
+    <updated>2019-09-11T08:27:44.872Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="树的概念"><a href="#树的概念" class="headerlink" title="树的概念"></a><div><span>树的概念</span></div></h3><p>探索二叉树前，先来认识下什么是树？用官方一点的话来说，<code>树是数据元素之间具有层次关系的非线性结构，是由n（n&gt;=0）个节点组成的有限集合</code>，n=0时称为空树。在任意一颗非空树中，它具有了以下特性：</p><ul><li><p>每棵树至多只有一个根节点。</p></li><li><p>由根节点构造出多个孩子节点，每个孩子节点只有一个父节点，而孩子节点又构造出多个节点。</p></li></ul><p>先看张图，方便了解下树的一些专业术语。</p><p class="customize-img"><img src="/assets/blogImg/algorithm/binarytree/tree-structure-1.png" alt="树结构"></p><ul><li><p><code>根节点</code>：根节点是没有父节点，图中的A节点。</p></li><li><p><code>孩子节点/子节点</code>：某个节点的孩子称为孩子节点，孩子节点/子节点是相对的，图中A的孩子节点有B、C、D，而B的孩子节点有E、F。</p></li><li><p><code>叶子节点</code>：某个节点没有孩子，图中的E、F、G、D。</p></li><li><p><code>节点的度</code>：某个节点的孩子节点个数，图中A有BCD（3）个孩子节点，B有EF（2）个孩子节点。</p></li><li><p><code>树的层次</code>：某个节点处于树中的层次，图中的A处于第1层。</p></li><li><p><code>树的高/深度</code>：树的最大层次，图中的高/深度为3。</p></li></ul><p>接下来聊正题吧！</p><a id="more"></a><h3 id="二叉树的概念"><a href="#二叉树的概念" class="headerlink" title="二叉树的概念"></a><div><span>二叉树的概念</span></div></h3><p><code>二叉树是由n（n&gt;=0）个节点组成的有限集合</code>，n=0时称为空树。在任意一颗非空树中，由一个根节点和两颗互不相交、分别称为根节点的左子树、右子树组成。简单来说，二叉树是一种特殊的树，每个节点最多只能有<code>两个</code>子节点，也就是左子树、右子树。比某个节点小的值放在该节点的左侧，称为左子树，该节点左侧的所有节点，包括子孙节点，都小于该节点，同理，比某个节点大的值放在该节点的右侧，称为右子树，右侧的所有节点都大于该节点的值，这是二叉树的特点！除了上面提到的特性，二叉树还有另外一些性质，提供一张图，方便理解与解释：</p><p class="customize-img"><img src="/assets/blogImg/algorithm/binarytree/binarytree-structure-1.png" alt="二叉树结构"></p><ul><li><p>在二叉树的第K层上，<code>最多</code>有2<sup>k-1</sup>个节点，假设k=3，即在第三层，最多有4个节点。</p></li><li><p>高/深为m的二叉树中，<code>最多</code>有2<sup>m</sup>-1个节点，图中高/深度为3，那么最多7个节点，只差C节点的左子树。</p></li><li><p>在任意一颗二叉树中，度为0的节点总是比度为2的节点多1个，图中度为0的节点有DEF（3），而度为2的节点有AB（2）个。</p></li><li><p>具有n个节点的二叉树，其高/深度<code>至少</code>为log<sub>2</sub>n + 1，图中共有6个节点，log<sub>2</sub>6不会算的话，可以想想6是不是介于2<sup>2</sup>与2<sup>3</sup>之间，它应该无限接近于2次方，最后在加上1，所以高/深至少为3层。</p></li></ul><h4 id="满二叉树"><a href="#满二叉树" class="headerlink" title="满二叉树"></a>满二叉树</h4><p><code>在一颗二叉树中，每一层的节点数都达到最大个数</code>，以下是它的特性：</p><ul><li><p>在满二叉树的第K层上，有2<sup>k-1</sup>个节点。</p></li><li><p>高/深为m的二叉树中，有2<sup>m</sup>-1个节点。</p></li></ul><p>如图所示：</p><p class="customize-img"><img src="/assets/blogImg/algorithm/binarytree/binarytree-full-structure-1.png" alt="满二叉树结构"></p><h4 id="完全二叉树"><a href="#完全二叉树" class="headerlink" title="完全二叉树"></a>完全二叉树</h4><p><code>在一颗二叉树中，除了最后一层外，其他各层的节点数都达到最大个数，且最后一层从左向右的节点连续存在，只缺右侧若干节点</code>。该含义和满二叉树很相似，所以说满二叉树一定是完全二叉树，完全二叉树不一定是满二叉树，以下是它的特性：</p><ul><li>具有n个节点的二叉树，其高/深为log<sub>2</sub>n + 1</li></ul><p>如图所示：</p><p class="customize-img"><img src="/assets/blogImg/algorithm/binarytree/binarytree-complete-structure-1.png" alt="完全二叉树结构"></p><p class="customize-img"><img src="/assets/blogImg/algorithm/binarytree/binarytree-complete-structure-2.png" alt="普通二叉树结构"></p><h3 id="二叉树的存储结构"><a href="#二叉树的存储结构" class="headerlink" title="二叉树的存储结构"></a><div><span>二叉树的存储结构</span></div></h3><h4 id="顺序结构"><a href="#顺序结构" class="headerlink" title="顺序结构"></a>顺序结构</h4><p>二叉树的顺序结构是使用一维数组存储二叉树中的节点，如图所示：</p><p class="customize-img"><img src="/assets/blogImg/algorithm/binarytree/binarytree-order-1.png" alt="二叉树顺序存储结构"></p><p>上图中所采用的顺序存储结构如图所示：</p><p class="customize-img"><img src="/assets/blogImg/algorithm/binarytree/binarytree-order-2.png" alt="二叉树顺序存储结构"></p><p>仔细观察这是一颗完全二叉树，数组能够刚好填充数组，但对于不是完全二叉树又该是如何存储的？接着看图：</p><p class="customize-img"><img src="/assets/blogImg/algorithm/binarytree/binarytree-order-3.png" alt="二叉树顺序存储结构"></p><p>上图中所采用的顺序存储结构如图所示：</p><p class="customize-img"><img src="/assets/blogImg/algorithm/binarytree/binarytree-order-4.png" alt="二叉树顺序存储结构"></p><p>存储位置没有发生变化，只是在索引为4的位置上存储了空元素（^代表为空），表示此位置上是没有节点的？为什么要这么做呢？简单来说就是为了节点能够很容易地找到父节点或孩子节点，若没有按照一定的规则存储，压根不知道每个节点之间的关系，也就失去了二叉树的意义了。具体的规则如下：一棵树有n个节点，假设i（0 &lt;= i &lt; n）为某个节点的索引，那么该节点的左子树对应的数组索引是2i + 1，右子树对应的数组索引是2i + 2，而该节点的父节点对应的数组索引是(i - 1) / 2。通过以上的规则在数组中维护了每个节点之间的关系，但同时也会造成一定空间的浪费，就好比当它是空元素时，也只有在完全二叉树的情况下才不会造成空间的浪费，严格上来说，该存储方式一般适用于完全二叉树。</p><h4 id="二叉链表"><a href="#二叉链表" class="headerlink" title="二叉链表"></a>二叉链表</h4><p>二叉树还有另外一种存储结构，<code>链式存储结构</code>，该结构可分为：二叉链表、三叉链表，下面将会分别说明。<code>二叉链表结构</code>主要由一个<code>数据域</code>和两个分别指向<code>左右子树的节点</code>组成，如图所示：</p><p class="customize-img"><img src="/assets/blogImg/algorithm/binarytree/binarytree-link-1.png" alt="二叉树链表存储结构"></p><p>这很像单向链表，每个节点只存储了孩子节点的关系，若要找到其父节点需要重新遍历链表，那效率将被大大的降低了！因此为了提高效率，在原有的基础上新增了父节点的地址，称为<code>三叉链表结构</code>，如图所示：</p><p class="customize-img"><img src="/assets/blogImg/algorithm/binarytree/binarytree-link-2.png" alt="二叉树链表存储结构"></p><p>两者的区别仅在于多了一个父节点的地址。</p><h3 id="二叉树的设计与实现"><a href="#二叉树的设计与实现" class="headerlink" title="二叉树的设计与实现"></a><div><span>二叉树的设计与实现</span></div></h3><p>尝试手写下二叉树，将采用二叉链表结构实现。由于作者对算法技术并不是很了解，该设计也是参考了别个文章的代码，不得不说，别人写的算法文章还是很专业，对于算法内容讲的很明白、清晰，但是对于代码上的设计并不是很友好，所以最终作者是自己设计了实现代码，只是放出了代码相关的图片，有兴趣的同学可以去github上观摩-<a href="https://github.com/JulianHang/little-java-project/blob/master/src/tech/zlia/interest/algorithm/tree/binary/BinarySearchTree.java" target="_blank" rel="noopener">二叉树设计</a>，也顺便提一下别人的文章<a href="https://blog.csdn.net/javazejian/article/details/53727333" target="_blank" rel="noopener">二叉树算法</a></p><p class="customize-img"><img src="/assets/blogImg/algorithm/binarytree/binarytree-code.png" alt="二叉树设计"></p><p><code>若只是想了解算法的话，可以看提供的别人的文章，想看设计代码的话，可以看我的设计代码，良心推荐！</code></p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><div><span>总结</span></div></h3><p>二叉树的知识点还是挺复杂、多样的。作者也是入门级别水平，要学的内容还是挺多的，尽可能的将自己理解的内容通过博客的方式写出来，帮助自己也拉别人一把。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;树的概念&quot;&gt;&lt;a href=&quot;#树的概念&quot; class=&quot;headerlink&quot; title=&quot;树的概念&quot;&gt;&lt;/a&gt;&lt;div&gt;&lt;span&gt;树的概念&lt;/span&gt;&lt;/div&gt;&lt;/h3&gt;&lt;p&gt;探索二叉树前，先来认识下什么是树？用官方一点的话来说，&lt;code&gt;树是数据元素之间具有层次关系的非线性结构，是由n（n&amp;gt;=0）个节点组成的有限集合&lt;/code&gt;，n=0时称为空树。在任意一颗非空树中，它具有了以下特性：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;每棵树至多只有一个根节点。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;由根节点构造出多个孩子节点，每个孩子节点只有一个父节点，而孩子节点又构造出多个节点。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;先看张图，方便了解下树的一些专业术语。&lt;/p&gt;
+&lt;p class=&quot;customize-img&quot;&gt;&lt;img src=&quot;/assets/blogImg/algorithm/binarytree/tree-structure-1.png&quot; alt=&quot;树结构&quot;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;根节点&lt;/code&gt;：根节点是没有父节点，图中的A节点。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;孩子节点/子节点&lt;/code&gt;：某个节点的孩子称为孩子节点，孩子节点/子节点是相对的，图中A的孩子节点有B、C、D，而B的孩子节点有E、F。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;叶子节点&lt;/code&gt;：某个节点没有孩子，图中的E、F、G、D。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;节点的度&lt;/code&gt;：某个节点的孩子节点个数，图中A有BCD（3）个孩子节点，B有EF（2）个孩子节点。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;树的层次&lt;/code&gt;：某个节点处于树中的层次，图中的A处于第1层。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;树的高/深度&lt;/code&gt;：树的最大层次，图中的高/深度为3。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;接下来聊正题吧！&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="rearend" scheme="http://zlia.tech/categories/rearend/"/>
+    
+    
+      <category term="algorithm" scheme="http://zlia.tech/tags/algorithm/"/>
+    
+  </entry>
   
   <entry>
     <title>探索Stack底层实现-JDK1.8</title>
@@ -571,28 +616,6 @@
     
     
       <category term="daily-konwledge-point-java" scheme="http://zlia.tech/tags/daily-konwledge-point-java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>搭建基于leancloud的评论系统</title>
-    <link href="http://zlia.tech/2018/11/18/leancloud-build/"/>
-    <id>http://zlia.tech/2018/11/18/leancloud-build/</id>
-    <published>2018-11-18T07:11:42.000Z</published>
-    <updated>2019-06-08T06:13:13.216Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="博客都有个评论系统"><a href="#博客都有个评论系统" class="headerlink" title="博客都有个评论系统"></a><div><span>博客都有个评论系统</span></div></h3><p>没啥好说的，但凡是个博客都应该有个评论系统。一开始找了个<code>多说</code>还是啥来着，要填写备案信息，好扯，只好绕路。又换了一个，<code>来必力</code>,搜了好几篇文章，都说不错不错，实际上给我的体验一般般，至少它的管理页面让我觉得不爽，当然了，我还是尝试了一波，因为懒，哈哈，结果居然不行！网上的一篇篇博客都TM是复制粘贴的，很难看出谁才是原创作者，没啥意思，真不知道是为了什么？别人的博客可以参考，复制就过分了，把我给气的，所以我的博客并没有放到百度的搜索库中，只有谷歌才能搜到，我宁愿别人没有看到自己的博客，也不想看着自己的成果被人一个个吞噬。后面又看了几篇文章，发现<code>leanCloud</code>这个评论系统是做的真可以，不是我吹牛，不管是文档还是管理端都很符合我的要求，脑子里一下子决定就是它了！当然了，它也没白白让我失望，花了2个晚上的时间就基本搞定了，体验真的好，它是免费的，啥都不用做，就只需要注册登录进去配置内容即可。<a id="more"></a></p><h3 id="动手开始干吧"><a href="#动手开始干吧" class="headerlink" title="动手开始干吧"></a><div><span>动手开始干吧</span></div></h3><p>因为我搭建该评论系统的时候也是参照着别人写好的博客来操作，关键是你提问作者还会准时回答的你，让我很佩服，更加重了我要搭建此评论系统的决心，真的赞！所以这里就贴出两个我觉得很好的博客文章，从零开始搭建的一个教程吧，它们是基于<code>yilia</code>主题来搭建的，因为我的博客应用的便是该主题。这两篇文章加起来刚好很完整，有代码层面的也有配置层面的，当然了，如果你看不懂也是可以在下方进行评论的，我就是其中的一个留言者！</p><p><a href="https://www.xxwhite.com/2017/Valine.html" target="_blank" rel="noopener">yilia主题配置leancloud</a> &amp; <a href="https://panjunwen.com/valine-admin-document/" target="_blank" rel="noopener">leancloud管理端配置</a></p><p><code>这里我在补充一些关键信息，也是非常重要的内容</code>，当初就是该错误让我找不到方向，上面提到的文章的作者也没能给我很好的回答，要是你仔细看评论的话可能会发现我留下的足迹，哈哈，整了2天都是因为该问题，都想放弃了，不够真心觉得它不错所以又拾起来了。按照上面提供的文章配置完毕后，你应该会在你的管理端中发现有这样子的内容，请看截图！</p><p class="customize-img"><img src="/assets/blogImg/leancloud/leancloud-build-1.png" alt="leancloud管理端"></p><p>当初配置完毕后就是少了<code>Comment Count</code>这两张表导致控制台一直报<code>https://xfc3sns5.api.lncld.net/1.1/classes/Comment?····</code>错误，我就想不通了，咋就这样子呢，有人让我创建一个，但我总得知道这表的数据结构吧，我去哪里找呢，肯定不好找，还是找了有一段时间，不好找，于是于是，报着尝试的心里将<code>原有的应用删除掉重新建了一个</code>，果然果然，这两张表有了，是<code>系统帮我们已经创建好的</code>，也就是说之所以第一次没生成成功是因为<code>leancloud</code>系统内部的原因，当然了你看不到内部有啥原因，只是存粹的猜测而已，反正第二次是成功了，开心开心，将内容重新发布后就可以了，控制台也没有报错了，哇！有兴趣的同学可以看下我的博客哈，菜鸟一枚，只为了提高自己来幸福自己！ <a href="http://zlia.tech/">zlia博客</a></p><p>最后的最后，我简单截下我配置后的效果图，里头也加上了评论邮箱通知功能。</p><p class="customize-img"><img src="/assets/blogImg/leancloud/leancloud-build-2.png" alt="配置leancloud管理端-2"></p><p class="customize-img"><img src="/assets/blogImg/leancloud/leancloud-build-3.png" alt="配置leancloud管理端-3"></p><p class="customize-img"><img src="/assets/blogImg/leancloud/leancloud-build-4.png" alt="配置leancloud管理端-4"></p><p class="customize-img"><img src="/assets/blogImg/leancloud/leancloud-build-5.png" alt="配置leancloud管理端-5"></p><p>截的图是相对比较重要的内容，其他像部署库和应用key参考提供的两篇文章就可以解决了，很简单。</p><h3 id="早点实现你想做的事"><a href="#早点实现你想做的事" class="headerlink" title="早点实现你想做的事"></a><div><span>早点实现你想做的事</span></div></h3><p>为啥会是这个小标题呢？好像跟博客没啥毛关系呢，其实是由于搭建了评论系统而进一步完善了博客，基本的东西都拥有了，倘若若干年后我在来回顾自己所写的博客文章，一定会越看越笑，就仿佛吃了蜜一样开心，一步一个脚印建立起来的，很有成就感！我想每个搭建博客的作者都应该会有这样子的感想吧。所以早点去做自己想做的事你就可以早点看到体验到什么叫做成功的人生，哈哈！无奈，感慨了一把！</p><h3 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a><div><span>重点关注</span></div></h3><p><a href="https://www.xxwhite.com/2017/Valine.html" target="_blank" rel="noopener">yilia主题配置leancloud</a> &amp; <a href="https://panjunwen.com/valine-admin-document/" target="_blank" rel="noopener">leancloud管理端配置</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;博客都有个评论系统&quot;&gt;&lt;a href=&quot;#博客都有个评论系统&quot; class=&quot;headerlink&quot; title=&quot;博客都有个评论系统&quot;&gt;&lt;/a&gt;&lt;div&gt;&lt;span&gt;博客都有个评论系统&lt;/span&gt;&lt;/div&gt;&lt;/h3&gt;&lt;p&gt;没啥好说的，但凡是个博客都应该有个评论系统。一开始找了个&lt;code&gt;多说&lt;/code&gt;还是啥来着，要填写备案信息，好扯，只好绕路。又换了一个，&lt;code&gt;来必力&lt;/code&gt;,搜了好几篇文章，都说不错不错，实际上给我的体验一般般，至少它的管理页面让我觉得不爽，当然了，我还是尝试了一波，因为懒，哈哈，结果居然不行！网上的一篇篇博客都TM是复制粘贴的，很难看出谁才是原创作者，没啥意思，真不知道是为了什么？别人的博客可以参考，复制就过分了，把我给气的，所以我的博客并没有放到百度的搜索库中，只有谷歌才能搜到，我宁愿别人没有看到自己的博客，也不想看着自己的成果被人一个个吞噬。后面又看了几篇文章，发现&lt;code&gt;leanCloud&lt;/code&gt;这个评论系统是做的真可以，不是我吹牛，不管是文档还是管理端都很符合我的要求，脑子里一下子决定就是它了！当然了，它也没白白让我失望，花了2个晚上的时间就基本搞定了，体验真的好，它是免费的，啥都不用做，就只需要注册登录进去配置内容即可。
-    
-    </summary>
-    
-      <category term="essays" scheme="http://zlia.tech/categories/essays/"/>
-    
-    
-      <category term="leancloud" scheme="http://zlia.tech/tags/leancloud/"/>
     
   </entry>
   
