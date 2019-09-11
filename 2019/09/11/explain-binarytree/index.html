@@ -28,7 +28,7 @@
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/algorithm/binarytree/binarytree-link-1.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/algorithm/binarytree/binarytree-link-2.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/algorithm/binarytree/binarytree-code.png">
-<meta property="og:updated_time" content="2019-09-11T08:27:44.872Z">
+<meta property="og:updated_time" content="2019-09-11T08:32:50.057Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初识二叉树">
 <meta name="twitter:description" content="树的概念探索二叉树前，先来认识下什么是树？用官方一点的话来说，树是数据元素之间具有层次关系的非线性结构，是由n（n&amp;gt;=0）个节点组成的有限集合，n=0时称为空树。在任意一颗非空树中，它具有了以下特性：  每棵树至多只有一个根节点。  由根节点构造出多个孩子节点，每个孩子节点只有一个父节点，而孩子节点又构造出多个节点。   先看张图，方便了解下树的一些专业术语。   根节点：根节点是没有父节点">
@@ -275,7 +275,7 @@
 <p>这很像单向链表，每个节点只存储了孩子节点的关系，若要找到其父节点需要重新遍历链表，那效率将被大大的降低了！因此为了提高效率，在原有的基础上新增了父节点的地址，称为<code>三叉链表结构</code>，如图所示：</p>
 <p class="customize-img"><img src="/assets/blogImg/algorithm/binarytree/binarytree-link-2.png" alt="二叉树链表存储结构"></p>
 <p>两者的区别仅在于多了一个父节点的地址。</p>
-<h3 id="二叉树的设计与实现"><a href="#二叉树的设计与实现" class="headerlink" title="二叉树的设计与实现"></a><div><span>二叉树的设计与实现</span></div></h3><p>尝试手写下二叉树，将采用二叉链表结构实现。由于作者对算法技术并不是很了解，该设计也是参考了别个文章的代码，不得不说，别人写的算法文章还是很专业，对于算法内容讲的很明白、清晰，但是对于代码上的设计并不是很友好，所以最终作者是自己设计了实现代码，只是放出了代码相关的图片，有兴趣的同学可以去github上观摩-<a href="https://github.com/JulianHang/little-java-project/blob/master/src/tech/zlia/interest/algorithm/tree/binary/BinarySearchTree.java" target="_blank" rel="noopener">二叉树设计</a>，也顺便提一下别人的文章<a href="https://blog.csdn.net/javazejian/article/details/53727333" target="_blank" rel="noopener">二叉树算法</a></p>
+<h3 id="二叉树的设计与实现"><a href="#二叉树的设计与实现" class="headerlink" title="二叉树的设计与实现"></a><div><span>二叉树的设计与实现</span></div></h3><p>尝试手写下二叉树，将采用二叉链表结构实现。由于作者对算法技术并不是很了解，该设计也是参考了别个文章的代码，不得不说，别人写的算法文章还是很专业，对于算法内容讲的很明白、清晰，但是对于代码上的设计并不是很友好，所以最终作者是自己设计了实现代码，只是放出了代码相关的图片，有兴趣的同学可以去github上观摩-<a href="https://github.com/JulianHang/little-java-project/blob/master/src/tech/zlia/interest/algorithm/tree/binary/BinarySearchTree.java" target="_blank" rel="noopener">二叉树设计</a>，也顺便提一下别人的文章<a href="https://blog.csdn.net/javazejian/article/details/53727333" target="_blank" rel="noopener">二叉树算法</a>。</p>
 <p class="customize-img"><img src="/assets/blogImg/algorithm/binarytree/binarytree-code.png" alt="二叉树设计"></p>
 <p><code>若只是想了解算法的话，可以看提供的别人的文章，想看设计代码的话，可以看我的设计代码，良心推荐！</code></p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><div><span>总结</span></div></h3><p>二叉树的知识点还是挺复杂、多样的。作者也是入门级别水平，要学的内容还是挺多的，尽可能的将自己理解的内容通过博客的方式写出来，帮助自己也拉别人一把。</p>
@@ -596,15 +596,15 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -624,11 +624,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
             
             <div class="clearfix"></div>
