@@ -6,28 +6,29 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>ActiveMQ的简单使用 | 奇思妙想</title>
+  <title>初识平衡二叉树-AVL | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="接触消息队列原本一开始是打算直接从activemq的客户端讲起的，但是忽然发现，既然对activemq有了些许了解之后，至少应该知道消息队列是什么？或者是它的由来和一些应用场景，可是我并不知道。我觉得更多的人更倾向于该技术怎么使用，而并不关心它为什么会出现，也很难静得下心来看它的理念以及应用场景，包括我。因为我觉得那些概念看着看着就可能让我失去了兴趣，也就果断地放弃学些了，哈哈。当然了，现在还是个">
-<meta name="keywords" content="activemq">
+  <meta name="description" content="前言上一篇文章只是简单地认识下二叉树，并未提到它的缺陷。数据结构的好坏取决于时间复杂度，由于每次操作（插入、删除、查找）需要与节点比较来选择进入到左子树还是右子树，也就是说每次比较都会排除一些可能（选择左右其中一侧），当然了这是对于随机均匀分布的二叉树来说，它的时间复杂度是O（log2n），但是对于只有单向的左子树或右子树来说，它的时间复杂度就变成了O（n），每次操作都会从头到尾所有节点比较一遍。">
+<meta name="keywords" content="algorithm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ActiveMQ的简单使用">
-<meta property="og:url" content="http://zlia.tech/2018/08/18/activemq-understand/index.html">
+<meta property="og:title" content="初识平衡二叉树-AVL">
+<meta property="og:url" content="http://zlia.tech/2019/09/15/explain-binarytree-avl/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="接触消息队列原本一开始是打算直接从activemq的客户端讲起的，但是忽然发现，既然对activemq有了些许了解之后，至少应该知道消息队列是什么？或者是它的由来和一些应用场景，可是我并不知道。我觉得更多的人更倾向于该技术怎么使用，而并不关心它为什么会出现，也很难静得下心来看它的理念以及应用场景，包括我。因为我觉得那些概念看着看着就可能让我失去了兴趣，也就果断地放弃学些了，哈哈。当然了，现在还是个">
+<meta property="og:description" content="前言上一篇文章只是简单地认识下二叉树，并未提到它的缺陷。数据结构的好坏取决于时间复杂度，由于每次操作（插入、删除、查找）需要与节点比较来选择进入到左子树还是右子树，也就是说每次比较都会排除一些可能（选择左右其中一侧），当然了这是对于随机均匀分布的二叉树来说，它的时间复杂度是O（log2n），但是对于只有单向的左子树或右子树来说，它的时间复杂度就变成了O（n），每次操作都会从头到尾所有节点比较一遍。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq/download-activemq.png">
-<meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq/activemq-catalog.png">
-<meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq/start-activemq.png">
-<meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq/create-activemq.png">
-<meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq/import-activemq.png">
-<meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq/producer-result.png">
-<meta property="og:image" content="http://zlia.tech/assets/blogImg/activemq/consumer-result.png">
-<meta property="og:updated_time" content="2018-09-02T01:07:12.801Z">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/algorithm/avl/single-binarytree.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/algorithm/avl/balance-binarytree-1.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/algorithm/avl/avl-binarytree-1.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/algorithm/avl/avl-binarytree-2.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/algorithm/avl/avl-binarytree-3.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/algorithm/avl/avl-binarytree-4.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/algorithm/avl/avl-binarytree-5.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/algorithm/avl/avl-binarytree-code.png">
+<meta property="og:updated_time" content="2019-09-15T11:23:55.273Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ActiveMQ的简单使用">
-<meta name="twitter:description" content="接触消息队列原本一开始是打算直接从activemq的客户端讲起的，但是忽然发现，既然对activemq有了些许了解之后，至少应该知道消息队列是什么？或者是它的由来和一些应用场景，可是我并不知道。我觉得更多的人更倾向于该技术怎么使用，而并不关心它为什么会出现，也很难静得下心来看它的理念以及应用场景，包括我。因为我觉得那些概念看着看着就可能让我失去了兴趣，也就果断地放弃学些了，哈哈。当然了，现在还是个">
-<meta name="twitter:image" content="http://zlia.tech/assets/blogImg/activemq/download-activemq.png">
+<meta name="twitter:title" content="初识平衡二叉树-AVL">
+<meta name="twitter:description" content="前言上一篇文章只是简单地认识下二叉树，并未提到它的缺陷。数据结构的好坏取决于时间复杂度，由于每次操作（插入、删除、查找）需要与节点比较来选择进入到左子树还是右子树，也就是说每次比较都会排除一些可能（选择左右其中一侧），当然了这是对于随机均匀分布的二叉树来说，它的时间复杂度是O（log2n），但是对于只有单向的左子树或右子树来说，它的时间复杂度就变成了O（n），每次操作都会从头到尾所有节点比较一遍。">
+<meta name="twitter:image" content="http://zlia.tech/assets/blogImg/algorithm/avl/single-binarytree.png">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -175,14 +176,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-activemq-understand" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-explain-binarytree-avl" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      ActiveMQ的简单使用
+      初识平衡二叉树-AVL
     </h1>
   
 
@@ -191,44 +192,51 @@
 <!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/08/18/activemq-understand/" class="pageViews">0</span>
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/09/15/explain-binarytree-avl/" class="pageViews">0</span>
   </a>
 
         
-        <a href="/2018/08/18/activemq-understand/" class="archive-article-date">
-  	<time datetime="2018-08-18T10:51:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-18</time>
+        <a href="/2019/09/15/explain-binarytree-avl/" class="archive-article-date">
+  	<time datetime="2019-09-15T11:23:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-15</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="接触消息队列"><a href="#接触消息队列" class="headerlink" title="接触消息队列"></a><div><span>接触消息队列</span></div></h3><p>原本一开始是打算直接从activemq的客户端讲起的，但是忽然发现，既然对activemq有了些许了解之后，至少应该知道消息队列是什么？或者是它的由来和一些应用场景，可是我并不知道。我觉得更多的人更倾向于该技术怎么使用，而并不关心它为什么会出现，也很难静得下心来看它的理念以及应用场景，包括我。因为我觉得那些概念看着看着就可能让我失去了兴趣，也就果断地放弃学些了，哈哈。当然了，现在还是个小小的程序员，等升了职位后就该去考虑了，偷懒了偷懒了！不过这里我也简单地看了一下几篇<code>消息队列</code>的文章，着实不错，有各种高级的架构啊，所以分享给各位<a href="https://blog.csdn.net/dj2008/article/details/78872889" target="_blank" rel="noopener">消息队列的使用场景</a>。有打破砂锅问到底心态的朋友可以去观望观望，定不会让你失望。<a id="more"></a></p>
-<h3 id="ActiveMQ服务端跑起来吧"><a href="#ActiveMQ服务端跑起来吧" class="headerlink" title="ActiveMQ服务端跑起来吧"></a><div><span>ActiveMQ服务端跑起来吧</span></div></h3><p>既然有客户端，那就一定要先有服务端，那我们就先让服务端跑起来吧！acitvemq官网下载地址：<a href="http://activemq.apache.org/activemq-5155-release.html" target="_blank" rel="noopener">http://activemq.apache.org/activemq-5155-release.html</a> 。官网提供了Linux和window的版本，由于没有Linux环境故下载了window版本。</p>
-<p class="customize-img"><img src="/assets/blogImg/activemq/download-activemq.png" alt="下载AcitveMQ服务器window版本"></p>
-<p>下载好了就直接解压即可。在跑起来之前先来认识下每个目录的用处以便后续的开发：</p>
-<p class="customize-img"><img src="/assets/blogImg/activemq/activemq-catalog.png" alt="下载AcitveMQ服务器window版本"></p>
-<ul>
-<li>bin：存放用来启动<code>服务器的脚本文件</code>，可以用普通用户或管理员的权限来启动。</li>
-<li>conf：存放<code>服务器的相关配置文件</code>、管理端的配置文件以及安全权限控制。多说几句，<code>activmemq.xml</code>是用来配置服务器相关协议的端口、地址和相关属性，还有消息存储方式以及集群方式等等。</li>
-<li>data：存放<code>消息存储的文件</code>以及日志文件。</li>
-<li>docs：ActiveMQ的相关文档。</li>
-<li>examples：服务器相关协议的客户端例子。</li>
-<li>lib：存放ActiveMQ相关jar包。</li>
-<li>webapps/webapps-demo：存放ActiveMQ管理端的相关文件。</li>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>上一篇文章只是简单地认识下<code>二叉树</code>，并未提到它的<code>缺陷</code>。数据结构的好坏取决于<code>时间复杂度</code>，由于每次操作（插入、删除、查找）需要与节点比较来选择进入到左子树还是右子树，也就是说每次比较都会排除一些可能（选择左右其中一侧），当然了这是对于随机均匀分布的二叉树来说，它的时间复杂度是O（log<sub>2</sub>n），但是对于只有单向的左子树或右子树来说，它的时间复杂度就变成了O（n），每次操作都会从头到尾所有节点比较一遍。总的来说，<code>二叉树的时间复杂度区间是在O（log&lt;sub&gt;2&lt;/sub&gt;n） ~ O（n）之间</code>，这完全取决于二叉树的结构！如图所示：</p>
+<p class="customize-img"><img src="/assets/blogImg/algorithm/avl/single-binarytree.png" alt="单向二叉树结构"></p>
+<p>随着单向二叉树越来越长，所消耗的时间也会越来越多，这已经跟单链表没有什么区别了。因此，为了解决单链表的情况，将时间复杂度降低至O（log<sub>2</sub>n），衍生出了<code>平衡二叉树</code>。</p>
+<a id="more"></a>
+<h3 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a><div><span>平衡二叉树</span></div></h3><p>通过上面的分析看出，只要将节点均匀分布在两侧即可完成目的，而这也正是平衡二叉树所要做的事，因此它要求<code>任何节点的左右子树的高度相差不超过1</code>，实际上就是计算同一层中<code>最大的高度值与最小的高度值相差不超过1</code>，解释下高度的含义：从叶子节点开始自底向上到指定节点的最长距离，叶子节点的高度为0，<code>空树的高度为-1</code>。对于AVL树来说，它只是平衡二叉树的其中一种，节点的左右子树高度差被称为<code>平衡因子</code>，如图所示：</p>
+<p class="customize-img"><img src="/assets/blogImg/algorithm/avl/balance-binarytree-1.png" alt="平衡二叉树结构"></p>
+<p>图中左侧为平衡二叉树，每一层的高度差值都不会超过1，图中右侧中出现高度差值超过1，故非平衡二叉树。仔细观察下，图中左右两个的二叉树无非就差了一个节点6，可以将这个多余的节点看成是新插入的节点，是该操作导致了二叉树失去平衡，更严格来说，只要是修改了树的结构，都有可能导致平衡失调，而能修改树结构的操作只有删除与插入。那么该如何才能让它继续保持平衡呢？很容易想到，只要稍微移动下树的结构就能使之平衡，这样子的操作被称为<code>旋转</code>，分为<code>单旋转</code>和<code>双旋转</code>。在想一想，图中右侧中左子树相对偏高，若是旋转的话应该将左子树的高度降低，相应的右子树也会增高，这样子就达到平衡了。</p>
+<h3 id="AVL树旋转"><a href="#AVL树旋转" class="headerlink" title="AVL树旋转"></a><div><span>AVL树旋转</span></div></h3><p>上面提到只有删除与插入会导致二叉树不平衡，这里就举插入来介绍平衡二叉树的几种<code>旋转方式</code>。插入的话无非就以下几种方式：</p>
+<h4 id="左左型"><a href="#左左型" class="headerlink" title="左左型"></a>左左型</h4><ul>
+<li>插入到根节点的左子树的左子树上，称作<code>左左型LL（右旋转）</code>。该方式导致的不平衡是因为左子树上的节点增加了，所以旋转的话就应当将左子树的高度降低，而旋转的节点是插入的节点到根节点的路径上的节点都有可能旋转（这个很在编写代码中很关键），也就是说有可能旋转多次才能达到平衡，如图所示操作：</li>
 </ul>
-<p>来吧！开始跑起来~进入到bin目录中并双击activemq.bat文件，若出现如下图所示则说明启动成功了！</p>
-<p class="customize-img"><img src="/assets/blogImg/activemq/start-activemq.png" alt="启动AcitveMQ服务器"></p>
-<p>这里就不带大家去看管理端长啥样了，要是有兴趣的话可以私底下去观摩观摩，管理端的默认账号密码都是<code>admin</code>。</p>
-<h3 id="开始造人了，生产者与消费者"><a href="#开始造人了，生产者与消费者" class="headerlink" title="开始造人了，生产者与消费者"></a><div><span>开始造人了，生产者与消费者</span></div></h3><p>既然服务器都搭建完成了，那么就开始着手造生产者与消费者了。先创建一个简单的Java项目，这里之所以创建的是Java项目，是因为笔者是直接通过引入ActiveMQ Jar包的方式来进行开发的。当然了，也可以用Maven来进行操作，不过鉴于有些用户不会用maven，所以干脆来个最简单的使用方式。</p>
-<p class="customize-img"><img src="/assets/blogImg/activemq/create-activemq.png" alt="创建ActiveMQ项目"></p>
-<p>啥都没有，空空如也。有用户可能会觉得还要去下载个Jar来引入，好麻烦啊，我才不想去下载，但是如果够细心的话，其实刚才在讲解ActiveMQ目录结构的时候最底下就有一个<code>activemq-all-5.9.0.jar</code>文件，一看名字就知道是ActiveMQ的所有Jar包，哈哈！将其该Jar包引入到项目中去。</p>
-<p class="customize-img"><img src="/assets/blogImg/activemq/import-activemq.png" alt="引入ActiveMQ包"></p>
-<p>Jar包引入了，那就速速开始开发吧！具体的代码内容就不做展示了，若有需要请在最下面点击<code>源码下载</code>即可到Github上获取所需。开发的差不多了，就来看看效果吧，首先启动消费者，在启动生产者，结果如图所示。</p>
-<p class="customize-img"><img src="/assets/blogImg/activemq/producer-result.png" alt="生产者结果"><br><img src="/assets/blogImg/activemq/consumer-result.png" alt="消费者结果"></p>
-<p>是否感觉很简单很容易，但是越往后你就会发现越来越多坑，哈哈，就很敲代码一样！不过，这都是必经之路，否则难成大神。好了，今天的分享就到这里了~</p>
-<h3 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a><div><span>重点关注</span></div></h3><p><code>activemq.xml 生产者与消费者 ActiveMQ管理端</code></p>
-<p><a href="https://github.com/JulianHang/activemq-client.git" target="_blank" rel="noopener">源码下载</a> </p>
+<p class="customize-img"><img src="/assets/blogImg/algorithm/avl/avl-binarytree-1.png" alt="avl平衡二叉树结构-1"></p>
+<p>图中可见是节点7，我们知道向右旋转会导致左子树的高度降低，没错，旋转正确的话是使二叉树达到平衡。我们将节点7移动到根节点位置上，节点5、6紧随其后，而节点8变成了节点的右子树，节点9还是节点8的右子树，简单来说，随着某个节点的移动，其他节点也会相应的移动，这样子才能达到平衡。不知道你们发现没有，旋转过后，不仅符合二叉树的规则，同时也达到平衡，只不过根节点变化了，不过这丝毫不影响！这是比较简单的<code>左左型LL</code>，在来看另外一种情况：</p>
+<p class="customize-img"><img src="/assets/blogImg/algorithm/avl/avl-binarytree-2.png" alt="avl平衡二叉树结构-2"></p>
+<p>此种情况比上面多了一个节点，不过这不是关键。我们发现节点X应该是比节点7大，而比节点8小，也就是说它可以当作节点7的右子树，也可以当作节点8的左子树，而随着节点7移动到根节点上，它已经有了节点5与节点8两个子节点，容不下第三个节点了，也就是说它已经做不了节点7的右子树了，那么这个时候节点X只能考虑去走另外一套方案了，让我称为节点8的左子树，所以最终旋转的结果如上图所示。理解了右旋转，左旋转也是一样的道理。</p>
+<h4 id="右右型"><a href="#右右型" class="headerlink" title="右右型"></a>右右型</h4><ul>
+<li>插入到根节点的右子树的右子树上，称作<code>右右型RR（左旋转）</code>。该方式导致的不平衡是因为右子树上的节点增加了，所以旋转的话就应当将右子树的高度降低，如图所示：</li>
+</ul>
+<p class="customize-img"><img src="/assets/blogImg/algorithm/avl/avl-binarytree-3.png" alt="avl平衡二叉树结构-3"></p>
+<p>图中可见是节点9导致了二叉树的不平衡，那么应该左旋转来降低右子树的高度。将节点9移动到根节点位置上，节点10、11紧随其后，而节点8变成了节点9的左子树，重点在于节点X，发现节点X比节点8大，而比节点9小，随着节点9的移动，它已经做不了节点9的左子树了，所以结果它成了节点8的右子树。跟上面的右旋转有点类似！</p>
+<h4 id="左右型"><a href="#左右型" class="headerlink" title="左右型"></a>左右型</h4><ul>
+<li>插入到根节点的左子树的右子树上，称作<code>左右型LR（左右旋转）</code>。该方式的结构与上面的左左型稍微有点区别，因为最终插入的节点是落在了右子树上，所以首先应该先降低右子树的高度，应该左旋转，不过你会发现，随着右子树的移动，左子树的高度最终增加了，二叉树还是不平衡，不过不用担心，事情是往好的方向发展，你发现没有，左旋转后的结构与上面的左左型是一样的！也就是说只需要在向右旋转一次就能达到平衡，总共旋转了两次，所以称为左右旋转！如图所示：</li>
+</ul>
+<p class="customize-img"><img src="/assets/blogImg/algorithm/avl/avl-binarytree-4.png" alt="avl平衡二叉树结构-4"></p>
+<p>我们知道若是直接移动节点7，最终还是不平衡，而咱们说从节点插入的地方到根节点的路径上都有可能需要旋转，那只有节点X了，那么应该通过左旋转来降低高度，不过随着节点X的移动，最终发现二叉树还是不平衡，不过你也应该发现了，这结构和左左型很像，所以最终还需要右旋转来达到平衡！</p>
+<h4 id="右左型"><a href="#右左型" class="headerlink" title="右左型"></a>右左型</h4><ul>
+<li>插入到根节点的右子树的左子树上，称作<code>右左型RL（右左旋转）</code>。该方式的结构与上面的右右型有些区别，最终插入的节点是落在了左子树上，所以首先应该先降低左子树的高度，那么应该右旋转，同理，随着旋转一次后发现还是不平衡，不过结构倒是很像右右型，接下来的操作就跟右右型一样了，就不做多阐述了！如图所示：</li>
+</ul>
+<p class="customize-img"><img src="/assets/blogImg/algorithm/avl/avl-binarytree-5.png" alt="avl平衡二叉树结构-5"></p>
+<p>这几种类型不难理解，只要记住哪边高度多大就旋转哪边，需要注意的事可能要旋转多次，这也很简单，发现旋转后还是不平衡在继续旋转即可。</p>
+<h3 id="平衡二叉树的设计与实现"><a href="#平衡二叉树的设计与实现" class="headerlink" title="平衡二叉树的设计与实现"></a><div><span>平衡二叉树的设计与实现</span></div></h3><p>掌握概念后，最重要的就是实战，我已经把代码写了一遍，不过中途是参考了别人的文章，这边也只是放出了代码图片，有兴趣的同学可以去github上观摩-<a href="https://github.com/JulianHang/little-java-project/blob/master/src/tech/zlia/interest/algorithm/tree/avl/AvlBalanceTree.java" target="_blank" rel="noopener">avl平衡二叉树代码设计与实现</a></p>
+<p class="customize-img"><img src="/assets/blogImg/algorithm/avl/avl-binarytree-code.png" alt="avl平衡二叉树结构代码设计"></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><div><span>总结</span></div></h3><p>平衡二叉树中的旋转较为复杂，最好能够结合场景去分析推敲，加油吧！</p>
 
       
 
@@ -242,7 +250,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">activemq</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
         		</li>
       		
 		</ul>
@@ -254,7 +262,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/mq//" class="article-tag-list-link color3">mq</a>
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
         		</li>
       		
 		</ul>
@@ -309,7 +317,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2018/08/18/activemq-understand/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/09/15/explain-binarytree-avl/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -323,18 +331,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/09/02/explain-activemq-soucecod/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          简单喵下ActiveMQ生产者源码
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/06/03/js-scope/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">读懂Javascript中的作用域链</div>
+    <a href="/2019/09/11/explain-binarytree/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">初识二叉树</div>
       <i class="icon-circle-right"></i>
     </a>
   
