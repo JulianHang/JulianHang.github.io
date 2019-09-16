@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>探索Stack底层实现-JDK1.8 | 奇思妙想</title>
+  <title>探索Stack底层实现 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="简单介绍Stack类就一百多行代码，简单说明下。它的特性是后进先出（LIFO），继承了Vector类，大部分的操作都是使用Vector中的方法。在注释中，作者提醒我们若要使用后进先出的栈操作，应该优先使用Deque，这么说来，该类已经被放弃了，早在JDK1.0的时候它就出现了，是有点老了！我们说过Vector属于相对线程安全，所以Stack也是相对线程安全！探索Stack源代码是基于JDK1.8的">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="探索Stack底层实现-JDK1.8">
+<meta property="og:title" content="探索Stack底层实现">
 <meta property="og:url" content="http://zlia.tech/2019/09/06/explain-stack-sourcecode/index.html">
 <meta property="og:site_name" content="奇思妙想">
 <meta property="og:description" content="简单介绍Stack类就一百多行代码，简单说明下。它的特性是后进先出（LIFO），继承了Vector类，大部分的操作都是使用Vector中的方法。在注释中，作者提醒我们若要使用后进先出的栈操作，应该优先使用Deque，这么说来，该类已经被放弃了，早在JDK1.0的时候它就出现了，是有点老了！我们说过Vector属于相对线程安全，所以Stack也是相对线程安全！探索Stack源代码是基于JDK1.8的">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/stack/stack-data-structure.png">
-<meta property="og:updated_time" content="2019-09-06T06:10:06.834Z">
+<meta property="og:updated_time" content="2019-09-16T06:56:43.294Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="探索Stack底层实现-JDK1.8">
+<meta name="twitter:title" content="探索Stack底层实现">
 <meta name="twitter:description" content="简单介绍Stack类就一百多行代码，简单说明下。它的特性是后进先出（LIFO），继承了Vector类，大部分的操作都是使用Vector中的方法。在注释中，作者提醒我们若要使用后进先出的栈操作，应该优先使用Deque，这么说来，该类已经被放弃了，早在JDK1.0的时候它就出现了，是有点老了！我们说过Vector属于相对线程安全，所以Stack也是相对线程安全！探索Stack源代码是基于JDK1.8的">
 <meta name="twitter:image" content="http://zlia.tech/assets/blogImg/java/stack/stack-data-structure.png">
   
@@ -176,7 +176,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      探索Stack底层实现-JDK1.8
+      探索Stack底层实现
     </h1>
   
 
@@ -534,11 +534,7 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -546,11 +542,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -559,6 +555,10 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
               </li>
              
               <li class="article-tag-list-item">
