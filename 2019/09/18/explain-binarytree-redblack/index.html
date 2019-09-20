@@ -51,7 +51,7 @@
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/algorithm/redblack/rb-binarytree-delete-19.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/algorithm/redblack/rb-binarytree-delete-20.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/algorithm/redblack/rb-binarytree-delete-21.png">
-<meta property="og:updated_time" content="2019-09-20T06:16:05.290Z">
+<meta property="og:updated_time" content="2019-09-20T10:09:55.186Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初识红黑树">
 <meta name="twitter:description" content="前言在认识红黑树之前，最好你已经认识并掌握了二叉树与平衡二叉树（AVL）。AVL树是高度平衡的二叉树，它的时间复杂度大约是O(log2n)，即使在最坏的情况下也是。其实AVL树最复杂的地方在于删除节点重新平衡时的处理，有可能需要多次旋转节点。而红黑树相对于AVL树降低了平衡要求，它使用红黑两种颜色来标记节点，并对颜色进行要求（限制），在插入删除操作后对不符合的情况进行调整以满足要求，从而实现自我平">
@@ -465,7 +465,7 @@
 <p class="customize-img"><img src="/assets/blogImg/algorithm/redblack/rb-binarytree-delete-9.png" alt="红黑树删除-9"></p>
 <p><code>删除节点X为140</code>，它为黑色，且兄弟节点110（左子树上）只有一个子节点115（右子树上），如图所示：</p>
 <p class="customize-img"><img src="/assets/blogImg/algorithm/redblack/rb-binarytree-delete-10.png" alt="红黑树删除-10"></p>
-<p>在删除节点140后，90-&gt;120-&gt;110-&gt;115的路径上少了一个黑色数目，采取的措施是将X的兄弟节点与X的兄弟节点的子节点进行颜色互换，将X的兄弟节点进行左/右旋，左右情况是左旋，右左情况是右旋，将X的父节点与X的兄弟节点进行颜色互换，将X的父节点变成黑色，将X的兄弟节点的子节点变成黑色，将X的父节点进行左/右旋，左右情况是右，右左情况是左旋，因为前面已经旋转过一次了，后面是另外一个旋转，就比如左右，先左旋在右旋（不知道你们发现没有，后半段的处理跟前面的左左/右右情况的处理是一样的），如图所示：</p>
+<p>在删除节点140后，90-&gt;120-&gt;110-&gt;115的路径上少了一个黑色数目，采取的措施是将X的兄弟节点与X的兄弟节点的子节点进行颜色互换，将X的兄弟节点进行左/右旋，左右情况是左旋，右左情况是右旋，将X的父节点进行左/右旋，左右情况是右，右左情况是左旋，因为前面已经旋转过一次了，后面是另外一个旋转，就比如左右，先左旋在右旋，将X的父节点与X的兄弟节点变成黑色，将X的父节点的父节点变成红色，如图所示：</p>
 <p class="customize-img"><img src="/assets/blogImg/algorithm/redblack/rb-binarytree-delete-11.png" alt="红黑树删除-11"></p>
 <p>最终每条路径上的黑色数目一样。</p>
 <ul>
@@ -479,7 +479,7 @@
 <p class="customize-img"><img src="/assets/blogImg/algorithm/redblack/rb-binarytree-delete-12.png" alt="红黑树删除-12"></p>
 <p><code>删除节点X为140</code>，它为黑色，且兄弟节点110也为黑色，有两个子节点，如图所示：</p>
 <p class="customize-img"><img src="/assets/blogImg/algorithm/redblack/rb-binarytree-delete-13.png" alt="红黑树删除-13"></p>
-<p>在删除节点140后，90-&gt;120-&gt;140的路径上少了一个黑色数目，采取的措施是将X的父节点进行左/右旋，X在左子树是左旋，X在右子树是右旋，将X的父节点与X的兄弟节点的左/右子节点变成黑色，X在左子树上就将右子节点变成黑色，X在右子树上就将左子节点变成黑色，将X的兄弟节点变成红色，如图所示：</p>
+<p>在删除节点140后，90-&gt;120-&gt;140的路径上少了一个黑色数目，采取的措施是将X的父节点进行左/右旋，X在左子树是左旋，X在右子树是右旋，将X的父节点与X的兄弟节点的左/右子节点变成黑色，X在左子树上就将右子节点变成黑色，X在右子树上就将左子节点变成黑色，将X的兄弟节点变成红色（若X的兄弟节点是根节点则不需要变化），如图所示：</p>
 <p class="customize-img"><img src="/assets/blogImg/algorithm/redblack/rb-binarytree-delete-14.png" alt="红黑树删除-14"></p>
 <p>最终每条路径上的黑色数目一样。</p>
 <ul>
@@ -634,13 +634,11 @@
 </li>
 <li><p>将X的兄弟节点进行左/右旋，左右情况是左旋，右左情况是右旋</p>
 </li>
-<li><p>将X的父节点与X的兄弟节点进行颜色互换</p>
-</li>
-<li><p>将X的父节点变成黑色</p>
-</li>
-<li><p>将X的兄弟节点的子节点变成黑色</p>
-</li>
 <li><p>将X的父节点进行左/右旋，左右情况是右，右左情况是左旋，因为前面已经旋转过一次了，后面是另外一个旋转，就比如左右，先左旋在右旋</p>
+</li>
+<li><p>将X的父节点与X的兄弟节点变成黑色</p>
+</li>
+<li><p>将X的父节点的父节点变成红色</p>
 </li>
 </ul>
 </li>
@@ -656,7 +654,7 @@
 </li>
 <li><p>将X的父节点与X的兄弟节点的左/右子节点变成黑色，X在左子树上就将右子节点变成黑色，X在右子树上就将左子节点变成黑色</p>
 </li>
-<li><p>将X的兄弟节点变成红色</p>
+<li><p>若X的兄弟节点是根节点则不需要变化，将X的兄弟节点变成红色</p>
 </li>
 </ul>
 </li>
@@ -1062,7 +1060,7 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1070,7 +1068,7 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1078,11 +1076,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
+                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
               </li>
              
               <li class="article-tag-list-item">
