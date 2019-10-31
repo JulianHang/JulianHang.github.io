@@ -21,7 +21,7 @@
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/vector/vector-comment-3.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/vector/vector-comment-4.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/vector/vector-comment-5.png">
-<meta property="og:updated_time" content="2019-09-06T06:09:18.565Z">
+<meta property="og:updated_time" content="2019-10-31T03:30:12.613Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="探索Vector的底层实现">
 <meta name="twitter:description" content="背景上周发布了探索ArrayList的底层实现，趁热打铁！实际上ArrayList与Vector的实现上非常相似，代码基本上都是一样的，还是老样子，先看注释，我能说注释都差不多一样吗。探索Vector源代码是基于JDK1.8的。 阅读注释 Vector内部是通过动态数组实现的。">
@@ -266,7 +266,7 @@
 <li><p>在遍历过程中不允许修改结构，否则会抛出错误。</p>
 </li>
 </ul>
-<h4 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a>重点关注</h4><p><code>默认每次自动扩容的关系是2倍</code> <code>相对线程安全</code> <code>默认初始容量是10</code> <code>底层是通过数组存储元素，故是有序可重复集合</code> <code>自动扩充的容量大小支持自定义（capacityIncrement）</code></p>
+<h3 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a><div><span>重点关注</span></div></h3><p><code>默认每次自动扩容的关系是2倍</code> <code>相对线程安全</code> <code>默认初始容量是10</code> <code>底层是通过数组存储元素，故是有序可重复集合</code> <code>自动扩充的容量大小支持自定义（capacityIncrement）</code></p>
 
       
 
@@ -613,15 +613,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">markdown</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
              
               <li class="article-tag-list-item">

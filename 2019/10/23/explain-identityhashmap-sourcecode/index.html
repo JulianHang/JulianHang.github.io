@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/identityhashmap/identityhashmap-comment-4.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/identityhashmap/identityhashmap-comment-5.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/identityhashmap/identityhashmap-comment-6.png">
-<meta property="og:updated_time" content="2019-10-23T09:11:08.844Z">
+<meta property="og:updated_time" content="2019-10-31T03:29:34.134Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="探索IdentityHashMap底层实现">
 <meta name="twitter:description" content="前沿我也是第一次认识IdentityHashMap，在工作中从未使用过它，所以对它的使用场景可能并不是很了解，本文也仅仅针对基于JDK1.8的源码进行探索。IdentityHashMap的数据结构应该是如图所示：  这个数据结构是我在看源码之前看了几篇别人写的文章所了解到的，个人喜欢在看源码对目标有所了解的习惯，紧接着才去深入它。">
@@ -244,7 +244,7 @@
 <li><p><code>删除节点流程</code>：在删除节点后，它会重新散列所有可能冲突的节点。按照上面的添加节点流程中我们知道，两个节点即使发生冲突了也只是找其他的位置进行存储，这和不冲突的情况下进行存储并没有什么区别，所以在删除节点后，它会重新散列所有节点</p>
 </li>
 </ul>
-<h4 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a>重点关注</h4><p><code>resize</code> <code>put</code> <code>remove</code></p>
+<h3 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a><div><span>重点关注</span></div></h3><p><code>resize</code> <code>put</code> <code>remove</code></p>
 
       
 
@@ -591,15 +591,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">markdown</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
              
               <li class="article-tag-list-item">

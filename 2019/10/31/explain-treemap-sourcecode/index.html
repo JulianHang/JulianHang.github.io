@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>奇思妙想</title>
+  <title>探索TreeMap底层实现 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="record my life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="奇思妙想">
-<meta property="og:url" content="http://zlia.tech/index.html">
+  <meta name="description" content="前言探索TreeMap底层实现是基于JDK1.8，通过该类的注释可以了解它的数据结构是红黑树，默认是按照自然顺序进行排序（所有的键都必须去实现Comparable），当然也可以通过指定比较器进行排序（所有的键都必须实现Comparator）。至于什么是红黑树，读者最好有一定的了解，那看懂它的源码也就是分分钟的事了。 数据结构1234567891011121314151617181920212223">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="探索TreeMap底层实现">
+<meta property="og:url" content="http://zlia.tech/2019/10/31/explain-treemap-sourcecode/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="record my life">
+<meta property="og:description" content="前言探索TreeMap底层实现是基于JDK1.8，通过该类的注释可以了解它的数据结构是红黑树，默认是按照自然顺序进行排序（所有的键都必须去实现Comparable），当然也可以通过指定比较器进行排序（所有的键都必须实现Comparator）。至于什么是红黑树，读者最好有一定的了解，那看懂它的源码也就是分分钟的事了。 数据结构1234567891011121314151617181920212223">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-10-31T03:31:42.974Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="奇思妙想">
-<meta name="twitter:description" content="record my life">
+<meta name="twitter:title" content="探索TreeMap底层实现">
+<meta name="twitter:description" content="前言探索TreeMap底层实现是基于JDK1.8，通过该类的注释可以了解它的数据结构是红黑树，默认是按照自然顺序进行排序（所有的键都必须去实现Comparable），当然也可以通过指定比较器进行排序（所有的键都必须实现Comparator）。至于什么是红黑树，读者最好有一定的了解，那看懂它的源码也就是分分钟的事了。 数据结构1234567891011121314151617181920212223">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -165,16 +167,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-explain-treemap-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-explain-treemap-sourcecode" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/31/explain-treemap-sourcecode/">探索TreeMap底层实现</a>
+    <h1 class="article-title" itemprop="name">
+      探索TreeMap底层实现
     </h1>
   
 
@@ -246,16 +246,75 @@
 
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/31/explain-treemap-sourcecode/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/10/31/explain-treemap-sourcecode/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2019/10/25/explain-linkedhashmap-sourcecode/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">探索LinkedHashMap底层实现</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -275,912 +334,53 @@
 
 
 
+  
+  
+  
 
   
-    <article id="post-explain-linkedhashmap-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+
+  
+
+  
+  
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/25/explain-linkedhashmap-sourcecode/">探索LinkedHashMap底层实现</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/10/25/explain-linkedhashmap-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/10/25/explain-linkedhashmap-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-10-25T06:59:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>印象中对LinkedHashMap的使用次数好像也不多，参考了几篇文章发现它依赖于<code>HashMap</code>而存在，也就是说它在HashMap的基础上又增加了某些特性，比如说<code>有序</code>。既然是基于HashMap，那么它内部的数据结构也应该有数组 + 链表 + 红黑树，而刚才说它又加上了自己的有序特性，那么应该还有<code>一条链表来维护该顺序</code>，如下图所示：</p>
-<p class="customize-img"><img src="/assets/blogImg/java/linkedhashmap/data-structure.png" alt="LinkedHashMap数据结构"></p>
-<p>该图侧重于它是如何保持有序的，就像上面说的是一条链表，画的有点丑，不过应该不难理解。另外一方面，由于它是基于HashMap，所以在看这篇文章之前最好能对HashMap有个了解，加上接下来并不会过多的解释它的数据结构，更多的关注还是在有序及其他特性上，毕竟它的数据结构是偷来的，探索LinkedHashMap底层实现是基于<code>JDK1.8</code>。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/25/explain-linkedhashmap-sourcecode/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-explain-identityhashmap-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/23/explain-identityhashmap-sourcecode/">探索IdentityHashMap底层实现</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/10/23/explain-identityhashmap-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/10/23/explain-identityhashmap-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-10-23T09:11:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前沿"><a href="#前沿" class="headerlink" title="前沿"></a><div><span>前沿</span></div></h3><p>我也是第一次认识IdentityHashMap，在工作中从未使用过它，所以对它的使用场景可能并不是很了解，本文也仅仅针对基于<code>JDK1.8</code>的源码进行探索。<code>IdentityHashMap</code>的数据结构应该是如图所示：</p>
-<p class="customize-img"><img src="/assets/blogImg/java/identityhashmap/data-structure.png" alt="IdentityHashMap数据结构"></p>
-<p>这个数据结构是我在看源码之前看了几篇别人写的文章所了解到的，个人喜欢在看源码对目标有所了解的习惯，紧接着才去深入它。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/23/explain-identityhashmap-sourcecode/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-explain-hashmap-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/21/explain-hashmap-sourcecode/">探索HashMap底层实现</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/10/21/explain-hashmap-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/10/21/explain-hashmap-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-10-21T02:32:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>探索<code>HashMap</code>底层实现是基于<code>JDK1.8</code>，看代码之前翻了一下别人写的博客我才知道<code>JDK1.7</code>版本的HashMap是由<code>数组 + 链表</code>的数据结构组成，而对于JDK1.8是由<code>数组 + 链表 + 红黑树</code>的数据结构组成，所以我又去了解了什么是二叉树、平衡二叉树、红黑树，为的就是能做个铺垫。既然是由数组、链表、红黑树组成，加上平时我们了解过的一些细节，可以猜到它的数据结构应该是这样子的，如图所示：</p>
-<p class="customize-img"><img src="/assets/blogImg/java/hashmap/hashmap-data-structure.png" alt="HashMap数据结构"></p>
-<p>长的虽然有点丑。下面我们就开始探索它吧，还是先从注释开始看！</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/21/explain-hashmap-sourcecode/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-explain-binarytree-redblack" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/18/explain-binarytree-redblack/">初识红黑树</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/09/18/explain-binarytree-redblack/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/09/18/explain-binarytree-redblack/" class="archive-article-date">
-  	<time datetime="2019-09-18T14:19:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>在认识红黑树之前，最好你已经认识并掌握了二叉树与平衡二叉树（AVL）。AVL树是高度平衡的二叉树，它的时间复杂度大约是O(log<sub>2</sub>n)，即使在最坏的情况下也是。其实AVL树最复杂的地方在于删除节点重新平衡时的处理，有可能需要多次旋转节点。而红黑树相对于AVL树<code>降低了平衡要求</code>，它使用<code>红黑两种颜色来标记节点</code>，并对颜色进行要求（限制），在插入删除操作后对不符合的情况进行调整以满足要求，从而实现自我平衡。这些所谓的要求即是红黑树的特性：</p>
-<ul>
-<li><p>每个节点要么是红色要么是黑色。</p>
-</li>
-<li><p>根节点是黑色。</p>
-</li>
-<li><p>叶节点（值为Nil或Null的节点）是黑色。</p>
-</li>
-<li><p>如果一个节点是红色，那么它的子节点是黑色，相当于父子节点之间不能出现连续的红色节点。</p>
-</li>
-<li><p>从任意节点出发到任意叶节点的所有路径上均包含相同数目的黑色节点。</p>
-</li>
-</ul>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/18/explain-binarytree-redblack/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-explain-binarytree-avl" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/15/explain-binarytree-avl/">初识平衡二叉树-AVL</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/09/15/explain-binarytree-avl/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/09/15/explain-binarytree-avl/" class="archive-article-date">
-  	<time datetime="2019-09-15T11:23:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>上一篇文章只是简单地认识下<code>二叉树</code>，并未提到它的<code>缺陷</code>。数据结构的好坏取决于<code>时间复杂度</code>，由于每次操作（插入、删除、查找）需要与节点比较来选择进入到左子树还是右子树，也就是说每次比较都会排除一些可能（选择左右其中一侧），当然了这是对于随机均匀分布的二叉树来说，它的时间复杂度是O（log<sub>2</sub>n），但是对于只有单向的左子树或右子树来说，它的时间复杂度就变成了O(n)，每次操作都会从头到尾所有节点比较一遍。总的来说，二叉树的时间复杂度区间是在O(log<sub>2</sub>n) ~ O(n)之间，这完全取决于二叉树的结构！如图所示：</p>
-<p class="customize-img"><img src="/assets/blogImg/algorithm/avl/single-binarytree.png" alt="单向二叉树结构"></p>
-<p>随着单向二叉树越来越长，所消耗的时间也会越来越多，这已经跟单链表没有什么区别了。因此，为了解决单链表的情况，将时间复杂度降低至O（log<sub>2</sub>n），衍生出了<code>平衡二叉树</code>。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/15/explain-binarytree-avl/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-explain-binarytree" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/11/explain-binarytree/">初识二叉树</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/09/11/explain-binarytree/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/09/11/explain-binarytree/" class="archive-article-date">
-  	<time datetime="2019-09-11T08:27:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="树的概念"><a href="#树的概念" class="headerlink" title="树的概念"></a><div><span>树的概念</span></div></h3><p>探索二叉树前，先来认识下什么是树？用官方一点的话来说，<code>树是数据元素之间具有层次关系的非线性结构，是由n（n&gt;=0）个节点组成的有限集合</code>，n=0时称为空树。在任意一颗非空树中，它具有了以下特性：</p>
-<ul>
-<li><p>每棵树至多只有一个根节点。</p>
-</li>
-<li><p>由根节点构造出多个孩子节点，每个孩子节点只有一个父节点，而孩子节点又构造出多个节点。</p>
-</li>
-</ul>
-<p>先看张图，方便了解下树的一些专业术语。</p>
-<p class="customize-img"><img src="/assets/blogImg/algorithm/binarytree/tree-structure-1.png" alt="树结构"></p>
-<ul>
-<li><p><code>根节点</code>：根节点是没有父节点，图中的A节点。</p>
-</li>
-<li><p><code>孩子节点/子节点</code>：某个节点的孩子称为孩子节点，孩子节点/子节点是相对的，图中A的孩子节点有B、C、D，而B的孩子节点有E、F。</p>
-</li>
-<li><p><code>叶子节点</code>：某个节点没有孩子，图中的E、F、G、D。</p>
-</li>
-<li><p><code>节点的度</code>：某个节点的孩子节点个数，图中A有BCD（3）个孩子节点，B有EF（2）个孩子节点。</p>
-</li>
-<li><p><code>树的层次</code>：某个节点处于树中的层次，图中的A处于第1层。</p>
-</li>
-<li><p><code>树的高/深度</code>：树的最大层次，图中的高/深度为3。</p>
-</li>
-</ul>
-<p>接下来聊正题吧！</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/11/explain-binarytree/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-explain-stack-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/06/explain-stack-sourcecode/">探索Stack底层实现</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/09/06/explain-stack-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/09/06/explain-stack-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-09-06T06:10:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a><div><span>简单介绍</span></div></h3><p><code>Stack</code>类就一百多行代码，简单说明下。它的特性是<code>后进先出（LIFO）</code>，继承了Vector类，大部分的操作都是使用Vector中的方法。在注释中，作者提醒我们若要使用后进先出的栈操作，应该优先使用<code>Deque</code>，这么说来，该类已经被放弃了，早在JDK1.0的时候它就出现了，是有点老了！我们说过Vector属于相对线程安全，所以Stack也是相对线程安全！探索<code>Stack</code>源代码是基于<code>JDK1.8</code>的。</p>
-<h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a><div><span>源码</span></div></h3><p>该类的代码不多，就不做分类了，不过为了方便理解，提供了它的数据结构图。</p>
-<p class="customize-img"><img src="/assets/blogImg/java/stack/stack-data-structure.png" alt="Stack数据结构图"></p>
-<p>说是后进先出，实际上它还是能通过调用Vector中的方法来破除该原则！该图只是告诉大家什么是<code>后进先出</code>。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/06/explain-stack-sourcecode/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-explain-copyonwritearraylist-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/05/explain-copyonwritearraylist-sourcecode/">探索CopyOnWriteArrayList底层实现</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/09/05/explain-copyonwritearraylist-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/09/05/explain-copyonwritearraylist-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-09-05T10:21:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a><div><span>简单介绍</span></div></h3><p>由于<code>CopyOnWriteArrayList</code>的<code>注释</code>并不是很多，所以在这里简单的说明下，它属于线程安全，底层是通过<code>生成数组的新副本</code>来实现的，也就是在修改列表元素/结构的情况会生成新副本。简单地说，它是ArrayList的一个变体！探索<code>CopyOnWriteArrayList</code>源代码是基于<code>JDK1.8</code>版本的。</p>
-<h3 id="开干"><a href="#开干" class="headerlink" title="开干"></a><div><span>开干</span></div></h3><p>开始进入到看源码的时间吧！</p>
-<h4 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//支持随机访问，可克隆，可序列化</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CopyOnWriteArrayList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">RandomAccess</span>, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//序列号</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">8673264195747942595L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//目前先知道是锁就行了，后续会有新文章来进行详细说明</span></span><br><span class="line">    <span class="comment">//保证同一个时间内只有一个线程能访问，</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">transient</span> ReentrantLock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//保证变量的可见性，但无法保证原子性</span></span><br><span class="line">    <span class="comment">//至于什么是可见性、原子性，较为难理解，况且也不是本章的重点，加上作者对其的理解还不够，所以后续才会出文章去做详细说明</span></span><br><span class="line">    <span class="comment">//该数组用于存放元素</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">volatile</span> Object[] array;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//相比于ArrayList，为什么没有了size、modCount成员属性呢？</span></span><br><span class="line">    <span class="comment">//因为每次添加/删除元素时，都会生成数组的新副本，也就是说新副本代替了size的作用</span></span><br><span class="line">    <span class="comment">//modCount在ArrayList中主要用于在迭代器的结构修改判断中，而CopyOnWriteArrayList的迭代器中不支持结构修改，为什么不支持呢？</span></span><br><span class="line">    <span class="comment">//源码中并未提到为什么不支持，以下主要是自我的理解</span></span><br><span class="line">    <span class="comment">//结构修改中必然涉及到加锁，若对迭代器加锁了，要是对它进行遍历上千条数据，那其他线程就不用执行了，所以迭代器万不可加锁！</span></span><br><span class="line">    <span class="comment">//不能加锁，那对于结构的修改势必会造成并发访问的问题，所以目前是没有提供支持，纯属个人理解！</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//JDK1.8并未有该类的相关注释，偏向底层，目前作者只知道它是跟锁有关联的，若想知道可自行百度</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> sun.misc.Unsafe UNSAFE;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> lockOffset;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            UNSAFE = sun.misc.Unsafe.getUnsafe();</span><br><span class="line">            Class&lt;?&gt; k = CopyOnWriteArrayList.class;</span><br><span class="line">            lockOffset = UNSAFE.objectFieldOffset</span><br><span class="line">                (k.getDeclaredField(<span class="string">"lock"</span>));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Error(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/05/explain-copyonwritearraylist-sourcecode/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-arraylist-linkedlist-perfermance-compare" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/02/arraylist-linkedlist-perfermance-compare/">ArrayList与LinkedList的性能比较</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/09/02/arraylist-linkedlist-perfermance-compare/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/09/02/arraylist-linkedlist-perfermance-compare/" class="archive-article-date">
-  	<time datetime="2019-09-02T15:44:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>我们都知道<code>ArrayList适合查询/替换</code>、<code>LinkedList适合添加/删除</code>，造成这样子的原因也在于它们底层的实现。光说这些理论似乎大家都会，所以准备用更加具体的例子来证明它，也能更好地比较这两者之间的性能关系。在测试具体场景前，简单说明下环境配置，window环境下：内存8个G；JDK8；i7处理器。</p>
-<h3 id="测试场景"><a href="#测试场景" class="headerlink" title="测试场景"></a><div><span>测试场景</span></div></h3><p>分别准备1w、5w、10w、50w、100w条数据，也就是说数据类别有上面这几种，将它们分别按照下列场景测试。</p>
-<ul>
-<li><p>在首部、尾部添加元素/节点的效率。</p>
-</li>
-<li><p>随机位置/索引插入元素/节点的效率。</p>
-</li>
-<li><p>在首部、尾部删除元素/节点的效率。</p>
-</li>
-<li><p>随机位置/索引删除元素/节点的效率。</p>
-</li>
-<li><p>随机位置/索引获取元素/节点的效率。</p>
-</li>
-<li><p>随机位置/索引修改元素/节点的效率。</p>
-</li>
-</ul>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/02/arraylist-linkedlist-perfermance-compare/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-  
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
+    <section id="comments" class="comments">
+	  <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "JoYcsWmKGGeDS1gi583VdmYm-gzGzoHsz",
+            app_key: "F9y6cyWlw9WVSFOEw3rnxfXY",
+            placeholder: "扯淡吧",
+            avatar: "",
+            avatar_cdn: "",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+	
+</script>
+    </section>
+	
   
 
 
@@ -1204,8 +404,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

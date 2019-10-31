@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/linkedhashmap/linkedhashmap-comment-3.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/linkedhashmap/linkedhashmap-comment-4.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/linkedhashmap/linkedhashmap-comment-5.png">
-<meta property="og:updated_time" content="2019-10-25T07:04:09.406Z">
+<meta property="og:updated_time" content="2019-10-31T03:29:19.477Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="探索LinkedHashMap底层实现">
 <meta name="twitter:description" content="前言印象中对LinkedHashMap的使用次数好像也不多，参考了几篇文章发现它依赖于HashMap而存在，也就是说它在HashMap的基础上又增加了某些特性，比如说有序。既然是基于HashMap，那么它内部的数据结构也应该有数组 + 链表 + 红黑树，而刚才说它又加上了自己的有序特性，那么应该还有一条链表来维护该顺序，如下图所示：  该图侧重于它是如何保持有序的，就像上面说的是一条链表，画的有点">
@@ -228,7 +228,7 @@
 <li><p>removeEldestEntry：是否移除最少访问的节点，可覆写该方法来实现不同策略的缓存机制</p>
 </li>
 </ul>
-<h4 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a>重点关注</h4><p><code>双向链表保证有序性</code> <code>可按插入顺序或按访问顺序</code></p>
+<h3 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a><div><span>重点关注</span></div></h3><p><code>双向链表保证有序性</code> <code>可按插入顺序或按访问顺序</code></p>
 
       
 
@@ -322,6 +322,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2019/10/31/explain-treemap-sourcecode/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          探索TreeMap底层实现
+        
+      </div>
+    </a>
   
   
     <a href="/2019/10/23/explain-identityhashmap-sourcecode/" id="article-nav-older" class="article-nav-link-wrap">
@@ -566,15 +575,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">markdown</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
              
               <li class="article-tag-list-item">
