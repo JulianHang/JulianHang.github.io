@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>我叫QPS，初次见面 | 奇思妙想</title>
+  <title>比较HashMap与Hashtable的不同点 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="自我介绍QPS，query per second，每秒的请求数。当我看到这里的时候很不明白，每秒？按照我的理解应该是计算开始的时间到1秒钟这中间的请求数，但是怎么算是开始的时间，是指服务启动的时间还是第一次请求开始的时间，至少对于我来说讲述的并不是很明确。在比如，有一个时间线，第二秒的后500ms到第三秒的前500ms这样子也算是一个每秒的区间，那这之间的请求数算是咋回事呢？在说说QPS的目的，有">
+  <meta name="description" content="比较趁着打铁！比较HashMap与Hashtable的不同点，此比较是基于JDK1.8，直接用表格展示。    比较点 HashMap Hashtable     键值对为null 允许 不允许   默认初始容量 16 11   默认加载因子 0.75 0.75   扩容策略 2 * capacity 2 * capacity + 1   计算hash方式 hash ^ (hash &amp;gt;&amp;gt">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我叫QPS，初次见面">
-<meta property="og:url" content="http://zlia.tech/2019/04/07/explain-qps-knowledge/index.html">
+<meta property="og:title" content="比较HashMap与Hashtable的不同点">
+<meta property="og:url" content="http://zlia.tech/2019/11/01/hashmap-hashtable-different-compare/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="自我介绍QPS，query per second，每秒的请求数。当我看到这里的时候很不明白，每秒？按照我的理解应该是计算开始的时间到1秒钟这中间的请求数，但是怎么算是开始的时间，是指服务启动的时间还是第一次请求开始的时间，至少对于我来说讲述的并不是很明确。在比如，有一个时间线，第二秒的后500ms到第三秒的前500ms这样子也算是一个每秒的区间，那这之间的请求数算是咋回事呢？在说说QPS的目的，有">
+<meta property="og:description" content="比较趁着打铁！比较HashMap与Hashtable的不同点，此比较是基于JDK1.8，直接用表格展示。    比较点 HashMap Hashtable     键值对为null 允许 不允许   默认初始容量 16 11   默认加载因子 0.75 0.75   扩容策略 2 * capacity 2 * capacity + 1   计算hash方式 hash ^ (hash &amp;gt;&amp;gt">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-08T06:12:19.385Z">
+<meta property="og:updated_time" content="2019-11-01T03:10:33.195Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我叫QPS，初次见面">
-<meta name="twitter:description" content="自我介绍QPS，query per second，每秒的请求数。当我看到这里的时候很不明白，每秒？按照我的理解应该是计算开始的时间到1秒钟这中间的请求数，但是怎么算是开始的时间，是指服务启动的时间还是第一次请求开始的时间，至少对于我来说讲述的并不是很明确。在比如，有一个时间线，第二秒的后500ms到第三秒的前500ms这样子也算是一个每秒的区间，那这之间的请求数算是咋回事呢？在说说QPS的目的，有">
+<meta name="twitter:title" content="比较HashMap与Hashtable的不同点">
+<meta name="twitter:description" content="比较趁着打铁！比较HashMap与Hashtable的不同点，此比较是基于JDK1.8，直接用表格展示。    比较点 HashMap Hashtable     键值对为null 允许 不允许   默认初始容量 16 11   默认加载因子 0.75 0.75   扩容策略 2 * capacity 2 * capacity + 1   计算hash方式 hash ^ (hash &amp;gt;&amp;gt">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -167,14 +167,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-explain-qps-knowledge" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-hashmap-hashtable-different-compare" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      我叫QPS，初次见面
+      比较HashMap与Hashtable的不同点
     </h1>
   
 
@@ -183,24 +183,65 @@
 <!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/04/07/explain-qps-knowledge/" class="pageViews">0</span>
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/01/hashmap-hashtable-different-compare/" class="pageViews">0</span>
   </a>
 
         
-        <a href="/2019/04/07/explain-qps-knowledge/" class="archive-article-date">
-  	<time datetime="2019-04-07T05:33:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-07</time>
+        <a href="/2019/11/01/hashmap-hashtable-different-compare/" class="archive-article-date">
+  	<time datetime="2019-11-01T03:10:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="自我介绍"><a href="#自我介绍" class="headerlink" title="自我介绍"></a><div><span>自我介绍</span></div></h3><p>QPS，query per second，<code>每秒的请求数</code>。当我看到这里的时候很不明白，每秒？按照我的理解应该是计算开始的时间到1秒钟这中间的请求数，但是怎么算是开始的时间，是指服务启动的时间还是第一次请求开始的时间，至少对于我来说讲述的并不是很明确。在比如，有一个时间线，第二秒的后500ms到第三秒的前500ms这样子也算是一个每秒的区间，那这之间的请求数算是咋回事呢？在说说QPS的目的，有人说是为了防止恶意刷取，增加项目负载，既然是控制刷取，那么我觉得这个控制应该是从别人第一次请求的时间开始算起，当它在1秒内多次请求达到上限后被服务限制了，这才算是合理的，所以我觉得应该是<code>从第一次请求开始的时间经过1秒后的请求数</code>，纯属个人理解。最近接触的项目中有提到QPS，说是恶意刷取，更准确的讲应该是用来做<code>流量控制</code>，这个词语给人的感觉更专业！而它算的时间也是从第一次请求开始算起的。 <a id="more"></a></p>
-<h3 id="模拟QPS"><a href="#模拟QPS" class="headerlink" title="模拟QPS"></a><div><span>模拟QPS</span></div></h3><p>方便理解，模拟了一个场景来实现QPS的流量控制效果。<br>假设控制在1秒内不多于Limit个请求，Limit代表请求上限。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">checkQps</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (count &lt; limit ) &#123;</span><br><span class="line">        count++;</span><br><span class="line">        total++;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (System.nanoTime() - start &gt; duration) &#123;</span><br><span class="line">        total++;</span><br><span class="line">        reset();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这只是其中的一部分代码，也是最主要的，要想看所有的可到该文章的底部点击源码下载即可跳转到相应的位置。</p>
-<h3 id="再见朋友"><a href="#再见朋友" class="headerlink" title="再见朋友"></a><div><span>再见朋友</span></div></h3><p>QPS是很多网站来衡量<code>吞吐量</code>的其中一个因素，基本上都会有一个统计图或者曲线图之类的，和QPS有关系的是另外一个朋友-<code>并发数</code>，目前笔者还没有去了解它，对于并发这块的知识点还远远不够，所以还早呢。又到了说几句鸡汤的时候了，技术是永远也学不完的，慢慢来，有一点点的进步总比呆坐着好，加油自己，加油每一个人。</p>
-<p><a href="https://github.com/JulianHang/little-java-project/blob/master/src/tech/zlia/interest/example/FlowControlQpsTest.java" target="_blank" rel="noopener">源码下载</a> </p>
+        <h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a><div><span>比较</span></div></h3><p>趁着打铁！比较HashMap与Hashtable的不同点，此比较是基于<code>JDK1.8</code>，直接用表格展示。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">比较点</th>
+<th style="text-align:center">HashMap</th>
+<th style="text-align:center">Hashtable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">键值对为null</td>
+<td style="text-align:center">允许</td>
+<td style="text-align:center">不允许</td>
+</tr>
+<tr>
+<td style="text-align:center">默认初始容量</td>
+<td style="text-align:center">16</td>
+<td style="text-align:center">11</td>
+</tr>
+<tr>
+<td style="text-align:center">默认加载因子</td>
+<td style="text-align:center">0.75</td>
+<td style="text-align:center">0.75</td>
+</tr>
+<tr>
+<td style="text-align:center">扩容策略</td>
+<td style="text-align:center">2 * capacity</td>
+<td style="text-align:center">2 * capacity + 1</td>
+</tr>
+<tr>
+<td style="text-align:center">计算hash方式</td>
+<td style="text-align:center">hash ^ (hash &gt;&gt;&gt; 16)</td>
+<td style="text-align:center">hash &amp; 0x7FFFFFFF</td>
+</tr>
+<tr>
+<td style="text-align:center">计算索引</td>
+<td style="text-align:center">hash &amp; (capacity - 1)</td>
+<td style="text-align:center">hash % capacity</td>
+</tr>
+<tr>
+<td style="text-align:center">新增节点</td>
+<td style="text-align:center">尾插法</td>
+<td style="text-align:center">头插法</td>
+</tr>
+</tbody>
+</table>
 
       
 
@@ -226,7 +267,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/essays//" class="article-tag-list-link color2">essays</a>
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
         		</li>
       		
 		</ul>
@@ -281,7 +322,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/04/07/explain-qps-knowledge/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/11/01/hashmap-hashtable-different-compare/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -295,18 +336,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/04/14/explain-spi-knowledge/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          我叫Spi，新成员
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/02/24/core-java-knowledge-20190211/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">每日知识点20190211</div>
+    <a href="/2019/10/31/explain-hashtable-sourcecode/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">探索Hashtable底层实现</div>
       <i class="icon-circle-right"></i>
     </a>
   
