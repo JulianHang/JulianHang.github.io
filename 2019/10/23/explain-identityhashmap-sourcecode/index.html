@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/identityhashmap/identityhashmap-comment-4.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/identityhashmap/identityhashmap-comment-5.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/identityhashmap/identityhashmap-comment-6.png">
-<meta property="og:updated_time" content="2019-10-31T03:29:34.134Z">
+<meta property="og:updated_time" content="2019-11-04T08:05:22.859Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="探索IdentityHashMap底层实现">
 <meta name="twitter:description" content="前沿我也是第一次认识IdentityHashMap，在工作中从未使用过它，所以对它的使用场景可能并不是很了解，本文也仅仅针对基于JDK1.8的源码进行探索。IdentityHashMap的数据结构应该是如图所示：  这个数据结构是我在看源码之前看了几篇别人写的文章所了解到的，个人喜欢在看源码对目标有所了解的习惯，紧接着才去深入它。">
@@ -236,6 +236,8 @@
 <li><p>IdentityHashMap用于序列化或深拷贝、代理场景中，不过即使这么说，我还是没能感受到它的用处</p>
 </li>
 <li><p>IdentityHashMap无序、不可重复、非线程安全</p>
+</li>
+<li><p>IdentityHashMap的键值对允许存放null</p>
 </li>
 <li><p><code>添加节点流程</code>：首先获取索引位置，接着若发现当前位置上不存在节点则直接添加皆可，若发现当前位置上已经存在节点了则比较两者是否相等（采用 k1 == k2的方式），若相等则说明重复进行替换值即可，若不相等说明发生冲突，它会往后查抄偶数索引位置，直到发现偶数索引位置上不存在节点时才进行存储</p>
 </li>
@@ -575,10 +577,6 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
@@ -587,11 +585,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -599,11 +597,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
             
             <div class="clearfix"></div>

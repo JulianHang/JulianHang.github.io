@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>比较HashMap与Hashtable的不同点 | 奇思妙想</title>
+  <title>比较Map实现类的不同点 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="比较趁着打铁！比较HashMap与Hashtable的不同点，此比较是基于JDK1.8，直接用表格展示。    比较点 HashMap Hashtable     键值对为null 允许 不允许   默认初始容量 16 11   默认加载因子 0.75 0.75   扩容策略 2 * capacity 2 * capacity + 1   计算hash方式 hash ^ (hash &amp;gt;&amp;gt">
+  <meta name="description" content="比较趁着打铁！比较最近学习到的几个Map实现类，也正好总结下！此比较是基于JDK1.8，直接用表格展示。    比较点 HashMap Hashtable IdentityHashMap LinkedHashMap TreeMap WeakHashMap     数据结构 数组、链表、红黑树 数组、链表 数组（哈希探针表） 数组、链表、红黑树 红黑树 数组、链表   是否有序/可重复 无序不可重复">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="比较HashMap与Hashtable的不同点">
-<meta property="og:url" content="http://zlia.tech/2019/11/01/hashmap-hashtable-different-compare/index.html">
+<meta property="og:title" content="比较Map实现类的不同点">
+<meta property="og:url" content="http://zlia.tech/2019/11/01/map-different-compare/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="比较趁着打铁！比较HashMap与Hashtable的不同点，此比较是基于JDK1.8，直接用表格展示。    比较点 HashMap Hashtable     键值对为null 允许 不允许   默认初始容量 16 11   默认加载因子 0.75 0.75   扩容策略 2 * capacity 2 * capacity + 1   计算hash方式 hash ^ (hash &amp;gt;&amp;gt">
+<meta property="og:description" content="比较趁着打铁！比较最近学习到的几个Map实现类，也正好总结下！此比较是基于JDK1.8，直接用表格展示。    比较点 HashMap Hashtable IdentityHashMap LinkedHashMap TreeMap WeakHashMap     数据结构 数组、链表、红黑树 数组、链表 数组（哈希探针表） 数组、链表、红黑树 红黑树 数组、链表   是否有序/可重复 无序不可重复">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-01T03:10:33.195Z">
+<meta property="og:updated_time" content="2019-11-04T10:11:39.664Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="比较HashMap与Hashtable的不同点">
-<meta name="twitter:description" content="比较趁着打铁！比较HashMap与Hashtable的不同点，此比较是基于JDK1.8，直接用表格展示。    比较点 HashMap Hashtable     键值对为null 允许 不允许   默认初始容量 16 11   默认加载因子 0.75 0.75   扩容策略 2 * capacity 2 * capacity + 1   计算hash方式 hash ^ (hash &amp;gt;&amp;gt">
+<meta name="twitter:title" content="比较Map实现类的不同点">
+<meta name="twitter:description" content="比较趁着打铁！比较最近学习到的几个Map实现类，也正好总结下！此比较是基于JDK1.8，直接用表格展示。    比较点 HashMap Hashtable IdentityHashMap LinkedHashMap TreeMap WeakHashMap     数据结构 数组、链表、红黑树 数组、链表 数组（哈希探针表） 数组、链表、红黑树 红黑树 数组、链表   是否有序/可重复 无序不可重复">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -167,14 +167,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hashmap-hashtable-different-compare" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-map-different-compare" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      比较HashMap与Hashtable的不同点
+      比较Map实现类的不同点
     </h1>
   
 
@@ -183,11 +183,11 @@
 <!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/01/hashmap-hashtable-different-compare/" class="pageViews">0</span>
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/01/map-different-compare/" class="pageViews">0</span>
   </a>
 
         
-        <a href="/2019/11/01/hashmap-hashtable-different-compare/" class="archive-article-date">
+        <a href="/2019/11/01/map-different-compare/" class="archive-article-date">
   	<time datetime="2019-11-01T03:10:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-01</time>
 </a>
         
@@ -195,50 +195,100 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a><div><span>比较</span></div></h3><p>趁着打铁！比较HashMap与Hashtable的不同点，此比较是基于<code>JDK1.8</code>，直接用表格展示。</p>
+        <h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a><div><span>比较</span></div></h3><p>趁着打铁！比较最近学习到的几个Map实现类，也正好总结下！此比较是基于<code>JDK1.8</code>，直接用表格展示。</p>
 <table>
 <thead>
 <tr>
 <th style="text-align:center">比较点</th>
 <th style="text-align:center">HashMap</th>
 <th style="text-align:center">Hashtable</th>
+<th>IdentityHashMap</th>
+<th>LinkedHashMap</th>
+<th>TreeMap</th>
+<th>WeakHashMap</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td style="text-align:center">数据结构</td>
+<td style="text-align:center">数组、链表、红黑树</td>
+<td style="text-align:center">数组、链表</td>
+<td>数组（哈希探针表）</td>
+<td>数组、链表、红黑树</td>
+<td>红黑树</td>
+<td>数组、链表</td>
+</tr>
+<tr>
+<td style="text-align:center">是否有序/可重复</td>
+<td style="text-align:center">无序不可重复</td>
+<td style="text-align:center">无序不可重复</td>
+<td>无序不可重复</td>
+<td>默认按插入顺序排列，可按访问顺序排列，不可重复</td>
+<td>默认按自然顺序，可指定比较器进行自定义排序，不可重复</td>
+<td>无序不可重复</td>
+</tr>
+<tr>
 <td style="text-align:center">键值对为null</td>
 <td style="text-align:center">允许</td>
 <td style="text-align:center">不允许</td>
+<td>允许</td>
+<td>允许</td>
+<td>默认排序中键不允许，值允许；自定义排序中键值对都允许</td>
+<td>允许</td>
 </tr>
 <tr>
 <td style="text-align:center">默认初始容量</td>
 <td style="text-align:center">16</td>
 <td style="text-align:center">11</td>
+<td>64</td>
+<td>16</td>
+<td></td>
+<td>16</td>
 </tr>
 <tr>
 <td style="text-align:center">默认加载因子</td>
 <td style="text-align:center">0.75</td>
 <td style="text-align:center">0.75</td>
+<td>1/3</td>
+<td>0.75</td>
+<td></td>
+<td>0.75</td>
 </tr>
 <tr>
 <td style="text-align:center">扩容策略</td>
 <td style="text-align:center">2 * capacity</td>
 <td style="text-align:center">2 * capacity + 1</td>
+<td>2 * capacity</td>
+<td>2 * capacity</td>
+<td></td>
+<td>2 * capacity</td>
 </tr>
 <tr>
 <td style="text-align:center">计算hash方式</td>
 <td style="text-align:center">hash ^ (hash &gt;&gt;&gt; 16)</td>
 <td style="text-align:center">hash &amp; 0x7FFFFFFF</td>
+<td>(hash &lt;&lt; 1) - (hash &lt;&lt; 8)</td>
+<td>hash ^ (hash &gt;&gt;&gt; 16)</td>
+<td></td>
+<td>有点复杂，就不贴了</td>
 </tr>
 <tr>
 <td style="text-align:center">计算索引</td>
 <td style="text-align:center">hash &amp; (capacity - 1)</td>
 <td style="text-align:center">hash % capacity</td>
+<td>hash &amp; (capacity - 1)</td>
+<td>hash &amp; (capacity - 1)</td>
+<td></td>
+<td>hash &amp; (capacity - 1)</td>
 </tr>
 <tr>
 <td style="text-align:center">新增节点</td>
 <td style="text-align:center">尾插法</td>
 <td style="text-align:center">头插法</td>
+<td></td>
+<td>尾插法</td>
+<td></td>
+<td>头插法</td>
 </tr>
 </tbody>
 </table>
@@ -322,7 +372,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/11/01/hashmap-hashtable-different-compare/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/11/01/map-different-compare/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -335,6 +385,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2019/11/04/explain-weakhashmap-sourcecode/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          探索WeakHashMap底层实现
+        
+      </div>
+    </a>
   
   
     <a href="/2019/10/31/explain-hashtable-sourcecode/" id="article-nav-older" class="article-nav-link-wrap">
@@ -563,10 +622,6 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
@@ -575,11 +630,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -587,11 +642,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
             
             <div class="clearfix"></div>
