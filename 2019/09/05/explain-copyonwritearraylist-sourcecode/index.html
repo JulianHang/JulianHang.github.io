@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="奇思妙想">
 <meta property="og:description" content="简单介绍由于CopyOnWriteArrayList的注释并不是很多，所以在这里简单的说明下，它属于线程安全，底层是通过生成数组的新副本来实现的，也就是在修改列表元素/结构的情况会生成新副本。简单地说，它是ArrayList的一个变体！探索CopyOnWriteArrayList源代码是基于JDK1.8版本的。 开干开始进入到看源码的时间吧！ 数据结构12345678910111213141516">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-06T06:08:32.916Z">
+<meta property="og:updated_time" content="2019-11-05T09:50:42.656Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="探索CopyOnWriteArrayList底层实现">
 <meta name="twitter:description" content="简单介绍由于CopyOnWriteArrayList的注释并不是很多，所以在这里简单的说明下，它属于线程安全，底层是通过生成数组的新副本来实现的，也就是在修改列表元素/结构的情况会生成新副本。简单地说，它是ArrayList的一个变体！探索CopyOnWriteArrayList源代码是基于JDK1.8版本的。 开干开始进入到看源码的时间吧！ 数据结构12345678910111213141516">
@@ -217,6 +217,8 @@
 <li><p>CopyOnWriteArrayList适用于读多写少的场景。</p>
 </li>
 <li><p>CopyOnWriteArrayList在性能上没有ArrayList、LinkedList好，毕竟加了锁！</p>
+</li>
+<li><p>CopyOnWriteArrayList没有扩容机制，每次添加节点前就拷贝源数组到新数组中，而新数组与源数组的长度差为1</p>
 </li>
 </ul>
 <h3 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a><div><span>重点关注</span></div></h3><p><code>线程安全</code> <code>底层是通过生成数组的新副本实现</code> <code>由于每次都生成新副本，故内存占用会相对更大</code> <code>多线程情况下，可能读取到旧数据（读取在添加之前执行）</code></p>
@@ -554,19 +556,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -575,6 +573,10 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
               </li>
              
               <li class="article-tag-list-item">

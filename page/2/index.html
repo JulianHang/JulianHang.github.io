@@ -167,6 +167,101 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-explain-binarytree-avl" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/15/explain-binarytree-avl/">初识平衡二叉树-AVL</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/09/15/explain-binarytree-avl/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2019/09/15/explain-binarytree-avl/" class="archive-article-date">
+  	<time datetime="2019-09-15T11:23:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>上一篇文章只是简单地认识下<code>二叉树</code>，并未提到它的<code>缺陷</code>。数据结构的好坏取决于<code>时间复杂度</code>，由于每次操作（插入、删除、查找）需要与节点比较来选择进入到左子树还是右子树，也就是说每次比较都会排除一些可能（选择左右其中一侧），当然了这是对于随机均匀分布的二叉树来说，它的时间复杂度是O（log<sub>2</sub>n），但是对于只有单向的左子树或右子树来说，它的时间复杂度就变成了O(n)，每次操作都会从头到尾所有节点比较一遍。总的来说，二叉树的时间复杂度区间是在O(log<sub>2</sub>n) ~ O(n)之间，这完全取决于二叉树的结构！如图所示：</p>
+<p class="customize-img"><img src="/assets/blogImg/algorithm/avl/single-binarytree.png" alt="单向二叉树结构"></p>
+<p>随着单向二叉树越来越长，所消耗的时间也会越来越多，这已经跟单链表没有什么区别了。因此，为了解决单链表的情况，将时间复杂度降低至O（log<sub>2</sub>n），衍生出了<code>平衡二叉树</code>。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/09/15/explain-binarytree-avl/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-explain-binarytree" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1054,100 +1149,6 @@
 
 
   
-    <article id="post-explain-binary-code" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/25/explain-binary-code/">探索Integer.toBinaryString源码</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/06/25/explain-binary-code/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/06/25/explain-binary-code/" class="archive-article-date">
-  	<time datetime="2019-06-25T11:56:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="不解驱动着你"><a href="#不解驱动着你" class="headerlink" title="不解驱动着你"></a><div><span>不解驱动着你</span></div></h3><p>一般情况下我是不会主动去看源码的，除非是写专门的主题或者是遇到不懂的难题。果然了，于是带着好奇心尝试理解下源码，一会我先抛出问题，要是有同学一下子就明白了那就可以不用往下看了！还有一个前提就是最好对原码、补码、反码有所了解，因为计算机操作的数据就是以二进制的形式存在的，准确的说是用补码的形式来计算的！</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">URShift</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = -<span class="number">1</span>;</span><br><span class="line">        System.out.println(Integer.toBinaryString(i));</span><br><span class="line"></span><br><span class="line">        i &gt;&gt;&gt;= <span class="number">10</span>;</span><br><span class="line">        System.out.println(Integer.toBinaryString(i));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">long</span> l = -<span class="number">1</span>;</span><br><span class="line">        System.out.println(Long.toBinaryString(l));</span><br><span class="line"></span><br><span class="line">        l &gt;&gt;&gt;= <span class="number">10</span>;</span><br><span class="line">        System.out.println(Long.toBinaryString(l));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">short</span> s = -<span class="number">1</span>;</span><br><span class="line">        System.out.println(Integer.toBinaryString(s));</span><br><span class="line"></span><br><span class="line">        s &gt;&gt;&gt;= <span class="number">10</span>;</span><br><span class="line">        System.out.println(Integer.toBinaryString(s));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">byte</span> b = -<span class="number">1</span>;</span><br><span class="line">        System.out.println(Integer.toBinaryString(b));</span><br><span class="line"></span><br><span class="line">        b &gt;&gt;&gt;= <span class="number">10</span>;</span><br><span class="line">        System.out.println(Integer.toBinaryString(b));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/25/explain-binary-code/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1309,19 +1310,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1330,6 +1327,10 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
               </li>
              
               <li class="article-tag-list-item">

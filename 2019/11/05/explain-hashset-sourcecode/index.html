@@ -6,23 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>每日知识点20181212 | 奇思妙想</title>
+  <title>探索HashSet底层实现 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="java javadoc只能为public和protected成员进行文档注释，private和默认权限的注释则会被忽略掉，不过可以用-private进行标记，以便把private成员的注释耶包括在内.  int x = Character.digit(‘c’, 16)：是把16进制的c转为10进制，结果是12，16进制中a、b、c、d、e、f分别代表10、11、12、13、14、15.  计算机">
-<meta name="keywords" content="daily-konwledge-point-java">
+  <meta name="description" content="前言HashSet的底层实现依赖于HashMap，所以它的数据结构也是数组 + 链表 + 红黑树，而对于它的类注释也没什么好总结的，探索HashSet底层实现是基于JDK1.8。仔细一想，HashSet存在的意义是什么？有时候需要添加元素时，也就是只有单个对象，并没有所谓的键值对，或许还有些用处，可这ArrayList也能做到啊！可是相比之下，HashSet由于有HashMap撑腰，它的性能要高于">
+<meta name="keywords" content="java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="每日知识点20181212">
-<meta property="og:url" content="http://zlia.tech/2019/06/25/thinking-in-java-knowledge-20190609/index.html">
+<meta property="og:title" content="探索HashSet底层实现">
+<meta property="og:url" content="http://zlia.tech/2019/11/05/explain-hashset-sourcecode/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="java javadoc只能为public和protected成员进行文档注释，private和默认权限的注释则会被忽略掉，不过可以用-private进行标记，以便把private成员的注释耶包括在内.  int x = Character.digit(‘c’, 16)：是把16进制的c转为10进制，结果是12，16进制中a、b、c、d、e、f分别代表10、11、12、13、14、15.  计算机">
+<meta property="og:description" content="前言HashSet的底层实现依赖于HashMap，所以它的数据结构也是数组 + 链表 + 红黑树，而对于它的类注释也没什么好总结的，探索HashSet底层实现是基于JDK1.8。仔细一想，HashSet存在的意义是什么？有时候需要添加元素时，也就是只有单个对象，并没有所谓的键值对，或许还有些用处，可这ArrayList也能做到啊！可是相比之下，HashSet由于有HashMap撑腰，它的性能要高于">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://zlia.tech/assets/blogImg/daliy-konwledge-point/20190812/for-1.png">
-<meta property="og:image" content="http://zlia.tech/assets/blogImg/daliy-konwledge-point/20190812/for-2.png">
-<meta property="og:updated_time" content="2019-09-02T16:07:18.078Z">
+<meta property="og:updated_time" content="2019-11-05T12:59:05.138Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="每日知识点20181212">
-<meta name="twitter:description" content="java javadoc只能为public和protected成员进行文档注释，private和默认权限的注释则会被忽略掉，不过可以用-private进行标记，以便把private成员的注释耶包括在内.  int x = Character.digit(‘c’, 16)：是把16进制的c转为10进制，结果是12，16进制中a、b、c、d、e、f分别代表10、11、12、13、14、15.  计算机">
-<meta name="twitter:image" content="http://zlia.tech/assets/blogImg/daliy-konwledge-point/20190812/for-1.png">
+<meta name="twitter:title" content="探索HashSet底层实现">
+<meta name="twitter:description" content="前言HashSet的底层实现依赖于HashMap，所以它的数据结构也是数组 + 链表 + 红黑树，而对于它的类注释也没什么好总结的，探索HashSet底层实现是基于JDK1.8。仔细一想，HashSet存在的意义是什么？有时候需要添加元素时，也就是只有单个对象，并没有所谓的键值对，或许还有些用处，可这ArrayList也能做到啊！可是相比之下，HashSet由于有HashMap撑腰，它的性能要高于">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -170,14 +167,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-thinking-in-java-knowledge-20190609" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-explain-hashset-sourcecode" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      每日知识点20181212
+      探索HashSet底层实现
     </h1>
   
 
@@ -186,52 +183,32 @@
 <!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/06/25/thinking-in-java-knowledge-20190609/" class="pageViews">0</span>
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/05/explain-hashset-sourcecode/" class="pageViews">0</span>
   </a>
 
         
-        <a href="/2019/06/25/thinking-in-java-knowledge-20190609/" class="archive-article-date">
-  	<time datetime="2019-06-25T11:52:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-25</time>
+        <a href="/2019/11/05/explain-hashset-sourcecode/" class="archive-article-date">
+  	<time datetime="2019-11-05T12:59:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-05</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul>
-<li><p>javadoc只能为public和protected成员进行文档注释，private和默认权限的注释则会被忽略掉，不过可以用-private进行标记，以便把private成员的注释耶包括在内.</p>
-</li>
-<li><p>int x = Character.digit(‘c’, 16)：是把16进制的c转为10进制，结果是12，16进制中a、b、c、d、e、f分别代表10、11、12、13、14、15.</p>
-</li>
-<li><p>计算机中计算都是采用补码计算的。在计算机中的机器字长的最高位表示正负，0为正数，1为负数。正数的原码、反码和补码都一样，都等于原码。负数的反码就是在原码的基础上符号位不变其余位按位取反，负数的补码就是在反码的基础上+1.值得注意的是，计算机将数值10000000表示为最大负数-128.推荐大家看下为什么计算机中要采用补码来储存数据，这是我搜索当中觉得不错的一篇文章-<a href="https://blog.csdn.net/weixin_44734925/article/details/88432355" target="_blank" rel="noopener">为什么计算机采用补码形式进行数据的表示</a>.</p>
-</li>
-<li><p>对于byte或short值进行移位运算，得到的可能不是正确的结果。它们会被转换成int类型，在进行移位操作，然后被<code>截断</code>，赋值给原来的类型.如short i = -1; i &gt;&gt;&gt;= 10; 因为i是short类型，所以会被截断，最终的结果是-1.</p>
-</li>
-<li><p>Math.round：四舍五入.</p>
-</li>
-<li><p>如果在返回void的方法中没有return语句，那么在该方法的结尾处会有一个隐式的return.</p>
-</li>
-<li><p>对于一类中的成员最好使用private访问权限修饰符。若你直接让外部类去访问该属性，有一天如果想要改变获取该属性的方式，那外部类岂不是也要跟着修改，所以最好的方式是用private修改该属性，同时提供具有public修饰符的方法，该方法主要用来获取该属性，至于怎么获取就是你说了算，外部类只要调用该方法即可，即使哪一天获取属性的方式变化了，也只需要修改方法的内部代码即可，外部类的调用方法还是不变.</p>
-</li>
-</ul>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>HashSet的底层实现依赖于HashMap，所以它的数据结构也是<code>数组 + 链表 + 红黑树</code>，而对于它的类注释也没什么好总结的，探索HashSet底层实现是基于<code>JDK1.8</code>。仔细一想，HashSet存在的意义是什么？有时候需要添加元素时，也就是只有单个对象，并没有所谓的键值对，或许还有些用处，可这ArrayList也能做到啊！可是相比之下，HashSet由于有HashMap撑腰，它的性能要高于ArrayList，所以我认为HashSet是List和Map独有的特性结合后的产物。</p>
 <a id="more"></a>
-<ul>
-<li><p>当实现某个接口时，并不需要实现嵌套在其内部的任何接口.</p>
+<h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a><div><span>数据结构</span></div></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//可序列化、可克隆</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashSet</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractSet</span>&lt;<span class="title">E</span>&gt; <span class="keyword">implements</span> <span class="title">Set</span>&lt;<span class="title">E</span>&gt;, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//直接使用了HashMap来存储它的元素</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> HashMap&lt;E,Object&gt; map;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//既然用了HashMap就要考虑值应该存什么，就是它了，不管新增的元素是什么，它都作为值</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object PRESENT = <span class="keyword">new</span> Object();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 初始化</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashSet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 指定集合来初始化</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> c 指定集合</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashSet</span><span class="params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;</span><br><span class="line">    map = <span class="keyword">new</span> HashMap&lt;&gt;(Math.max((<span class="keyword">int</span>) (c.size()/.<span class="number">75f</span>) + <span class="number">1</span>, <span class="number">16</span>));</span><br><span class="line">    addAll(c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 指定初始容量与加载因子来初始化</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> initialCapacity 指定初始容量</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> loadFactor 指定加载因子</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashSet</span><span class="params">(<span class="keyword">int</span> initialCapacity, <span class="keyword">float</span> loadFactor)</span> </span>&#123;</span><br><span class="line">    map = <span class="keyword">new</span> HashMap&lt;&gt;(initialCapacity, loadFactor);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 指定初始容量来初始化</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> initialCapacity 指定初始容量</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashSet</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">    map = <span class="keyword">new</span> HashMap&lt;&gt;(initialCapacity);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 指定初始容量与加载因子来初始化</span></span><br><span class="line"><span class="comment"> * 对比上面这里构造了LinkedHashMap，说明它是有序的</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> initialCapacity 指定初始容量</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> loadFactor 指定加载因子</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> dummy 无实际意义，为了与上面的构造函数区分开来</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">HashSet(<span class="keyword">int</span> initialCapacity, <span class="keyword">float</span> loadFactor, <span class="keyword">boolean</span> dummy) &#123;</span><br><span class="line">    map = <span class="keyword">new</span> LinkedHashMap&lt;&gt;(initialCapacity, loadFactor);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="简单方法"><a href="#简单方法" class="headerlink" title="简单方法"></a>简单方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取迭代器</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 迭代器</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Iterator&lt;E&gt; <span class="title">iterator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> map.keySet().iterator();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取元素个数</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 元素个数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> map.size();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * HashSet是否为空</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 是否为空</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> map.isEmpty();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * HashSet是否包含指定元素</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> o 指定元素</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 是否包含指定元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> map.containsKey(o);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 新增元素</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> e 指定元素</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 是否新增成功</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> map.put(e, PRESENT)==<span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 移除指定元素</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> o 指定元素</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 是否移除成功</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">remove</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> map.remove(o)==PRESENT;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 清空</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    map.clear();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 浅克隆</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        HashSet&lt;E&gt; newSet = (HashSet&lt;E&gt;) <span class="keyword">super</span>.clone();</span><br><span class="line">        newSet.map = (HashMap&lt;E, Object&gt;) map.clone();</span><br><span class="line">        <span class="keyword">return</span> newSet;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> InternalError(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li><p>HashSet无序、不可重复、非线程安全</p>
 </li>
-<li><p>当某个外围类的对象创建了一个内部类对象时，此内部类对象必定会秘密地捕获一个指向那个外围类对象的引用.</p>
+<li><p>HashSet允许存放空元素</p>
 </li>
-<li><p>看到这个程序的时候一开始我是不能理解的，后面仔细想想好像很有道理！先不用管为什么要这么写，看就完事了！</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> a;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> <span class="keyword">extends</span> <span class="title">B</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> B b;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">A</span><span class="params">(B b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.b = b;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">a</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(name);<span class="comment">//compile ok</span></span><br><span class="line">        System.out.println(b.name);<span class="comment">//compile error</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> b;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">B</span> </span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> String name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><p>HashSet底层基于HashMap</p>
 </li>
 </ul>
-<p>一开始我想着没问题啊，怎么会报错呢？后面一想想，这是两个事情啊！不能混为一谈.<code>name</code>是在访问A类中的变量，按照<code>protected</code>权限来说是可以访问的，但是对于另外一个对象<code>b</code>自身来说，若是在该类里面去访问name是没问题的，但是借助其他类来访问b对象，让b对象去访问name是不可取的，因为A类与b对象没有任何的关系，<code>b.name</code>就是去访问b类中的name变量，不好意思，它只对子类或同包访问，而A类都不是，可以考虑下若b = new C()，而C类正好继承B，这种多态场景下是不是更好理解一些.</p>
-<ul>
-<li><code>高级for循环</code>，只要是<code>实现了Iterable</code>类都可以使用高级for循环，实际上它底层是调用的迭代器的<code>hasNext</code>与<code>next</code>方法，当然这些是编译器帮你做的，不用我们操心了，于是我又很好奇的尝试了数组，不知道它底层有没有实现Iterable，因为它也是可以使用高级for循环，结果不太一样，也是编译器帮你做的，只不过是假的高级for循环，最终被编译成了普通的for循环了.</li>
-</ul>
-<p class="customize-img"><img src="/assets/blogImg/daliy-konwledge-point/20190812/for-1.png" alt="高级for-1"></p>
-<p>很简单，以上是源码.</p>
-<p class="customize-img"><img src="/assets/blogImg/daliy-konwledge-point/20190812/for-2.png" alt="高级for-1"></p>
-<p>以上是编译后的字节码文件，不信你编一个试试.</p>
+<h3 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a><div><span>重点关注</span></div></h3><p><code>基于HashMap</code></p>
 
       
 
@@ -245,7 +222,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">daily-konwledge-point-java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
       		
 		</ul>
@@ -312,7 +289,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/06/25/thinking-in-java-knowledge-20190609/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/11/05/explain-hashset-sourcecode/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -326,18 +303,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/06/25/explain-binary-code/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          探索Integer.toBinaryString源码
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/06/08/primary-programmer-book-list/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">推荐初级程序员书单</div>
+    <a href="/2019/11/05/map-different-compare/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">比较Map实现类的不同点</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -566,19 +534,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -587,6 +551,10 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
               </li>
              
               <li class="article-tag-list-item">

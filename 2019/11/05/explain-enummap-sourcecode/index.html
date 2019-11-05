@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://zlia.tech">
   <title>探索EnumMap底层实现 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言EnumMap初次见面，请多多关照！对于该类的注释直接上总结：  专门用于枚举类型的键的Map实现。EnumMap内部的数据结构是数组，按枚举常量的声明顺序排列它的键，与其他Map实现类不同的是，它的迭代器并不会抛出快速失败错误！  该类的代码不到1000行，速速解决掉。">
+  <meta name="description" content="前言EnumMap初次见面，请多多关照！对于该类的注释直接上总结：  专门用于枚举类型的键的Map实现。EnumMap内部的数据结构是数组，按枚举常量的声明顺序排列它的键，与其他Map实现类不同的是，它的迭代器并不会抛出快速失败错误！  该类的代码不到1000行，速速解决掉，探索EnumMap底层实现是基于JDK1.8。">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="探索EnumMap底层实现">
 <meta property="og:url" content="http://zlia.tech/2019/11/05/explain-enummap-sourcecode/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="前言EnumMap初次见面，请多多关照！对于该类的注释直接上总结：  专门用于枚举类型的键的Map实现。EnumMap内部的数据结构是数组，按枚举常量的声明顺序排列它的键，与其他Map实现类不同的是，它的迭代器并不会抛出快速失败错误！  该类的代码不到1000行，速速解决掉。">
+<meta property="og:description" content="前言EnumMap初次见面，请多多关照！对于该类的注释直接上总结：  专门用于枚举类型的键的Map实现。EnumMap内部的数据结构是数组，按枚举常量的声明顺序排列它的键，与其他Map实现类不同的是，它的迭代器并不会抛出快速失败错误！  该类的代码不到1000行，速速解决掉，探索EnumMap底层实现是基于JDK1.8。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-05T08:21:37.143Z">
+<meta property="og:updated_time" content="2019-11-05T09:28:40.140Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="探索EnumMap底层实现">
-<meta name="twitter:description" content="前言EnumMap初次见面，请多多关照！对于该类的注释直接上总结：  专门用于枚举类型的键的Map实现。EnumMap内部的数据结构是数组，按枚举常量的声明顺序排列它的键，与其他Map实现类不同的是，它的迭代器并不会抛出快速失败错误！  该类的代码不到1000行，速速解决掉。">
+<meta name="twitter:description" content="前言EnumMap初次见面，请多多关照！对于该类的注释直接上总结：  专门用于枚举类型的键的Map实现。EnumMap内部的数据结构是数组，按枚举常量的声明顺序排列它的键，与其他Map实现类不同的是，它的迭代器并不会抛出快速失败错误！  该类的代码不到1000行，速速解决掉，探索EnumMap底层实现是基于JDK1.8。">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -199,7 +199,7 @@
 <blockquote>
 <p>专门用于<code>枚举类型</code>的键的Map实现。EnumMap内部的数据结构是数组，按枚举常量的声明顺序排列它的键，与其他Map实现类不同的是，它的迭代器并不会抛出快速失败错误！</p>
 </blockquote>
-<p>该类的代码不到1000行，速速解决掉。</p>
+<p>该类的代码不到1000行，速速解决掉，探索EnumMap底层实现是基于<code>JDK1.8</code>。</p>
 <a id="more"></a>
 <h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a><div><span>数据结构</span></div></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EnumMap</span>&lt;<span class="title">K</span> <span class="keyword">extends</span> <span class="title">Enum</span>&lt;<span class="title">K</span>&gt;, <span class="title">V</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractMap</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span>, <span class="title">Cloneable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 枚举类型的类类型</span></span><br><span class="line"><span class="comment">     * 为什么需要类类型呢? </span></span><br><span class="line"><span class="comment">     * 因为在一开始初始化时，EnumMap就会将枚举类的所有对象加载到数组中，所以每次添加节点时，实际上只是添加了值对象而已</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Class&lt;K&gt; keyType;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 包含枚举类的所有对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> K[] keyUniverse;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 存储值对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> Object[] vals;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 节点个数</span></span><br><span class="line"><span class="comment">     * vals数组中存储的值对象个数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">int</span> size = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 缓存entrySet方法的返回值</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 初始化键数组与值数组</span></span><br><span class="line"><span class="comment"> * 这个就是上面我们所说将枚举类型的所有对象存储到键数组中</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> keyType 枚举类型的类类型</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">EnumMap</span><span class="params">(Class&lt;K&gt; keyType)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.keyType = keyType;</span><br><span class="line">    keyUniverse = getKeyUniverse(keyType);<span class="comment">//该方法会将枚举类的所有对象按照声明的顺序存放</span></span><br><span class="line">    vals = <span class="keyword">new</span> Object[keyUniverse.length];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 指定EnumMap来初始化</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> m EnumMap对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">EnumMap</span><span class="params">(EnumMap&lt;K, ? extends V&gt; m)</span> </span>&#123;</span><br><span class="line">    keyType = m.keyType;</span><br><span class="line">    keyUniverse = m.keyUniverse;</span><br><span class="line">    vals = m.vals.clone();</span><br><span class="line">    size = m.size;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 指定集合来初始化</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> m 指定集合</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">EnumMap</span><span class="params">(Map&lt;K, ? extends V&gt; m)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (m <span class="keyword">instanceof</span> EnumMap) &#123;</span><br><span class="line">        EnumMap&lt;K, ? extends V&gt; em = (EnumMap&lt;K, ? extends V&gt;) m;</span><br><span class="line">        keyType = em.keyType;</span><br><span class="line">        keyUniverse = em.keyUniverse;</span><br><span class="line">        vals = em.vals.clone();</span><br><span class="line">        size = em.size;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (m.isEmpty())</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Specified map is empty"</span>);</span><br><span class="line">        keyType = m.keySet().iterator().next().getDeclaringClass();</span><br><span class="line">        keyUniverse = getKeyUniverse(keyType);</span><br><span class="line">        vals = <span class="keyword">new</span> Object[keyUniverse.length];</span><br><span class="line">        putAll(m);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -553,19 +553,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -574,6 +570,10 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
               </li>
              
               <li class="article-tag-list-item">
