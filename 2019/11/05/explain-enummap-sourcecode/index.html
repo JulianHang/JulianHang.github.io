@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>比较Map实现类的不同点 | 奇思妙想</title>
+  <title>探索EnumMap底层实现 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="比较趁着打铁！比较最近学习到的几个Map实现类，也正好总结下！此比较是基于JDK1.8，直接用表格展示。    比较点 HashMap Hashtable IdentityHashMap LinkedHashMap TreeMap WeakHashMap     数据结构 数组链表红黑树 数组链表 数组（哈希探针表） 数组链表红黑树 红黑树 数组链表   是否有序/可重复 无序不可重复 无序不可重">
+  <meta name="description" content="前言EnumMap初次见面，请多多关照！对于该类的注释直接上总结：  专门用于枚举类型的键的Map实现。EnumMap内部的数据结构是数组，按枚举常量的声明顺序排列它的键，与其他Map实现类不同的是，它的迭代器并不会抛出快速失败错误！  该类的代码不到1000行，速速解决掉。">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="比较Map实现类的不同点">
-<meta property="og:url" content="http://zlia.tech/2019/11/01/map-different-compare/index.html">
+<meta property="og:title" content="探索EnumMap底层实现">
+<meta property="og:url" content="http://zlia.tech/2019/11/05/explain-enummap-sourcecode/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="比较趁着打铁！比较最近学习到的几个Map实现类，也正好总结下！此比较是基于JDK1.8，直接用表格展示。    比较点 HashMap Hashtable IdentityHashMap LinkedHashMap TreeMap WeakHashMap     数据结构 数组链表红黑树 数组链表 数组（哈希探针表） 数组链表红黑树 红黑树 数组链表   是否有序/可重复 无序不可重复 无序不可重">
+<meta property="og:description" content="前言EnumMap初次见面，请多多关照！对于该类的注释直接上总结：  专门用于枚举类型的键的Map实现。EnumMap内部的数据结构是数组，按枚举常量的声明顺序排列它的键，与其他Map实现类不同的是，它的迭代器并不会抛出快速失败错误！  该类的代码不到1000行，速速解决掉。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-04T10:23:51.213Z">
+<meta property="og:updated_time" content="2019-11-05T08:17:02.498Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="比较Map实现类的不同点">
-<meta name="twitter:description" content="比较趁着打铁！比较最近学习到的几个Map实现类，也正好总结下！此比较是基于JDK1.8，直接用表格展示。    比较点 HashMap Hashtable IdentityHashMap LinkedHashMap TreeMap WeakHashMap     数据结构 数组链表红黑树 数组链表 数组（哈希探针表） 数组链表红黑树 红黑树 数组链表   是否有序/可重复 无序不可重复 无序不可重">
+<meta name="twitter:title" content="探索EnumMap底层实现">
+<meta name="twitter:description" content="前言EnumMap初次见面，请多多关照！对于该类的注释直接上总结：  专门用于枚举类型的键的Map实现。EnumMap内部的数据结构是数组，按枚举常量的声明顺序排列它的键，与其他Map实现类不同的是，它的迭代器并不会抛出快速失败错误！  该类的代码不到1000行，速速解决掉。">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -167,14 +167,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-map-different-compare" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-explain-enummap-sourcecode" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      比较Map实现类的不同点
+      探索EnumMap底层实现
     </h1>
   
 
@@ -183,115 +183,42 @@
 <!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/01/map-different-compare/" class="pageViews">0</span>
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/05/explain-enummap-sourcecode/" class="pageViews">0</span>
   </a>
 
         
-        <a href="/2019/11/01/map-different-compare/" class="archive-article-date">
-  	<time datetime="2019-11-01T03:10:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-01</time>
+        <a href="/2019/11/05/explain-enummap-sourcecode/" class="archive-article-date">
+  	<time datetime="2019-11-05T08:17:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-05</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a><div><span>比较</span></div></h3><p>趁着打铁！比较最近学习到的几个Map实现类，也正好总结下！此比较是基于<code>JDK1.8</code>，直接用表格展示。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">比较点</th>
-<th style="text-align:center">HashMap</th>
-<th style="text-align:center">Hashtable</th>
-<th style="text-align:center">IdentityHashMap</th>
-<th style="text-align:center">LinkedHashMap</th>
-<th style="text-align:center">TreeMap</th>
-<th style="text-align:center">WeakHashMap</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">数据结构</td>
-<td style="text-align:center">数组<br>链表<br>红黑树</td>
-<td style="text-align:center">数组<br>链表</td>
-<td style="text-align:center">数组<br>（哈希探针表）</td>
-<td style="text-align:center">数组<br>链表<br>红黑树</td>
-<td style="text-align:center">红黑树</td>
-<td style="text-align:center">数组<br>链表</td>
-</tr>
-<tr>
-<td style="text-align:center">是否有序/可重复</td>
-<td style="text-align:center">无序不可重复</td>
-<td style="text-align:center">无序不可重复</td>
-<td style="text-align:center">无序不可重复</td>
-<td style="text-align:center">默认按插入顺序排列<br>可按访问顺序排列<br>不可重复</td>
-<td style="text-align:center">默认按自然顺序<br>可指定比较器进行自定义排序<br>不可重复</td>
-<td style="text-align:center">无序不可重复</td>
-</tr>
-<tr>
-<td style="text-align:center">键值对为null</td>
-<td style="text-align:center">允许</td>
-<td style="text-align:center">不允许</td>
-<td style="text-align:center">允许</td>
-<td style="text-align:center">允许</td>
-<td style="text-align:center">默认排序中键不允许，值允许<br>自定义排序中键值对都允许</td>
-<td style="text-align:center">允许</td>
-</tr>
-<tr>
-<td style="text-align:center">默认初始容量</td>
-<td style="text-align:center">16</td>
-<td style="text-align:center">11</td>
-<td style="text-align:center">64</td>
-<td style="text-align:center">16</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">16</td>
-</tr>
-<tr>
-<td style="text-align:center">默认加载因子</td>
-<td style="text-align:center">0.75</td>
-<td style="text-align:center">0.75</td>
-<td style="text-align:center">1/3</td>
-<td style="text-align:center">0.75</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">0.75</td>
-</tr>
-<tr>
-<td style="text-align:center">扩容策略</td>
-<td style="text-align:center">2 * capacity</td>
-<td style="text-align:center">2 * capacity + 1</td>
-<td style="text-align:center">2 * capacity</td>
-<td style="text-align:center">2 * capacity</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">2 * capacity</td>
-</tr>
-<tr>
-<td style="text-align:center">计算hash方式</td>
-<td style="text-align:center">hash ^ (hash &gt;&gt;&gt; 16)</td>
-<td style="text-align:center">hash &amp; 0x7FFFFFFF</td>
-<td style="text-align:center">(hash &lt;&lt; 1) - (hash &lt;&lt; 8)</td>
-<td style="text-align:center">hash ^ (hash &gt;&gt;&gt; 16)</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">有点复杂，就不贴了</td>
-</tr>
-<tr>
-<td style="text-align:center">计算索引</td>
-<td style="text-align:center">hash &amp; (capacity - 1)</td>
-<td style="text-align:center">hash % capacity</td>
-<td style="text-align:center">hash &amp; (capacity - 1)</td>
-<td style="text-align:center">hash &amp; (capacity - 1)</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">hash &amp; (capacity - 1)</td>
-</tr>
-<tr>
-<td style="text-align:center">新增节点</td>
-<td style="text-align:center">尾插法</td>
-<td style="text-align:center">头插法</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">尾插法</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">头插法</td>
-</tr>
-</tbody>
-</table>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>EnumMap初次见面，请多多关照！对于该类的注释直接上总结：</p>
+<blockquote>
+<p>专门用于<code>枚举类型</code>的键的Map实现。EnumMap内部的数据结构是数组，按枚举常量的声明顺序排列它的键，与其他Map实现类不同的是，它的迭代器并不会抛出快速失败错误！</p>
+</blockquote>
+<p>该类的代码不到1000行，速速解决掉。</p>
+<a id="more"></a>
+<h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a><div><span>数据结构</span></div></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EnumMap</span>&lt;<span class="title">K</span> <span class="keyword">extends</span> <span class="title">Enum</span>&lt;<span class="title">K</span>&gt;, <span class="title">V</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractMap</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span>, <span class="title">Cloneable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 枚举类型的类类型</span></span><br><span class="line"><span class="comment">     * 为什么需要类类型呢? </span></span><br><span class="line"><span class="comment">     * 因为在一开始初始化时，EnumMap就会将枚举类的所有对象加载到数组中，所以每次添加节点时，实际上只是添加了值对象而已</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Class&lt;K&gt; keyType;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 包含枚举类的所有对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> K[] keyUniverse;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 存储值对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> Object[] vals;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 节点个数</span></span><br><span class="line"><span class="comment">     * vals数组中存储的值对象个数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">int</span> size = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 缓存entrySet方法的返回值</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 初始化键数组与值数组</span></span><br><span class="line"><span class="comment"> * 这个就是上面我们所说将枚举类型的所有对象存储到键数组中</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> keyType 枚举类型的类类型</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">EnumMap</span><span class="params">(Class&lt;K&gt; keyType)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.keyType = keyType;</span><br><span class="line">    keyUniverse = getKeyUniverse(keyType);<span class="comment">//该方法会将枚举类的所有对象按照声明的顺序存放</span></span><br><span class="line">    vals = <span class="keyword">new</span> Object[keyUniverse.length];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 指定EnumMap来初始化</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> m EnumMap对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">EnumMap</span><span class="params">(EnumMap&lt;K, ? extends V&gt; m)</span> </span>&#123;</span><br><span class="line">    keyType = m.keyType;</span><br><span class="line">    keyUniverse = m.keyUniverse;</span><br><span class="line">    vals = m.vals.clone();</span><br><span class="line">    size = m.size;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 指定集合来初始化</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> m 指定集合</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">EnumMap</span><span class="params">(Map&lt;K, ? extends V&gt; m)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (m <span class="keyword">instanceof</span> EnumMap) &#123;</span><br><span class="line">        EnumMap&lt;K, ? extends V&gt; em = (EnumMap&lt;K, ? extends V&gt;) m;</span><br><span class="line">        keyType = em.keyType;</span><br><span class="line">        keyUniverse = em.keyUniverse;</span><br><span class="line">        vals = em.vals.clone();</span><br><span class="line">        size = em.size;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (m.isEmpty())</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Specified map is empty"</span>);</span><br><span class="line">        keyType = m.keySet().iterator().next().getDeclaringClass();</span><br><span class="line">        keyUniverse = getKeyUniverse(keyType);</span><br><span class="line">        vals = <span class="keyword">new</span> Object[keyUniverse.length];</span><br><span class="line">        putAll(m);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="简单方法"><a href="#简单方法" class="headerlink" title="简单方法"></a>简单方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 倘若值为null则采用NULL_KEY作为值</span></span><br><span class="line"><span class="comment"> * 正如方法名一样，隐藏Null</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> value 指定键</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> NULL_KEY或指定值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> Object <span class="title">maskNull</span><span class="params">(Object value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (value == <span class="keyword">null</span> ? NULL : value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 倘若值为NULL_KEY则返回null</span></span><br><span class="line"><span class="comment"> * 正如方法名一样，揭露Null</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> value 值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> null或指定值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line"><span class="function"><span class="keyword">private</span> V <span class="title">unmaskNull</span><span class="params">(Object value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (V)(value == NULL ? <span class="keyword">null</span> : value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取节点个数</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 节点个数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> size;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 数组中是否包含指定值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> value 指定值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 是否包含指定值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">containsValue</span><span class="params">(Object value)</span> </span>&#123;</span><br><span class="line">    value = maskNull(value);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (Object val : vals)</span><br><span class="line">        <span class="keyword">if</span> (value.equals(val))</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 数组中是否包含指定键</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> key 指定键</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 是否包含指定键</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">containsKey</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> isValidKey(key) &amp;&amp; vals[((Enum&lt;?&gt;)key).ordinal()] != <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 指定键是否有效</span></span><br><span class="line"><span class="comment"> * 是否符合指定的类类型</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> key 指定键</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 是否有效</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isValidKey</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (key == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    Class&lt;?&gt; keyClass = key.getClass();</span><br><span class="line">    <span class="keyword">return</span> keyClass == keyType || keyClass.getSuperclass() == keyType; <span class="comment">//keyClass.getSuperclass这个判断语句没有什么意义，枚举类既不能继承其他类，也不能被继承，两个类就无法发生关系，那这个判断结果只会是false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 数组中是否包含指定键值对</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> key 指定键</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> value 指定值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 是否包含键值对</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">containsMapping</span><span class="params">(Object key, Object value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> isValidKey(key) &amp;&amp; maskNull(value).equals(vals[((Enum&lt;?&gt;)key).ordinal()]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 指定键获取值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> key 指定键</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> null或值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (isValidKey(key) ? unmaskNull(vals[((Enum&lt;?&gt;)key).ordinal()]) : <span class="keyword">null</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 新增键值对</span></span><br><span class="line"><span class="comment"> * 可能会发生替换</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> key 指定键</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> value 指定值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> null或旧值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span> </span>&#123;</span><br><span class="line">    typeCheck(key);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> index = key.ordinal();</span><br><span class="line">    Object oldValue = vals[index];</span><br><span class="line">    vals[index] = maskNull(value);</span><br><span class="line">    <span class="keyword">if</span> (oldValue == <span class="keyword">null</span>)</span><br><span class="line">        size++;</span><br><span class="line">    <span class="keyword">return</span> unmaskNull(oldValue);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 指定键移除值对象</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> key 指定键</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> null或旧值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">remove</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!isValidKey(key))</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">int</span> index = ((Enum&lt;?&gt;)key).ordinal();</span><br><span class="line">    Object oldValue = vals[index];</span><br><span class="line">    vals[index] = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (oldValue != <span class="keyword">null</span>)</span><br><span class="line">        size--;</span><br><span class="line">    <span class="keyword">return</span> unmaskNull(oldValue);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 指定键值对移除值对象</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> key 指定键</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> value 指定值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 是否移除值对象成功</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">removeMapping</span><span class="params">(Object key, Object value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!isValidKey(key))</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">int</span> index = ((Enum&lt;?&gt;)key).ordinal();</span><br><span class="line">    <span class="keyword">if</span> (maskNull(value).equals(vals[index])) &#123;</span><br><span class="line">        vals[index] = <span class="keyword">null</span>;</span><br><span class="line">        size--;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 批量添加集合</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> m 指定集合</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">putAll</span><span class="params">(Map&lt;? extends K, ? extends V&gt; m)</span> </span>&#123; <span class="comment">//枚举类之间无法继承，所以这里压根就只能指定K、V</span></span><br><span class="line">    <span class="keyword">if</span> (m <span class="keyword">instanceof</span> EnumMap) &#123;</span><br><span class="line">        EnumMap&lt;?, ?&gt; em = (EnumMap&lt;?, ?&gt;)m;</span><br><span class="line">        <span class="keyword">if</span> (em.keyType != keyType) &#123;</span><br><span class="line">            <span class="keyword">if</span> (em.isEmpty())</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ClassCastException(em.keyType + <span class="string">" != "</span> + keyType);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; keyUniverse.length; i++) &#123;</span><br><span class="line">            Object emValue = em.vals[i];</span><br><span class="line">            <span class="keyword">if</span> (emValue != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (vals[i] == <span class="keyword">null</span>)</span><br><span class="line">                    size++;</span><br><span class="line">                vals[i] = emValue;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.putAll(m);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//中间省略了相关迭代器...较为简单相似，有兴趣的读者可自行查看</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 清空值数组</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Arrays.fill(vals, <span class="keyword">null</span>);</span><br><span class="line">    size = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取枚举类中所有对象的数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> keyType 枚举类类型</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 包含所有对象的数组</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> &lt;K extends Enum&lt;K&gt;&gt; K[] getKeyUniverse(Class&lt;K&gt; keyType) &#123;</span><br><span class="line">    <span class="keyword">return</span> SharedSecrets.getJavaLangAccess().getEnumConstantsShared(keyType);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li><p>专门用于其键为<code>枚举类型</code>的Map实现</p>
+</li>
+<li><p>EnumMap的数据结构是数组，按枚举常量的声明顺序进行排列</p>
+</li>
+<li><p>EnumMap的键不允许为空，值允许为空</p>
+</li>
+<li><p>EnumMap的迭代器不会发生快速失败</p>
+</li>
+<li><p>EnumMap有序、不可重复、非线程安全</p>
+</li>
+<li><p>EnumMap在初始化时将枚举类中的所有对象存储到数组中，而后续的增删改查实际上都是对其值对象的操作</p>
+</li>
+</ul>
+<h4 id="重点"><a href="#重点" class="headerlink" title="重点"></a>重点</h4><p><code>内部实现机制</code></p>
 
       
 
@@ -372,7 +299,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/11/01/map-different-compare/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/11/05/explain-enummap-sourcecode/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -386,18 +313,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/11/04/explain-weakhashmap-sourcecode/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          探索WeakHashMap底层实现
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/10/31/explain-hashtable-sourcecode/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">探索Hashtable底层实现</div>
+    <a href="/2019/11/04/explain-weakhashmap-sourcecode/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">探索WeakHashMap底层实现</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -618,15 +536,11 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -634,11 +548,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -651,6 +565,10 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
               </li>
             
             <div class="clearfix"></div>
