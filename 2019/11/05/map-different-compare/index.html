@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>Archives: 2019 | 奇思妙想</title>
+  <title>比较Map实现类的不同点 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="record my life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="奇思妙想">
-<meta property="og:url" content="http://zlia.tech/archives/2019/index.html">
+  <meta name="description" content="比较趁着打铁！比较最近学习到的几个Map实现类，也正好总结下！此比较是基于JDK1.8，直接用表格展示。    比较点 HashMap Hashtable IdentityHashMap LinkedHashMap TreeMap WeakHashMap EnumMap     数据结构 数组链表红黑树 数组链表 数组（哈希探针表） 数组链表红黑树 红黑树 数组链表 数组   是否有序/可重复 无">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="比较Map实现类的不同点">
+<meta property="og:url" content="http://zlia.tech/2019/11/05/map-different-compare/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="record my life">
+<meta property="og:description" content="比较趁着打铁！比较最近学习到的几个Map实现类，也正好总结下！此比较是基于JDK1.8，直接用表格展示。    比较点 HashMap Hashtable IdentityHashMap LinkedHashMap TreeMap WeakHashMap EnumMap     数据结构 数组链表红黑树 数组链表 数组（哈希探针表） 数组链表红黑树 红黑树 数组链表 数组   是否有序/可重复 无">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-11-05T08:22:02.315Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="奇思妙想">
-<meta name="twitter:description" content="record my life">
+<meta name="twitter:title" content="比较Map实现类的不同点">
+<meta name="twitter:description" content="比较趁着打铁！比较最近学习到的几个Map实现类，也正好总结下！此比较是基于JDK1.8，直接用表格展示。    比较点 HashMap Hashtable IdentityHashMap LinkedHashMap TreeMap WeakHashMap EnumMap     数据结构 数组链表红黑树 数组链表 数组（哈希探针表） 数组链表红黑树 红黑树 数组链表 数组   是否有序/可重复 无">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -165,31 +167,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-map-different-compare" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/11/05/map-different-compare/" class="archive-article-date">
-  	<time datetime="2019-11-05T08:22:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-05</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/11/05/map-different-compare/">比较Map实现类的不同点</a>
+    <h1 class="article-title" itemprop="name">
+      比较Map实现类的不同点
     </h1>
   
 
@@ -201,8 +186,130 @@
       <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/05/map-different-compare/" class="pageViews">0</span>
   </a>
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/11/05/map-different-compare/" class="archive-article-date">
+  	<time datetime="2019-11-05T08:22:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a><div><span>比较</span></div></h3><p>趁着打铁！比较最近学习到的几个Map实现类，也正好总结下！此比较是基于<code>JDK1.8</code>，直接用表格展示。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">比较点</th>
+<th style="text-align:center">HashMap</th>
+<th style="text-align:center">Hashtable</th>
+<th style="text-align:center">IdentityHashMap</th>
+<th style="text-align:center">LinkedHashMap</th>
+<th style="text-align:center">TreeMap</th>
+<th style="text-align:center">WeakHashMap</th>
+<th style="text-align:center">EnumMap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">数据结构</td>
+<td style="text-align:center">数组<br>链表<br>红黑树</td>
+<td style="text-align:center">数组<br>链表</td>
+<td style="text-align:center">数组<br>（哈希探针表）</td>
+<td style="text-align:center">数组<br>链表<br>红黑树</td>
+<td style="text-align:center">红黑树</td>
+<td style="text-align:center">数组<br>链表</td>
+<td style="text-align:center">数组</td>
+</tr>
+<tr>
+<td style="text-align:center">是否有序/可重复</td>
+<td style="text-align:center">无序不可重复</td>
+<td style="text-align:center">无序不可重复</td>
+<td style="text-align:center">无序不可重复</td>
+<td style="text-align:center">默认按插入顺序排列<br>可按访问顺序排列<br>不可重复</td>
+<td style="text-align:center">默认按自然顺序<br>可指定比较器进行自定义排序<br>不可重复</td>
+<td style="text-align:center">无序不可重复</td>
+<td style="text-align:center">按照枚举类中对象的声明顺序进行排列<br>不可重复</td>
+</tr>
+<tr>
+<td style="text-align:center">键值对为null</td>
+<td style="text-align:center">允许</td>
+<td style="text-align:center">不允许</td>
+<td style="text-align:center">允许</td>
+<td style="text-align:center">允许</td>
+<td style="text-align:center">默认排序中键不允许，值允许<br>自定义排序中键值对都允许</td>
+<td style="text-align:center">允许</td>
+<td style="text-align:center">键不允许，值允许</td>
+</tr>
+<tr>
+<td style="text-align:center">默认初始容量</td>
+<td style="text-align:center">16</td>
+<td style="text-align:center">11</td>
+<td style="text-align:center">64</td>
+<td style="text-align:center">16</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">16</td>
+<td style="text-align:center">枚举类中对象的个数</td>
+</tr>
+<tr>
+<td style="text-align:center">默认加载因子</td>
+<td style="text-align:center">0.75</td>
+<td style="text-align:center">0.75</td>
+<td style="text-align:center">1/3</td>
+<td style="text-align:center">0.75</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">0.75</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">扩容策略</td>
+<td style="text-align:center">2 * capacity</td>
+<td style="text-align:center">2 * capacity + 1</td>
+<td style="text-align:center">2 * capacity</td>
+<td style="text-align:center">2 * capacity</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">2 * capacity</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">计算hash方式</td>
+<td style="text-align:center">hash ^ (hash &gt;&gt;&gt; 16)</td>
+<td style="text-align:center">hash &amp; 0x7FFFFFFF</td>
+<td style="text-align:center">(hash &lt;&lt; 1) - (hash &lt;&lt; 8)</td>
+<td style="text-align:center">hash ^ (hash &gt;&gt;&gt; 16)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">有点复杂，就不贴了</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">计算索引</td>
+<td style="text-align:center">hash &amp; (capacity - 1)</td>
+<td style="text-align:center">hash % capacity</td>
+<td style="text-align:center">hash &amp; (capacity - 1)</td>
+<td style="text-align:center">hash &amp; (capacity - 1)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">hash &amp; (capacity - 1)</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">新增节点</td>
+<td style="text-align:center">尾插法</td>
+<td style="text-align:center">头插法</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">尾插法</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">头插法</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -214,7 +321,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -227,533 +334,142 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/11/05/map-different-compare/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/11/05/explain-enummap-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-11-05T08:17:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-05</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/11/05/explain-enummap-sourcecode/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">探索EnumMap底层实现</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/11/05/explain-enummap-sourcecode/">探索EnumMap底层实现</a>
-    </h1>
+  
   
 
+  
 
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+  
 
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/05/explain-enummap-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+  
   
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/11/04/explain-weakhashmap-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-11-04T10:00:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/11/04/explain-weakhashmap-sourcecode/">探索WeakHashMap底层实现</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/04/explain-weakhashmap-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/31/explain-hashtable-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-10-31T10:15:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/31/explain-hashtable-sourcecode/">探索Hashtable底层实现</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/10/31/explain-hashtable-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/31/explain-treemap-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-10-31T03:31:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/31/explain-treemap-sourcecode/">探索TreeMap底层实现</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/10/31/explain-treemap-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/25/explain-linkedhashmap-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-10-25T06:59:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/25/explain-linkedhashmap-sourcecode/">探索LinkedHashMap底层实现</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/10/25/explain-linkedhashmap-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/23/explain-identityhashmap-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-10-23T09:11:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/23/explain-identityhashmap-sourcecode/">探索IdentityHashMap底层实现</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/10/23/explain-identityhashmap-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/21/explain-hashmap-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-10-21T02:32:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/21/explain-hashmap-sourcecode/">探索HashMap底层实现</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/10/21/explain-hashmap-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/18/explain-binarytree-redblack/" class="archive-article-date">
-  	<time datetime="2019-09-18T14:19:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/18/explain-binarytree-redblack/">初识红黑树</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/09/18/explain-binarytree-redblack/" class="pageViews">0</span>
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/15/explain-binarytree-avl/" class="archive-article-date">
-  	<time datetime="2019-09-15T11:23:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/15/explain-binarytree-avl/">初识平衡二叉树-AVL</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/09/15/explain-binarytree-avl/" class="pageViews">0</span>
-  </a>
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2019/page/2/">2</a><a class="page-number" href="/archives/2019/page/3/">3</a><a class="extend next" rel="next" href="/archives/2019/page/2/">Next &raquo;</a>
-    </nav>
+    <section id="comments" class="comments">
+	  <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "JoYcsWmKGGeDS1gi583VdmYm-gzGzoHsz",
+            app_key: "F9y6cyWlw9WVSFOEw3rnxfXY",
+            placeholder: "扯淡吧",
+            avatar: "",
+            avatar_cdn: "",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+	
+</script>
+    </section>
+	
   
 
 
@@ -778,8 +494,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

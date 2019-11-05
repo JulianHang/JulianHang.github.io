@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="奇思妙想">
 <meta property="og:description" content="前言EnumMap初次见面，请多多关照！对于该类的注释直接上总结：  专门用于枚举类型的键的Map实现。EnumMap内部的数据结构是数组，按枚举常量的声明顺序排列它的键，与其他Map实现类不同的是，它的迭代器并不会抛出快速失败错误！  该类的代码不到1000行，速速解决掉。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-05T08:17:02.498Z">
+<meta property="og:updated_time" content="2019-11-05T08:21:37.143Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="探索EnumMap底层实现">
 <meta name="twitter:description" content="前言EnumMap初次见面，请多多关照！对于该类的注释直接上总结：  专门用于枚举类型的键的Map实现。EnumMap内部的数据结构是数组，按枚举常量的声明顺序排列它的键，与其他Map实现类不同的是，它的迭代器并不会抛出快速失败错误！  该类的代码不到1000行，速速解决掉。">
@@ -218,7 +218,7 @@
 <li><p>EnumMap在初始化时将枚举类中的所有对象存储到数组中，而后续的增删改查实际上都是对其值对象的操作</p>
 </li>
 </ul>
-<h4 id="重点"><a href="#重点" class="headerlink" title="重点"></a>重点</h4><p><code>内部实现机制</code></p>
+<h3 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a><div><span>重点关注</span></div></h3><p><code>内部实现机制</code></p>
 
       
 
@@ -312,6 +312,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2019/11/05/map-different-compare/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          比较Map实现类的不同点
+        
+      </div>
+    </a>
   
   
     <a href="/2019/11/04/explain-weakhashmap-sourcecode/" id="article-nav-older" class="article-nav-link-wrap">
@@ -536,11 +545,11 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -556,6 +565,10 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
@@ -565,10 +578,6 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
               </li>
             
             <div class="clearfix"></div>
