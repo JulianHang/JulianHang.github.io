@@ -6,18 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>奇思妙想</title>
+  <title>探索ByteBuffer底层实现 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="record my life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="奇思妙想">
-<meta property="og:url" content="http://zlia.tech/page/3/index.html">
+  <meta name="description" content="前言由于最近在了解IO相关知识，而正好看到了nio，这是我以前从来没接触过的，虽然它很早就出现了，所以先来看看有关于它的一些基础。探索ByteBuffer源代码是基于JDK1.8版本的，ByteBuffer的父类是Buffer，通过阅读注释后对Buffer总结如下：  缓冲区是特定基本类型的元素的线性有限序列，除了内容之外，缓冲区的基本属性还包括capacity、limit、position、ma">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="探索ByteBuffer底层实现">
+<meta property="og:url" content="http://zlia.tech/2019/11/26/explain-bytebuffer-sourcecode/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="record my life">
+<meta property="og:description" content="前言由于最近在了解IO相关知识，而正好看到了nio，这是我以前从来没接触过的，虽然它很早就出现了，所以先来看看有关于它的一些基础。探索ByteBuffer源代码是基于JDK1.8版本的，ByteBuffer的父类是Buffer，通过阅读注释后对Buffer总结如下：  缓冲区是特定基本类型的元素的线性有限序列，除了内容之外，缓冲区的基本属性还包括capacity、limit、position、ma">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/java/bytebuffer/bytebuffer-variable.png">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/java/bytebuffer/bytebuffer-hierarchy.png">
+<meta property="og:updated_time" content="2019-11-26T08:27:15.081Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="奇思妙想">
-<meta name="twitter:description" content="record my life">
+<meta name="twitter:title" content="探索ByteBuffer底层实现">
+<meta name="twitter:description" content="前言由于最近在了解IO相关知识，而正好看到了nio，这是我以前从来没接触过的，虽然它很早就出现了，所以先来看看有关于它的一些基础。探索ByteBuffer源代码是基于JDK1.8版本的，ByteBuffer的父类是Buffer，通过阅读注释后对Buffer总结如下：  缓冲区是特定基本类型的元素的线性有限序列，除了内容之外，缓冲区的基本属性还包括capacity、limit、position、ma">
+<meta name="twitter:image" content="http://zlia.tech/assets/blogImg/java/bytebuffer/bytebuffer-variable.png">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -165,16 +170,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-explain-linkedlist-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-explain-bytebuffer-sourcecode" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/02/explain-linkedlist-sourcecode/">探索LinkedList底层实现</a>
+    <h1 class="article-title" itemprop="name">
+      探索ByteBuffer底层实现
     </h1>
   
 
@@ -183,694 +186,52 @@
 <!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/09/02/explain-linkedlist-sourcecode/" class="pageViews">0</span>
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/26/explain-bytebuffer-sourcecode/" class="pageViews">0</span>
   </a>
 
         
-        <a href="/2019/09/02/explain-linkedlist-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-09-02T06:59:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-02</time>
+        <a href="/2019/11/26/explain-bytebuffer-sourcecode/" class="archive-article-date">
+  	<time datetime="2019-11-26T08:27:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-26</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>老样子，还是先看注释！本来以为能收获点什么干货，结果注释与<code>ArrayList</code>的注释基本相同，有点尴尬…LinkedList的源码是基于<code>JDK1.8</code>。</p>
-<h3 id="开干"><a href="#开干" class="headerlink" title="开干"></a><div><span>开干</span></div></h3><p>先上LinkedList类的注释，在深入到类中详细说明属性与方法。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/02/explain-linkedlist-sourcecode/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-explain-arraylist-spliterator-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/28/explain-arraylist-spliterator-sourcecode/">探索ArrayListSpliterator底层实现</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/08/28/explain-arraylist-spliterator-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/08/28/explain-arraylist-spliterator-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-08-28T09:53:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>上次看ArrayList底层机制时把<code>ArrayListSpliterator</code>放了放，现在回过头来具体看看实现。</p>
-<h3 id="简单粗暴"><a href="#简单粗暴" class="headerlink" title="简单粗暴"></a><div><span>简单粗暴</span></div></h3><p>直接上代码吧！</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/28/explain-arraylist-spliterator-sourcecode/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-explain-vector-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/21/explain-vector-sourcecode/">探索Vector的底层实现</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/08/21/explain-vector-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/08/21/explain-vector-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-08-21T10:06:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a><div><span>背景</span></div></h3><p>上周发布了<a href="http://zlia.tech/2019/08/16/explain-arraylist-sourcecode/">探索ArrayList的底层实现</a>，趁热打铁！实际上<code>ArrayList</code>与<code>Vector</code>的实现上非常相似，代码基本上都是一样的，还是老样子，先看注释，我能说注释都差不多一样吗。探索<code>Vector</code>源代码是基于<code>JDK1.8</code>的。</p>
-<h4 id="阅读注释"><a href="#阅读注释" class="headerlink" title="阅读注释"></a>阅读注释</h4><p class="customize-img"><img src="/assets/blogImg/java/vector/vector-comment-1.png" alt="Vector注释-1"></p>
-<p>Vector内部是通过动态数组实现的。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/21/explain-vector-sourcecode/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-explain-arraylist-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/16/explain-arraylist-sourcecode/">探索ArrayList底层实现</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/08/16/explain-arraylist-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/08/16/explain-arraylist-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-08-16T08:08:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a><div><span>背景</span></div></h3><p>想进步，想学习了，反正面试都要问的，还不如早点看了好。探索<code>ArrayList</code>源代码是基于<code>JDK1.8</code>版本的，相比以前的版本不知道有没有优化，毕竟没看过之前版本的底层代码。</p>
-<h3 id="简单说明下"><a href="#简单说明下" class="headerlink" title="简单说明下"></a><div><span>简单说明下</span></div></h3><p>一般看底层代码前我都习惯先阅读下该类的<code>注释说明</code>，也不知道在哪里养成的习惯。相信大家都写过应用代码，既然写过，那也深知注释对于一个使用者来说是多么的重要，决定了它是否能够正确的使用，所以这是一个好习惯。</p>
-<h4 id="阅读注释"><a href="#阅读注释" class="headerlink" title="阅读注释"></a>阅读注释</h4><p class="customize-img"><img src="/assets/blogImg/java/arraylist/arraylist-comment-1.png" alt="ArrayList注释-1"></p>
-<p>看到这不知道你们有没有很惊讶，反正我倒是一惊，所以我说看注释很重要！！！如果是你写代码给别人看，除了看具体代码之外，看注释就是最好的理解方式了，一语道破很多原理，要求不高的我都觉得可以不用看代码实现了，所以接下来会继续阅读注释。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/16/explain-arraylist-sourcecode/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-photoshop-knowledge-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/19/photoshop-knowledge-1/">Photoshop CC 2014 安装、破解、完全卸载</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/07/19/photoshop-knowledge-1/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/07/19/photoshop-knowledge-1/" class="archive-article-date">
-  	<time datetime="2019-07-19T14:43:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="先下载在说"><a href="#先下载在说" class="headerlink" title="先下载在说"></a><div><span>先下载在说</span></div></h3><p>废话少说点，上个链接，先下载着在文章。<br><code>安装包下载地址</code>：<a href="https://pan.baidu.com/s/1jijJZpNanLOhZY_yNUJQww" target="_blank" rel="noopener">Photoshop CC 2014 64位安装包</a> 提取码：u3cm。<br><code>破解补丁</code>：<a href="https://pan.baidu.com/s/1r7AFcb32LrRrzWtJb9PD7A" target="_blank" rel="noopener">Photoshop CC 2014 补丁</a> 提取码：cz1c<br>现在都2019年了，为啥还是2014年的版本呢？好老啊！怪作者没有一点基础，有个版本先学着就不错了，莫怪莫怪！</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">photoshop</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/essays//" class="article-tag-list-link color2">essays</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/07/19/photoshop-knowledge-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-explain-binary-code" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/25/explain-binary-code/">探索Integer.toBinaryString源码</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/06/25/explain-binary-code/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/06/25/explain-binary-code/" class="archive-article-date">
-  	<time datetime="2019-06-25T11:56:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="不解驱动着你"><a href="#不解驱动着你" class="headerlink" title="不解驱动着你"></a><div><span>不解驱动着你</span></div></h3><p>一般情况下我是不会主动去看源码的，除非是写专门的主题或者是遇到不懂的难题。果然了，于是带着好奇心尝试理解下源码，一会我先抛出问题，要是有同学一下子就明白了那就可以不用往下看了！还有一个前提就是最好对原码、补码、反码有所了解，因为计算机操作的数据就是以二进制的形式存在的，准确的说是用补码的形式来计算的！</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">URShift</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = -<span class="number">1</span>;</span><br><span class="line">        System.out.println(Integer.toBinaryString(i));</span><br><span class="line"></span><br><span class="line">        i &gt;&gt;&gt;= <span class="number">10</span>;</span><br><span class="line">        System.out.println(Integer.toBinaryString(i));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">long</span> l = -<span class="number">1</span>;</span><br><span class="line">        System.out.println(Long.toBinaryString(l));</span><br><span class="line"></span><br><span class="line">        l &gt;&gt;&gt;= <span class="number">10</span>;</span><br><span class="line">        System.out.println(Long.toBinaryString(l));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">short</span> s = -<span class="number">1</span>;</span><br><span class="line">        System.out.println(Integer.toBinaryString(s));</span><br><span class="line"></span><br><span class="line">        s &gt;&gt;&gt;= <span class="number">10</span>;</span><br><span class="line">        System.out.println(Integer.toBinaryString(s));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">byte</span> b = -<span class="number">1</span>;</span><br><span class="line">        System.out.println(Integer.toBinaryString(b));</span><br><span class="line"></span><br><span class="line">        b &gt;&gt;&gt;= <span class="number">10</span>;</span><br><span class="line">        System.out.println(Integer.toBinaryString(b));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/25/explain-binary-code/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-core-java-knowledge-20190609" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/25/core-java-knowledge-20190609/">每日知识点20181212</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/06/25/core-java-knowledge-20190609/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/06/25/core-java-knowledge-20190609/" class="archive-article-date">
-  	<time datetime="2019-06-25T11:52:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul>
-<li><p>javadoc只能为public和protected成员进行文档注释，private和默认权限的注释则会被忽略掉，不过可以用-private进行标记，以便把private成员的注释耶包括在内.</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>由于最近在了解IO相关知识，而正好看到了nio，这是我以前从来没接触过的，虽然它很早就出现了，所以先来看看有关于它的一些基础。探索<code>ByteBuffer</code>源代码是基于<code>JDK1.8</code>版本的，ByteBuffer的父类是<code>Buffer</code>，通过阅读注释后对Buffer总结如下：</p>
+<blockquote>
+<p>缓冲区是特定基本类型的元素的线性有限序列，除了内容之外，缓冲区的基本属性还包括<code>capacity</code>、<code>limit</code>、<code>position</code>、<code>mark</code>。假设缓冲区是一本1000页的书籍，你已经看到800页了，其中在500页处有个很重要的知识点，你做了个标记以便下次能够轻松找到它。那么capacity指代的就是1000，意思就是这本书的最大页数，缓冲区的最大容量，该属性值不会为负不会改变；limit指代的是800，意思是目前只学了这么多知识，可以理解为界限；position指代的是具体某一页，也就是你每看一页，position就会有所增加；mark很容易理解，指代的是我们标记到具体某一页。在实际代码中有读、写模式，我们将读模式比喻成复习，也就是说你可以从第0页复习到第800页，此时的postion从0-800，limit保持800不变，也可以从你所标记的点到第800页，此时的position从mark-800，但是切记不能从第0页复习而后直接跳到mark处，这样子就导致知识点的不连续性，简单来说<code>0 &lt;= mark &lt;= posiiton &lt;= limit &lt;= capacity</code>；将写模式比喻成继续学习新知识点，也就是从第801页继续往后看，position会逐步增加。对于只读缓冲区来说，不允许修改它的内容，但是limit、position、mark是可以变化的。最后一点是缓冲区属于非线程安全！</p>
+</blockquote>
+<p>提供一张图片方便理解。接下来在总结下ByteBuffer，以便对其有个大概性的了解。</p>
+<p class="customize-img"><img src="/assets/blogImg/java/bytebuffer/bytebuffer-variable.png" alt="Buffer相关变量"></p>
+<blockquote>
+<p><code>字节缓冲区</code>，可创建视图缓冲区，视图缓冲区指的是包含其他基本类型值的缓冲区，如CharBuffer，视图缓冲区的索引不是以字节为单位，而是根据其值的特定类型的大小决定的，如CharBuffer是2个字节。字节缓冲区可分为直接或间接，直接缓冲区的内容存放在堆外内存，JVM将尽最大努力直接执行原生IO操作，而间接缓冲区存放在堆内存中，交由JVM操作，与操作系统并未直接交互，直接缓冲区通常比间接缓冲区具有更高的分配和释放成本，简单来说，对于大型缓冲区来说直接分配直接缓冲区。</p>
+</blockquote>
+<p>概念性的内容就阐述到这里了，接着就直接进入源码世界吧！</p>
+<a id="more"></a>
+<h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a><div><span>数据结构</span></div></h3><p>由于ByteBuffer是个抽象类，故方法可能涉及到多个类，先贴一张继承结构类图。</p>
+<p class="customize-img"><img src="/assets/blogImg/java/bytebuffer/bytebuffer-hierarchy.png" alt="Buffer继承结构"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 抽象类没办法直接创建该对象</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">ByteBuffer</span> <span class="keyword">extends</span> <span class="title">Buffer</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">ByteBuffer</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 存储缓冲区的内容</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">byte</span>[] hb;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 缓冲区的第一个元素在hb数组中索引</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> offset;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 缓冲区是否是只读缓冲区</span></span><br><span class="line">    <span class="keyword">boolean</span> isReadOnly;  </span><br><span class="line"></span><br><span class="line">    <span class="comment">// 缓冲区的字节顺序</span></span><br><span class="line">    <span class="keyword">boolean</span> bigEndian = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 该属性定义在Buffer中，标记缓冲区中的某个位置  mark &lt;= position</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mark = -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 该属性定义在Buffer中，代表缓冲区中下一个读取或写入的元素的索引 position &lt;= limit</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> position = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 该属性定义在Buffer中，代表着界限，该值在写模式下等于capacity，读模式下等于position写模式下的索引 limit &lt;= capacity</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> limit;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 该属性定义在Buffer中，代表着缓冲区的容量</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> capacity;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 初始化，设置属性值</span></span><br><span class="line"><span class="comment"> * 在初始化之前需要校验这些成员属性是否合法性</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> mark 标记缓冲区中的某个索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> pos 下一个读取或写入的元素的索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> lim 界限-读模式下等于position写模式下的索引，简单来说就是记住最后写入内容的索引，以便知道读取结束了；写模式下等于capacity，以便知道缓冲区已经写满了，不能再写了</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> cap 缓冲区的容量</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> hb 字节数组-存储缓冲区的内容</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> offset 缓冲区中第一个元素的索引</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">ByteBuffer(<span class="keyword">int</span> mark, <span class="keyword">int</span> pos, <span class="keyword">int</span> lim, <span class="keyword">int</span> cap, <span class="keyword">byte</span>[] hb, <span class="keyword">int</span> offset) &#123;</span><br><span class="line">    <span class="keyword">super</span>(mark, pos, lim, cap);</span><br><span class="line">    <span class="keyword">this</span>.hb = hb;</span><br><span class="line">    <span class="keyword">this</span>.offset = offset;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 初始化</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> mark 标记缓冲区中的某个索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> pos 下一个读取或写入的元素的索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> lim 界限-读模式下等于position写模式下的索引，简单来说就是记住最后写入内容的索引，以便知道读取结束了；写模式下等于capacity，以便知道缓冲区已经写满了，不能再写了</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> cap 缓冲区的容量</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">ByteBuffer(<span class="keyword">int</span> mark, <span class="keyword">int</span> pos, <span class="keyword">int</span> lim, <span class="keyword">int</span> cap) &#123;</span><br><span class="line">    <span class="keyword">this</span>(mark, pos, lim, cap, <span class="keyword">null</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 该构造函数中涉及到的知识点比较多，笔者也是不懂，借助别人分析的文章进行讲解</span></span><br><span class="line"><span class="comment"> * 申请堆外内存与设置释放堆外内存机制</span></span><br><span class="line"><span class="comment"> * 堆外内存是不受JVM管理，这导致了堆外内存没办法被JVM回收，所以它通过在堆内存中创建对象，当该对象被回收时，会先调用Cleaner#clean，而在该方法中调用了Deallocator#run，这样子就将堆外内存释放了</span></span><br><span class="line"><span class="comment"> * 这里涉及到了虚引用的使用，可参考Reference类中的代码，或者看有关文章</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> cap 要申请的容量</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">DirectByteBuffer(<span class="keyword">int</span> cap) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">super</span>(-<span class="number">1</span>, <span class="number">0</span>, cap, cap);</span><br><span class="line">    <span class="keyword">boolean</span> pa = VM.isDirectMemoryPageAligned(); <span class="comment">// 判断是否需要页面对齐，默认是false，何为页面对齐，目前我是不知道有什么用</span></span><br><span class="line">    <span class="keyword">int</span> ps = Bits.pageSize();</span><br><span class="line">    <span class="keyword">long</span> size = Math.max(<span class="number">1L</span>, (<span class="keyword">long</span>)cap + (pa ? ps : <span class="number">0</span>));</span><br><span class="line">    Bits.reserveMemory(size, cap); <span class="comment">// 主要用于判断申请的堆外内存是否超过了最大值，这里的代码就不做深入了，要求大概能懂就行了</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">long</span> base = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        base = unsafe.allocateMemory(size); <span class="comment">// 申请堆外内存</span></span><br><span class="line">    &#125; <span class="keyword">catch</span> (OutOfMemoryError x) &#123;</span><br><span class="line">        Bits.unreserveMemory(size, cap);</span><br><span class="line">        <span class="keyword">throw</span> x;</span><br><span class="line">    &#125;</span><br><span class="line">    unsafe.setMemory(base, size, (<span class="keyword">byte</span>) <span class="number">0</span>); <span class="comment">// 初始化堆外内存空间为0</span></span><br><span class="line">    <span class="keyword">if</span> (pa &amp;&amp; (base % ps != <span class="number">0</span>)) &#123;</span><br><span class="line">        <span class="comment">// Round up to page boundary</span></span><br><span class="line">        address = base + ps - (base &amp; (ps - <span class="number">1</span>));</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        address = base;</span><br><span class="line">    &#125;</span><br><span class="line">    cleaner = Cleaner.create(<span class="keyword">this</span>, <span class="keyword">new</span> Deallocator(base, size, cap)); <span class="comment">// 使用Cleaner机制回收堆外内存</span></span><br><span class="line">    att = <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="简单方法"><a href="#简单方法" class="headerlink" title="简单方法"></a>简单方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 校验并设置属性</span></span><br><span class="line"><span class="comment"> * 由于mark &lt;= position &lt;= limit 所以只要校验mark、position即可</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> limit 界限值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 当前对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Buffer <span class="title">limit</span><span class="params">(<span class="keyword">int</span> newLimit)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ((newLimit &gt; capacity) || (newLimit &lt; <span class="number">0</span>))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">    limit = newLimit;</span><br><span class="line">    <span class="keyword">if</span> (position &gt; limit) position = limit;</span><br><span class="line">    <span class="keyword">if</span> (mark &gt; limit) mark = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 校验并设置属性</span></span><br><span class="line"><span class="comment"> * 由于mark &lt;= position 所以只要校验mark即可</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> newPosition 下一个读取或写入的元素的索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 当前对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Buffer <span class="title">position</span><span class="params">(<span class="keyword">int</span> newPosition)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ((newPosition &gt; limit) || (newPosition &lt; <span class="number">0</span>))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">    position = newPosition;</span><br><span class="line">    <span class="keyword">if</span> (mark &gt; position) mark = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 通过申请堆外内存来构造直接缓冲区</span></span><br><span class="line"><span class="comment"> * 当该对象被回收时会出发释放堆外内存</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> capacity 申请的容量</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ByteBuffer <span class="title">allocateDirect</span><span class="params">(<span class="keyword">int</span> capacity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> DirectByteBuffer(capacity);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 构造间接缓冲区</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> capacity 缓冲区的容量</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ByteBuffer <span class="title">allocate</span><span class="params">(<span class="keyword">int</span> capacity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (capacity &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> HeapByteBuffer(capacity, capacity); <span class="comment">// 虽然这是另外一个类，实际上挺简单的，所以这里就不做继续阐述了</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 构造一个包含指定字节数组的缓冲区</span></span><br><span class="line"><span class="comment"> * 若在外部修改该字节数组，对应的缓冲区内容也会变化</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> arry 指定字节数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> offset 下一个要读取或写入的元素的索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> length 指定写入或读取的元素的长度</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 缓冲区</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ByteBuffer <span class="title">wrap</span><span class="params">(<span class="keyword">byte</span>[] array, <span class="keyword">int</span> offset, <span class="keyword">int</span> length)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> HeapByteBuffer(array, offset, length);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IllegalArgumentException x) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IndexOutOfBoundsException();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 构造一个包含指定字节数组的缓冲区</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> array 指定字节数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 缓冲区</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ByteBuffer <span class="title">wrap</span><span class="params">(<span class="keyword">byte</span>[] array)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> wrap(array, <span class="number">0</span>, array.length);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 构造一个包含从position到limit之间的源缓冲区内容的新缓冲区（HeapByteBuffer）</span></span><br><span class="line"><span class="comment"> * 源缓冲区与新缓冲区共享同一个字节数组，两者的属性position、limit、capacity是相互独立的</span></span><br><span class="line"><span class="comment"> * 在源缓冲区构建完后它的offset就已经确定下来了，而对于position来说，它会随着读或写不断的变化，但它始终 &gt;= offset，因为offset代表着缓冲区的第一个元素对应到字节数组上的索引</span></span><br><span class="line"><span class="comment"> * position相当于它离第一个元素多远，offset + position = 当前读或者写入的元素对应到字节数组上的索引，所以对于新缓冲区来说，它的第一个元素对应到字节数组上的索引就是position + offset，不知道说清楚没有</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 0  1  2  3  4  5  6  7  8  9  10</span></span><br><span class="line"><span class="comment"> * 假设这是字节数组，1：offset  position：3（此时的3并不是指的3索引，而是指定离第一个元素有多远，那么position对应的索引应该是1 + 3 = 4索引）</span></span><br><span class="line"><span class="comment"> * 该类中的arrayOffset方法在第一次获取offset值时个人觉得写的不对，就好比我上面已经指定了position的值了，可惜返回的结果并不是我想要的，而在调用完slice完后再次通过arrayOffset获取offset，这次的结果确实正确的，于是我就有点纳闷了</span></span><br><span class="line"><span class="comment"> * 况且它的注释已经写的很明白了</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 新缓冲区，与源缓冲区共享同一个字节数组</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ByteBuffer <span class="title">slice</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> HeapByteBuffer(hb, -<span class="number">1</span>, <span class="number">0</span>, <span class="keyword">this</span>.remaining(), <span class="keyword">this</span>.remaining(), <span class="keyword">this</span>.position() + offset);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取缓冲区中剩余元素的数量</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 剩余元素的数量</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">remaining</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> limit - position;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取position的值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> position</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">position</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> position;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 对于直接缓冲区来说，笔者不敢保证是否共享同一块内存区域，这块的知识点并不是很充裕</span></span><br><span class="line"><span class="comment"> * 注释上说，若调用该方法的是个直接缓冲区，那么新缓冲区将是个只读缓冲区</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ByteBuffer <span class="title">slice</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> pos = <span class="keyword">this</span>.position();</span><br><span class="line">    <span class="keyword">int</span> lim = <span class="keyword">this</span>.limit();</span><br><span class="line">    <span class="keyword">assert</span> (pos &lt;= lim);</span><br><span class="line">    <span class="keyword">int</span> rem = (pos &lt;= lim ? lim - pos : <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">int</span> off = (pos &lt;&lt; <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">assert</span> (off &gt;= <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> DirectByteBuffer(<span class="keyword">this</span>, -<span class="number">1</span>, <span class="number">0</span>, rem, rem, off);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 复制源缓冲区，包括其属性position、limit、capacity、offset</span></span><br><span class="line"><span class="comment"> * 源缓冲区与新缓冲区共享同一个字节数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 新缓冲区</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ByteBuffer <span class="title">duplicate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> HeapByteBuffer(hb, <span class="keyword">this</span>.markValue(), <span class="keyword">this</span>.position(), <span class="keyword">this</span>.limit(), <span class="keyword">this</span>.capacity(), offset);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 注释上说，若调用该方法的是个直接缓冲区，那么新缓冲区将是个只读缓冲区</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ByteBuffer <span class="title">duplicate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> DirectByteBuffer(<span class="keyword">this</span>, <span class="keyword">this</span>.markValue(), <span class="keyword">this</span>.position(), <span class="keyword">this</span>.limit(), <span class="keyword">this</span>.capacity(), <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 复制源缓冲区，但是不允许新缓冲区修改内容，源缓冲区还是可以继续修改其内容，毕竟它不属于只读</span></span><br><span class="line"><span class="comment"> * HeapByteBufferR类中覆写了put方法，调用put方法都将抛出异常</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ByteBuffer <span class="title">asReadOnlyBuffer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> HeapByteBufferR(hb, <span class="keyword">this</span>.markValue(), <span class="keyword">this</span>.position(), <span class="keyword">this</span>.limit(), <span class="keyword">this</span>.capacity(), offset);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 读取缓冲区中position上的字节</span></span><br><span class="line"><span class="comment"> * 缓冲区中position会对应到字节数组中的索引来获取字节</span></span><br><span class="line"><span class="comment"> * 调用完该方法后position会自增</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 与该方法类似的直接缓冲区的知识点将尽量讲解，不懂的点我不会讲解！！！</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 字节</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">byte</span> <span class="title">get</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> hb[ix(nextGetIndex())];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取下一个读取的元素的索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 下一个读取的元素的索引</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">int</span> <span class="title">nextGetIndex</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (position &gt;= limit)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> BufferUnderflowException();</span><br><span class="line">    <span class="keyword">return</span> position++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取字节数组上对应的索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> i 对应position</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 字节数组上对应的索引</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">int</span> <span class="title">ix</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> i + offset;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将指定字节写入到缓冲区中position位置上</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> x 指定字节</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 缓冲区</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ByteBuffer <span class="title">put</span><span class="params">(<span class="keyword">byte</span> x)</span> </span>&#123;</span><br><span class="line">    hb[ix(nextPutIndex())] = x;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取下一个写入的元素的索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 下一个写入的元素的索引</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">int</span> <span class="title">nextPutIndex</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (position &gt;= limit)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> BufferOverflowException();</span><br><span class="line">    <span class="keyword">return</span> position++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 读取缓冲区中指定位置上的字节</span></span><br><span class="line"><span class="comment"> * 注意这里并没有修改position的值</span></span><br><span class="line"><span class="comment"> * 这里一直称作是指定位置，而不是指定索引，因为该位置并不是字节数组中的索引，而是缓冲区的指定位置对应到字节数组的指定索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> i 指定位置</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 指定位置上的字节</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">byte</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> hb[ix(checkIndex(i))];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 校验指定索引是否超过界限</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> i 指定位置</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 指定位置</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">int</span> <span class="title">checkIndex</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ((i &lt; <span class="number">0</span>) || (i &gt;= limit))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IndexOutOfBoundsException();</span><br><span class="line">    <span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将指定字节写入到缓冲区中指定位置上</span></span><br><span class="line"><span class="comment"> * 注意这里并没有修改position的值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> i 指定位置</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> x 指定字节</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 缓冲区</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ByteBuffer <span class="title">put</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">byte</span> x)</span> </span>&#123;</span><br><span class="line">    hb[ix(checkIndex(i))] = x;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将缓冲区中的剩余元素复制指定数量，从指定字节数组的指定起始索引处开始复制缓冲区的内容</span></span><br><span class="line"><span class="comment"> * 校验字节数组的参数是否合法</span></span><br><span class="line"><span class="comment"> * 若所需数量大于缓冲区的剩余元素长度，则会抛出异常</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> dst 指定字节数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> offset 指定起始索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> length 指定数量</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 缓冲区</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ByteBuffer <span class="title">get</span><span class="params">(<span class="keyword">byte</span>[] dst, <span class="keyword">int</span> offset, <span class="keyword">int</span> length)</span> </span>&#123;</span><br><span class="line">    checkBounds(offset, length, dst.length);</span><br><span class="line">    <span class="keyword">if</span> (length &gt; remaining())</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> BufferUnderflowException();</span><br><span class="line">    <span class="keyword">int</span> end = offset + length;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = offset; i &lt; end; i++)</span><br><span class="line">        dst[i] = get();</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将缓冲区中的剩余元素复制到指定字节数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> dst 指定字节数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 缓冲区</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ByteBuffer <span class="title">get</span><span class="params">(<span class="keyword">byte</span>[] dst)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> get(dst, <span class="number">0</span>, dst.length);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将指定缓冲区的剩余元素复制到当前缓冲区</span></span><br><span class="line"><span class="comment"> * 若当前缓冲区是个只读，则抛出异常</span></span><br><span class="line"><span class="comment"> * 若当前的缓冲区的剩余元素个数小于指定缓冲区的剩余元素个数，简单来说，就是不够放了，那么抛出异常</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> src 指定缓冲区</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 缓冲区</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ByteBuffer <span class="title">put</span><span class="params">(ByteBuffer src)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (src == <span class="keyword">this</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">    <span class="keyword">if</span> (isReadOnly())</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ReadOnlyBufferException();</span><br><span class="line">    <span class="keyword">int</span> n = src.remaining();</span><br><span class="line">    <span class="keyword">if</span> (n &gt; remaining())</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> BufferOverflowException();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        put(src.get());</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 从指定字节数组的指定起始位置开始遍历指定数量，将遍历后的元素复制到缓冲区中</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> src 指定字节数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> offset 指定起始索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> length 指定数量</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 缓冲区 </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ByteBuffer <span class="title">put</span><span class="params">(<span class="keyword">byte</span>[] src, <span class="keyword">int</span> offset, <span class="keyword">int</span> length)</span> </span>&#123;</span><br><span class="line">    checkBounds(offset, length, src.length);</span><br><span class="line">    <span class="keyword">if</span> (length &gt; remaining())</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> BufferOverflowException();</span><br><span class="line">    <span class="keyword">int</span> end = offset + length;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = offset; i &lt; end; i++)</span><br><span class="line">        <span class="keyword">this</span>.put(src[i]);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将字节数组的内容复制到缓冲区中</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> src 指定字节数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 缓冲区</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> ByteBuffer <span class="title">put</span><span class="params">(<span class="keyword">byte</span>[] src)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> put(src, <span class="number">0</span>, src.length);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 是否是可访问数组（缓冲区），代表非只读缓冲区已初始化</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 是否是可访问数组（缓冲区）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">hasArray</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (hb != <span class="keyword">null</span>) &amp;&amp; !isReadOnly;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取字节数组</span></span><br><span class="line"><span class="comment"> * 若修改缓冲区的内容，则返回的字节数组的内容也将跟着变化</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 字节数组</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">byte</span>[] array() &#123;</span><br><span class="line">    <span class="keyword">if</span> (hb == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException();</span><br><span class="line">    <span class="keyword">if</span> (isReadOnly)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ReadOnlyBufferException();</span><br><span class="line">    <span class="keyword">return</span> hb;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取缓冲区的第一个元素对应到字节数组中的索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 索引</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">arrayOffset</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (hb == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException();</span><br><span class="line">    <span class="keyword">if</span> (isReadOnly)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ReadOnlyBufferException();</span><br><span class="line">    <span class="keyword">return</span> offset;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将缓冲区的剩余元素拷贝到缓冲区的起始位置</span></span><br><span class="line"><span class="comment"> * postion上的字节被拷贝到索引0上</span></span><br><span class="line"><span class="comment"> * 该方法最好在缓冲区写完数据后调用，防止数据不完整</span></span><br><span class="line"><span class="comment"> * positions设置到limit，limit设置到capacity，mark = -1</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *   buf.clear();</span></span><br><span class="line"><span class="comment"> *   while (in.read(buf) &gt;= 0 || buf.position != 0) &#123; // in.read(buf)：从channel读取数据到buf中 channel -&gt; buf</span></span><br><span class="line"><span class="comment"> *       buf.flip();  // 将limit设置到position, position = 0  实际上就是将写模式切换到读模式，一般在写完后要开始读取数据了调用</span></span><br><span class="line"><span class="comment"> *       out.write(buf);  // 将buf中的数据写入到channel中  buf -&gt; channel</span></span><br><span class="line"><span class="comment"> *       buf.compact();    // In case of partial write</span></span><br><span class="line"><span class="comment"> *   &#125;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 缓冲区</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ByteBuffer <span class="title">compact</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    System.arraycopy(hb, ix(position()), hb, ix(<span class="number">0</span>), remaining());</span><br><span class="line">    position(remaining());</span><br><span class="line">    limit(capacity());</span><br><span class="line">    discardMark(); <span class="comment">//mark = -1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 是否是直接缓冲区</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 是否是直接缓冲区</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isDirect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 比较两个缓冲区的剩余元素是否完全相同</span></span><br><span class="line"><span class="comment"> * 若有一处不同则直接返回结果</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> that 另一个缓冲区</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 比较结果</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(ByteBuffer that)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = <span class="keyword">this</span>.position() + Math.min(<span class="keyword">this</span>.remaining(), that.remaining());</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="keyword">this</span>.position(), j = that.position(); i &lt; n; i++, j++) &#123;</span><br><span class="line">        <span class="keyword">int</span> cmp = compare(<span class="keyword">this</span>.get(i), that.get(j));</span><br><span class="line">        <span class="keyword">if</span> (cmp != <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> cmp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.remaining() - that.remaining();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取缓冲区的字节顺序，默认是高位优先</span></span><br><span class="line"><span class="comment"> * 不同的机器可能会使用不同的字节排序方法来存储数据</span></span><br><span class="line"><span class="comment"> * 高位优先：高位字节存放在内存的低地址，低位字节存放在高地址</span></span><br><span class="line"><span class="comment"> * 低位优先：低位字节存放在内存的高地址，高位字节存放在低地址</span></span><br><span class="line"><span class="comment"> * 对于不同的基本类型的位数是不一样的</span></span><br><span class="line"><span class="comment"> * 高位  低位   </span></span><br><span class="line"><span class="comment"> * 0001 1111</span></span><br><span class="line"><span class="comment"> * 低地址 -----&gt; 高地址</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 代表字节顺序的对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> ByteOrder <span class="title">order</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> bigEndian ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 修改缓冲区的字节顺序</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> ByteBuffer <span class="title">order</span><span class="params">(ByteOrder bo)</span> </span>&#123;</span><br><span class="line">    bigEndian = (bo == ByteOrder.BIG_ENDIAN);</span><br><span class="line">    nativeByteOrder = (bigEndian == (Bits.byteOrder() == ByteOrder.BIG_ENDIAN));</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 读取缓冲区的position与position对应的字节，根据当前字节顺序将两个字节组成一个char值，然后将position + 2</span></span><br><span class="line"><span class="comment"> * 因为char类型是占用两个字节, 所以会将两个字节变成1个char类型</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 97 |  bytes</span></span><br><span class="line"><span class="comment"> * |       |       |       |   a    |  chars</span></span><br><span class="line"><span class="comment"> * |   0   |   0   |   0   |   97   |  shorts</span></span><br><span class="line"><span class="comment"> * |       0       |       97       |   ints</span></span><br><span class="line"><span class="comment"> * 以此类推....</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> char值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">getChar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Bits.getChar(<span class="keyword">this</span>, ix(nextGetIndex(<span class="number">2</span>)), bigEndian);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将指定char值写入到缓冲区中指定位置上</span></span><br><span class="line"><span class="comment"> * 由于char占用两个字节，分为高位与低位，根据缓冲区中字节的顺序进行存储，默认情况是将高位存储在低地址，低位存储在高地址</span></span><br><span class="line"><span class="comment"> * 最终position会加2</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> x 指定char值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 缓冲区</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ByteBuffer <span class="title">putChar</span><span class="params">(<span class="keyword">char</span> x)</span> </span>&#123;</span><br><span class="line">    Bits.putChar(<span class="keyword">this</span>, ix(nextPutIndex(<span class="number">2</span>)), x, bigEndian);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 读取缓冲区中指定位置上的char值</span></span><br><span class="line"><span class="comment"> * 注意这里并没有修改position的值</span></span><br><span class="line"><span class="comment"> * char值占用两个字节，所以会将position与position + 1上的字节进行组合，position放在高位、position + 1放在低位</span></span><br><span class="line"><span class="comment"> * 这里一直称作是指定位置，而不是指定索引，因为该位置并不是字节数组中的索引，而是缓冲区的指定位置对应到字节数组的指定索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> i 指定位置</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 指定位置上的char值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">getChar</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Bits.getChar(<span class="keyword">this</span>, ix(checkIndex(i, <span class="number">2</span>)), bigEndian);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将指定char值写入到缓冲区中指定位置上</span></span><br><span class="line"><span class="comment"> * 注意这里并没有修改position的值</span></span><br><span class="line"><span class="comment"> * char值可分成高低位，根据缓冲区中的字节顺序进行存放，默认情况下将高位存储在低地址，低位存储在高地址</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> i 指定位置</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> x 指定char值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 缓冲区</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ByteBuffer <span class="title">putChar</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">char</span> x)</span> </span>&#123;</span><br><span class="line">    Bits.putChar(<span class="keyword">this</span>, ix(checkIndex(i, <span class="number">2</span>)), x, bigEndian);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将字节缓冲区转换成字符缓冲区</span></span><br><span class="line"><span class="comment"> * 实际上内部还是通过字节缓冲区来操作，由于char占用两个字节，所以该对象对应的position、limit、capacity可能都会/2</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 字符缓冲区</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> CharBuffer <span class="title">asCharBuffer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> size = <span class="keyword">this</span>.remaining() &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> off = offset + position();</span><br><span class="line">    <span class="keyword">return</span> (bigEndian ? (CharBuffer)(<span class="keyword">new</span> ByteBufferAsCharBufferB(<span class="keyword">this</span>, -<span class="number">1</span>, <span class="number">0</span>, size, size, off)) : (CharBuffer)(<span class="keyword">new</span> ByteBufferAsCharBufferL(<span class="keyword">this</span>, -<span class="number">1</span>, <span class="number">0</span>, size, size, off)));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对于转换成其他类型，如short、int、float、double都是一样的道理，就不在做展示了</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 相当于从写模式切换到读模式</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 缓冲区</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Buffer <span class="title">flip</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    limit = position;</span><br><span class="line">    position = <span class="number">0</span>;</span><br><span class="line">    mark = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 是否缓冲区中还有剩余元素</span></span><br><span class="line"><span class="comment"> * 要么是写满缓冲区、要么是缓冲区的内容读完了</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 缓冲区是否还有剩余元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">hasRemaining</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> position &lt; limit;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 重新读取/写入缓冲区</span></span><br><span class="line"><span class="comment"> * 可重复读取缓冲区的内容，可重复写入来覆盖缓冲区的内容</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 缓冲区</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Buffer <span class="title">rewind</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    position = <span class="number">0</span>;</span><br><span class="line">    mark = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li><p>缓冲区的基本属性有position、limit、capacity、mark，这些属性必须满足<code>0 &lt;= mark &lt;= posiiton &lt;= limit &lt;= capacity</code></p>
 </li>
-<li><p>int x = Character.digit(‘c’, 16)：是把16进制的c转为10进制，结果是12，16进制中a、b、c、d、e、f分别代表10、11、12、13、14、15.</p>
+<li><p>可创建视图缓冲区，视图缓冲区指的是包含其他基本类型值的缓冲区，省去了类型转换的麻烦。但是千万记住视图缓冲区的索引不是以字节为单位，而是根据其值的特定类型的大小决定的</p>
 </li>
-<li><p>计算机中计算都是采用补码计算的。在计算机中的机器字长的最高位表示正负，0为正数，1为负数。正数的原码、反码和补码都一样，都等于原码。负数的反码就是在原码的基础上符号位不变其余位按位取反，负数的补码就是在反码的基础上+1.值得注意的是，计算机将数值10000000表示为最大负数-128.推荐大家看下为什么计算机中要采用补码来储存数据，这是我搜索当中觉得不错的一篇文章-<a href="https://blog.csdn.net/weixin_44734925/article/details/88432355" target="_blank" rel="noopener">为什么计算机采用补码形式进行数据的表示</a>.</p>
+<li><p>直接缓冲区建议还是了解下，不过本文没有讲的很详细，笔者能力有限</p>
 </li>
-<li><p>对于byte或short值进行移位运算，得到的可能不是正确的结果。它们会被转换成int类型，在进行移位操作，然后被<code>截断</code>，赋值给原来的类型.如short i = -1; i &gt;&gt;&gt;= 10; 因为i是short类型，所以会被截断，最终的结果是-1.</p>
+<li><p>高低位、高地址、低地址，缓冲区的字节顺序</p>
 </li>
-<li><p>Math.round：四舍五入.</p>
+<li><p>compact：将缓冲区的剩余元素拷贝到缓冲区的起始位置，修改position = limit，limit = capacity</p>
 </li>
-<li><p>如果在返回void的方法中没有return语句，那么在该方法的结尾处会有一个隐式的return.</p>
+<li><p>slice：构造一个包含从position到limit之间的源缓冲区内容的新缓冲区，源缓冲区与新缓冲区共享同一个字节数组，但两者的基本属性是相互的独立</p>
 </li>
-<li><p>对于一类中的成员最好使用private访问权限修饰符。若你直接让外部类去访问该属性，有一天如果想要改变获取该属性的方式，那外部类岂不是也要跟着修改，所以最好的方式是用private修改该属性，同时提供具有public修饰符的方法，该方法主要用来获取该属性，至于怎么获取就是你说了算，外部类只要调用该方法即可，即使哪一天获取属性的方式变化了，也只需要修改方法的内部代码即可，外部类的调用方法还是不变.</p>
+<li><p>duplicate：复制源缓冲区的内容构造一个新缓冲区，包括复制基本属性，两个缓冲区共享同一个字节数组</p>
 </li>
 </ul>
-        
-      
+<h3 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a><div><span>重点关注</span></div></h3><p><code>基本属性</code> <code>compact、slice、duplicate</code></p>
 
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">daily-konwledge-point-java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/25/core-java-knowledge-20190609/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-primary-programmer-book-list" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/08/primary-programmer-book-list/">推荐初级程序员书单</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/06/08/primary-programmer-book-list/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/06/08/primary-programmer-book-list/" class="archive-article-date">
-  	<time datetime="2019-06-08T07:02:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="有点菜"><a href="#有点菜" class="headerlink" title="有点菜"></a><div><span>有点菜</span></div></h3><p>嗯…怎么说好呢？由于笔者自我认为还是个初级程序员，所以以下的内容基本上是围绕着我个人的经历来写的。笔者毕业两年了，看过的书籍不是很多，因为刚出来的时候也像你们一样在百度上搜索着程序员书单之类的关键词，然后一一列举下来，做的好一点的呢会去看看书单中每一本书的目录都包含什么及收集一些看过这些书的人的观点，不适合自己的当然是果断排除点！如今自己也看了几本书，觉得都还可以，只不过是针对<code>初级程序员</code>，当然这只是目前情况，笔者还在学习，陆陆续续也会推荐更多的书单介绍。</p>
-        
       
 
       
@@ -895,129 +256,6 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/essays//" class="article-tag-list-link color2">essays</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/08/primary-programmer-book-list/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-core-java-knowledge-20190415" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/30/core-java-knowledge-20190415/">每日知识点20190415</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/05/30/core-java-knowledge-20190415/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/05/30/core-java-knowledge-20190415/" class="archive-article-date">
-  	<time datetime="2019-05-30T15:21:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul>
-<li><p>String v = map.putIfAbsent(“a”, “1”)：若map中不存在指定的key值(a)，则使用指定的key(a)和指定的value(1)进行填充，但此时返回的数据是<code>旧值</code>，所以是null，即v=null，当你真正调用map.get(“a”)时才返回指定的value值，即1.</p>
-</li>
-<li><p>String v = map.computeIfAbsent(“a”, “1”)：若map中不存在指定的key值(a)，则使用指定的key(a)和指定的value(1)进行填充，但此时返回的数据是<code>新值</code>，即v=1.</p>
-</li>
-<li><p>DateTimeFormatter.parse()：可以解析LocalDate、LocalTime、LocalDateTime.</p>
-</li>
-<li><p>MessageFormat：消息格式化，如MessageFormat.format(“hi, my name is {0}”, “zhangsan”)，不仅如此，占位符后面还可以跟一个类型和一个风格，它们之间用逗号隔开.单独将choice拿出来先讲讲，{1,choice,0#no house| 1#one hose | 2#two houses}，一个选择格式是由一个序列对构成的，每一个对包括一个<code>下限</code>和一个<code>格式字符串</code>，下面的列表中是其他的类型.</p>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">类型</th>
-<th style="text-align:center">风格</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">number</td>
-<td style="text-align:center">integer、currency、percent、$</td>
-</tr>
-<tr>
-<td style="text-align:center">time/date</td>
-<td style="text-align:center">short、medium、long、full、yyyy-MM-dd</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>注解中的所有元素值必须是编译期常量.</li>
-</ul>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">daily-konwledge-point-java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
         			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
         		</li>
       		
@@ -1026,16 +264,75 @@
 
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/30/core-java-knowledge-20190415/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/11/26/explain-bytebuffer-sourcecode/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2019/11/09/string-newString-compare/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">深入理解String与new String</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -1055,116 +352,53 @@
 
 
 
+  
+  
+  
 
   
-    <article id="post-core-java-knowledge-20190226" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+
+  
+
+  
+  
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/14/core-java-knowledge-20190226/">每日知识点20190226</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/04/14/core-java-knowledge-20190226/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/04/14/core-java-knowledge-20190226/" class="archive-article-date">
-  	<time datetime="2019-04-14T05:02:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul>
-<li><p>java Test &lt; 1.txt表示将1.txt中的内容作为其前面命令的输入.</p>
-</li>
-<li><p>java Test &gt; 1.txt表示将Test的结果输出到1.txt中.</p>
-</li>
-<li><p>双端队列，可以在头部和尾部添加或删除元素，但不支持在队列中间添加元素.</p>
-</li>
-<li><p>coll1.retainAll(coll2)：会从coll1中删除所有未在coll2中出现的元素.</p>
-</li>
-<li><p>方法引用所引用的方法的参数列表必须要和函数式接口中抽象方法的参数列表相同（完全一致），构造引用也是如此.</p>
-</li>
-<li><p>方法引用所引用的方法的的返回值必须要和函数式接口中抽象方法的返回值相同（完全一致），构造引用也是如此.</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">daily-konwledge-point-java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/04/14/core-java-knowledge-20190226/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
-    </nav>
+    <section id="comments" class="comments">
+	  <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "JoYcsWmKGGeDS1gi583VdmYm-gzGzoHsz",
+            app_key: "F9y6cyWlw9WVSFOEw3rnxfXY",
+            placeholder: "扯淡吧",
+            avatar: "",
+            avatar_cdn: "",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+	
+</script>
+    </section>
+	
   
 
 
@@ -1188,8 +422,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
