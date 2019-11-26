@@ -6,23 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>我叫Spi，新成员 | 奇思妙想</title>
+  <title>每日知识点20191107 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="自我介绍Spi，Service Provider Interface，是java提供的一套用来被第三方实现或扩展的API，它可以用来启用框架扩展或替换相应的组件。简单来说就是我提供标准，你按照我的标准提供实现就可以了，当然了，这个实现可以是可以有多个，你想选择哪个都可以，不过前提是你要知道所有的实现才能选择，这操作属于java中的策略模式，而所有的实现都被放在一个配置文件中，所以Spi基本上就是一">
-<meta name="keywords" content="java">
+  <meta name="description" content="java Exception#fillInStackTrace：将当前调用栈信息填入到原来异常对象，相当于更新最新的抛出点（catch异常后又抛出的点）  try-finally某些情况下会吃掉抛出的异常   123456try &amp;#123;    throw new RuntimeException();&amp;#125; finally &amp;#123;    return;&amp;#125;  覆盖方法时，">
+<meta name="keywords" content="daily-konwledge-point-java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我叫Spi，新成员">
-<meta property="og:url" content="http://zlia.tech/2019/04/14/explain-spi-knowledge/index.html">
+<meta property="og:title" content="每日知识点20191107">
+<meta property="og:url" content="http://zlia.tech/2019/11/26/core-java-knowledge-20191107/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="自我介绍Spi，Service Provider Interface，是java提供的一套用来被第三方实现或扩展的API，它可以用来启用框架扩展或替换相应的组件。简单来说就是我提供标准，你按照我的标准提供实现就可以了，当然了，这个实现可以是可以有多个，你想选择哪个都可以，不过前提是你要知道所有的实现才能选择，这操作属于java中的策略模式，而所有的实现都被放在一个配置文件中，所以Spi基本上就是一">
+<meta property="og:description" content="java Exception#fillInStackTrace：将当前调用栈信息填入到原来异常对象，相当于更新最新的抛出点（catch异常后又抛出的点）  try-finally某些情况下会吃掉抛出的异常   123456try &amp;#123;    throw new RuntimeException();&amp;#125; finally &amp;#123;    return;&amp;#125;  覆盖方法时，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://zlia.tech/assets/blogImg/essays/spi/example-spi-1.png">
-<meta property="og:image" content="http://zlia.tech/assets/blogImg/essays/spi/example-spi-2.png">
-<meta property="og:updated_time" content="2019-06-08T06:12:29.709Z">
+<meta property="og:updated_time" content="2019-11-26T08:34:07.855Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我叫Spi，新成员">
-<meta name="twitter:description" content="自我介绍Spi，Service Provider Interface，是java提供的一套用来被第三方实现或扩展的API，它可以用来启用框架扩展或替换相应的组件。简单来说就是我提供标准，你按照我的标准提供实现就可以了，当然了，这个实现可以是可以有多个，你想选择哪个都可以，不过前提是你要知道所有的实现才能选择，这操作属于java中的策略模式，而所有的实现都被放在一个配置文件中，所以Spi基本上就是一">
-<meta name="twitter:image" content="http://zlia.tech/assets/blogImg/essays/spi/example-spi-1.png">
+<meta name="twitter:title" content="每日知识点20191107">
+<meta name="twitter:description" content="java Exception#fillInStackTrace：将当前调用栈信息填入到原来异常对象，相当于更新最新的抛出点（catch异常后又抛出的点）  try-finally某些情况下会吃掉抛出的异常   123456try &amp;#123;    throw new RuntimeException();&amp;#125; finally &amp;#123;    return;&amp;#125;  覆盖方法时，">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -170,14 +167,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-explain-spi-knowledge" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-core-java-knowledge-20191107" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      我叫Spi，新成员
+      每日知识点20191107
     </h1>
   
 
@@ -186,32 +183,50 @@
 <!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/04/14/explain-spi-knowledge/" class="pageViews">0</span>
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/26/core-java-knowledge-20191107/" class="pageViews">0</span>
   </a>
 
         
-        <a href="/2019/04/14/explain-spi-knowledge/" class="archive-article-date">
-  	<time datetime="2019-04-14T05:01:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-14</time>
+        <a href="/2019/11/26/core-java-knowledge-20191107/" class="archive-article-date">
+  	<time datetime="2019-11-26T08:34:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-26</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="自我介绍"><a href="#自我介绍" class="headerlink" title="自我介绍"></a><div><span>自我介绍</span></div></h3><p>Spi，Service Provider Interface，是java提供的一套用来被第三方实现或扩展的API，它可以用来启用框架扩展或替换相应的组件。简单来说就是我提供标准，你按照我的标准提供实现就可以了，当然了，这个实现可以是可以有多个，你想选择哪个都可以，不过前提是你要知道所有的实现才能选择，这操作属于java中的策略模式，而所有的实现都被放在一个配置文件中，所以Spi基本上就是一个<code>接口</code> + <code>策略模式</code> + <code>配置文件</code>组合而成的动态加载机制。在面向对象的设计里，模块之间基于接口编程，模块之间不对实现类硬编码，在不同的场景下需要动态的指明实现类，这就需要一个服务发现的机制，Spi提供这样子的一个机制，为某个接口寻找服务实现的机制，将硬编码移到程序之外，也就是配置文件中，Spi的核心思想就是<code>解耦</code>。<a id="more"></a></p>
-<h3 id="模拟Spi"><a href="#模拟Spi" class="headerlink" title="模拟Spi"></a><div><span>模拟Spi</span></div></h3><p>既然是标准，那么肯定有一些必须要遵守的规范：</p>
-<ol>
-<li>定义服务接口与服务接口的实现类，若是jar包则要在jar包的META-INF/services目录下创建一个以<code>接口全限定名</code>为文件名的文本文件，该文本文件的内容即<code>服务接口实现类的全限定名</code>。</li>
-<li>该jar包记得加入到classpath中。</li>
-<li>服务接口的实现类必须有一个不带参数的构造方法，即默认的构造方法。</li>
-</ol>
-<p>接下来看几个截图，具体的代码实现已经上传到github上了，有兴趣的读者可以看看，菜鸟级别的水平不要见怪！</p>
-<p class="customize-img"><img src="/assets/blogImg/essays/spi/example-spi-1.png" alt="Spi例子-1"></p>
-<p><code>请注意</code>，创建META-INF/service目录后最好看一下目录结构，<code>META-INF是一个目录，而service是它的子目录，这不是只有一层目录</code>，当时就被自己给坑了。</p>
-<p class="customize-img"><img src="/assets/blogImg/essays/spi/example-spi-2.png" alt="Spi例子-2"></p>
-<p>看了以上的内容咱们顺便在说下Spi的优缺点，不对，优点就是一开始说的解耦，将业务代码分离，简单说下缺点吧。看到上面的截图中采用的是ServiceLoader类来加载实现类，源码当中采用的是懒加载的方式，只有当我们去遍历配置文件中的实现类时才会一一实例化，缺点很明显，<code>只能通过遍历的方式去获取每个实现类，若你不想用某个实现类，它最终还是会被实例化，这势必造成了资源的浪费</code>，没有提供通过传入某个参数来获取到指定的实现类，不够灵活。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><div><span>总结</span></div></h3><p>网上有人说很多框架当中使用了Spi机制，比如JDBC加载不同的类型数据库的驱动、不同的日志实现类、Dubbo，虽然这些我都没有看过，但解耦是每个程序都需要的，这也奠定了Spi的重要性。Spi的缺点很明显，<code>可以在它的基础上在包装一层，这部分例子我从其他地方拷贝了过来，挺实用的，而正好是后期完善的，所以上面的截图中并没有显示这些内容，不过我已经放到了github上了</code>，有兴趣可以看看。最后加油自己，加油每一个人。</p>
-<p><a href="https://github.com/JulianHang/little-mvn-project.git" target="_blank" rel="noopener">源码下载</a> </p>
+        <h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul>
+<li><p>Exception#fillInStackTrace：将当前调用栈信息填入到原来异常对象，相当于更新最新的抛出点（catch异常后又抛出的点）</p>
+</li>
+<li><p>try-finally某些情况下会吃掉抛出的异常</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException();</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>覆盖方法时，只能抛出在基类方法的异常说明里列出的那些异常或其子类或选择不抛出，但是此限制对构造器不起作用，派生类构造器可以抛出任何异常，只需要在异常说明中包含基类构造器的异常说明</p>
+</li>
+<li><p>Collections.nCopies能添加新元素，Collections.fill只能替换元素，无法添加新元素</p>
+</li>
+<li><p>通配符代表着持有具有某种具体类型的同构集合</p>
+</li>
+</ul>
+<a id="more"></a>
+<ul>
+<li>下面的代码摘抄自编程思想P550</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestS</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标准输入、输出和错误IO流进行重定向</span></span><br><span class="line"><span class="comment">     * 一开始只有in.out中有数据，而test.out中是空内容，执行完程序后，test.out中的数据和in.out是一致的</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        PrintStream console = System.out;</span><br><span class="line">        BufferedInputStream in = <span class="keyword">new</span> BufferedInputStream(<span class="keyword">new</span> FileInputStream(<span class="string">"in.out"</span>));</span><br><span class="line">        PrintStream out = <span class="keyword">new</span> PrintStream(<span class="keyword">new</span> BufferedOutputStream(<span class="keyword">new</span> FileOutputStream(<span class="string">"test.out"</span>)));</span><br><span class="line">        System.setIn(in);<span class="comment">//默认是从控制台读取数据，但是这里进行了重定向，于是从in.out中读取数据</span></span><br><span class="line">        System.setOut(out);<span class="comment">//默认是将数据写入到控制台，但是这里进行了重定向，于是写入到test.out中</span></span><br><span class="line">        System.setErr(out);<span class="comment">//同上</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//默认情况下是从控制台读取数据，然而这里是读取in.out文件中的数据</span></span><br><span class="line">        BufferedReader br = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(System.in));</span><br><span class="line">        String s ;</span><br><span class="line">        <span class="keyword">while</span>((s = br.readLine()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">            System.out.println(s);</span><br><span class="line">        &#125;</span><br><span class="line">        out.close();</span><br><span class="line">        System.setOut(console);<span class="comment">//切换到默认情况下</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>容错：发生故障时，如何让系统继续运行</p>
+</li>
+<li><p>高可用：系统中断时，如何尽快恢复</p>
+</li>
+<li><p>灾备：系统毁灭时，如何抢救数据</p>
+</li>
+<li><p>TestA.class.isAssignableFrom(TestB.class)：TestA与TestB是同一个类类型或TestA是TestB的父类或TestA是TestB的父接口</p>
+</li>
+<li><p>java中采用高位优先（大端模式）进行存储字节数据，也就是高位存储在低地址，低位存储在高地址上</p>
+</li>
+</ul>
 
       
 
@@ -225,7 +240,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">daily-konwledge-point-java</a>
         		</li>
       		
 		</ul>
@@ -237,7 +252,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/essays//" class="article-tag-list-link color2">essays</a>
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
         		</li>
       		
 		</ul>
@@ -292,7 +307,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/04/14/explain-spi-knowledge/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/11/26/core-java-knowledge-20191107/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -306,18 +321,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/04/14/core-java-knowledge-20190226/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          每日知识点20190226
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/04/07/explain-qps-knowledge/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">我叫QPS，初次见面</div>
+    <a href="/2019/11/26/explain-bytebuffer-sourcecode/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">探索ByteBuffer底层实现</div>
       <i class="icon-circle-right"></i>
     </a>
   
