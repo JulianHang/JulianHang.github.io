@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="奇思妙想">
 <meta property="og:description" content="前言探索Hashtable底层实现是基于JDK1.8，它的数据结构是数组 + 链表。在不考虑线程是否安全的前提下，它的很多细节处理都不如HashMap，何况如今的HashMap又加了红黑树，查询修改肯定比不上，因为红黑树的时间复杂度是O（logN），而链表的时间复杂度是O（N），新增与删除无法比较，毕竟两者的策略不一致；而倘若比较讨论并发的话，ConcurrentHashMap比它更适合，Hash">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-31T10:15:34.960Z">
+<meta property="og:updated_time" content="2019-11-29T02:18:43.657Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="探索Hashtable底层实现">
 <meta name="twitter:description" content="前言探索Hashtable底层实现是基于JDK1.8，它的数据结构是数组 + 链表。在不考虑线程是否安全的前提下，它的很多细节处理都不如HashMap，何况如今的HashMap又加了红黑树，查询修改肯定比不上，因为红黑树的时间复杂度是O（logN），而链表的时间复杂度是O（N），新增与删除无法比较，毕竟两者的策略不一致；而倘若比较讨论并发的话，ConcurrentHashMap比它更适合，Hash">
@@ -211,6 +211,8 @@
 <li><p>Hashtable计算索引时采用的是取余，而HashMap采用的与运算</p>
 </li>
 <li><p>Hashtable新增节点时采用的头插法</p>
+</li>
+<li><p>Hashtable计算hash值的方式可能会出现高位不同低位相同的两个不同数造成最终的索引相同，相比hashMap，它的hash计算方式降低了碰撞的概率</p>
 </li>
 </ul>
 <h3 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a><div><span>重点关注</span></div></h3><p><code>键值对不允许null</code> <code>计算索引采用取余</code> <code>头插法</code></p>
@@ -540,19 +542,19 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -568,11 +570,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">markdown</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+                <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
               </li>
             
             <div class="clearfix"></div>

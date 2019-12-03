@@ -167,6 +167,99 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-explain-activemq-soucecod" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/02/explain-activemq-soucecod/">简单喵下ActiveMQ生产者源码</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/09/02/explain-activemq-soucecod/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2018/09/02/explain-activemq-soucecod/" class="archive-article-date">
+  	<time datetime="2018-09-02T01:00:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a><div><span>前提</span></div></h3><p>前提前提大前提！准备一份源码呗，activemq生产者的源码。何为生产者？就是发消息的源头，谁来发送消息谁就是生产者。有了生产者自然就会有消费者，今天着重看看生产者的故事，后面的几篇文章咱们都会一一进行讲解，包括服务端、消费者以及<code>ACK</code>模式，<code>消息的传送机制</code>，至于其他的内容还有待发掘，因为目前我也只是了解了部分！生产者的源码大伙可以从网上百度下，只要能跑起来就可以了，如果可以的话最好知道对方写了什么，对代码有个简单的理解，否则下面讲解的内容可能跟你的需求会有很大的出入，也帮助不了你哈，另一方面也是浪费了作者的苦心啦！自我迷恋中，切勿当真，哈哈。最好最好或者你有兴趣的话，可以clone下我的代码，里面都添加了对应的注释，<a href="https://github.com/JulianHang/activemq-client.git" target="_blank" rel="noopener">源码下载</a>。最后一个前提，作者使用的代码工具是<code>IDEA</code>，采用DEBUG模式来查看源码，所以读者对工具的操作最好有个简单的了解。好了，不啰嗦了！
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">activemq</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/mq//" class="article-tag-list-link color3">mq</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/02/explain-activemq-soucecod/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-activemq-understand" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -692,19 +785,19 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -720,11 +813,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">markdown</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+                <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
               </li>
             
             <div class="clearfix"></div>

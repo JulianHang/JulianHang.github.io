@@ -167,6 +167,99 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-read-computer-mind" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/03/read-computer-mind/">为入门操作系统而读-《计算机的心智-操作系统之哲学原理》</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/12/03/read-computer-mind/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2019/12/03/read-computer-mind/" class="archive-article-date">
+  	<time datetime="2019-12-03T10:27:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>为什么会想着入门操作系统呢？还是跟Java有关系，在深入学习的过程中发现很多点都会涉及到操作系统底层的知识，特别是并发这块内容，而笔者我现在只是刚刚起步学习就已经要了解与操作系统相关的内容，所以还是早点入坑吧。为什么是先看这本书呢？当然了，我不会无缘无故随便看一本，是经过从前人的推荐到知识点的考察才最终定下来！《计算机的心智-操作系统之哲学原理》这本书出版于09年，也算是一本年代已久的书籍，不过相对于计算机的诞生时间来说，它的知识点应该不会显得过时，该书在商城上可能买不到了，笔者也是找的PDF，Google一下就有了。打算借着这本书的知识点来对操作系统的入门做一个总结，同时也希望能够帮助其他有缘人吧。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">operating-system</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/essays//" class="article-tag-list-link color2">essays</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/12/03/read-computer-mind/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-core-java-knowledge-20191107" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1133,113 +1226,6 @@
 
 
   
-    <article id="post-explain-weakhashmap-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/04/explain-weakhashmap-sourcecode/">探索WeakHashMap底层实现</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/04/explain-weakhashmap-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/11/04/explain-weakhashmap-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-11-04T10:00:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>探索<code>WeakHashMap</code>底层实现是基于<code>JDK1.8</code>，它的数据结构是<code>数组 + 链表</code>。就不贴它的注释了，直接总结一下吧：</p>
-<blockquote>
-<p>WeakHashMap基于<code>弱键</code>实现了Map接口，也就是说，当某个键不在使用时会被丢弃，对应的键值对将会被自动移除。如何确定不在使用取决于GC是否运行，而对于GC何时运行我们并不知道，所以某个键何时被丢弃我们也不得而知，至于GC如何运行就是另外一个话题了，有可能导致上一分钟与下一分钟获取到的结果是不一致的。另一个方面，WeakHashMap的值对象由强引用所持有（何为强引用下面会介绍），应确保值对象不会直接或间接引用自身的键或其他键，这会导致键无法被丢弃。</p>
-</blockquote>
-<ul>
-<li><p>强引用：简单来说指向new出来的对象就是一个强引用，可以说是经常使用。对于强引用来说，它们不会被GC回收，即使内存空间不足，JVM宁愿抛出内存溢出错误也不敢动它们，总体来说还是很有威信的。</p>
-</li>
-<li><p>软引用：首先给强引用包裹上一层<code>SoftReference</code>，通过SoftReference获取到的引用即为软引用。对于软引用来说，在内存充足的情况下，GC可以选择性的清除，而一旦内存不足了，它们一个都跑不了，都会被清除掉。软引用最常用用于实现对内存敏感的缓存。</p>
-</li>
-<li><p>弱引用：首先给强引用包裹上一层<code>WeakReference</code>，通过WeakReference获取到的引用即为弱引用，看到这里你应该就已经明白了WeakHashMap内部的机制。对于弱引用来说，GC压根就不管内存是否充足，直接回收，很没有人性！</p>
-</li>
-<li><p>虚引用：首先给强引用包裹上一层<code>PhantomReference</code>，通过PhantomReference获取到的引用即为虚引用。对于虚引用来说，它在任何时候都可能被回收，常用于跟踪对象。</p>
-</li>
-</ul>
-<p>还有一个方面，读者最好去了解下<code>Reference</code>类，内部通过队列实现了一些机制。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/11/04/explain-weakhashmap-sourcecode/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1393,19 +1379,19 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1421,11 +1407,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">markdown</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+                <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
               </li>
             
             <div class="clearfix"></div>
