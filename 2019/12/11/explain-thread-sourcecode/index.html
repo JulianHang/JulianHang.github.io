@@ -17,7 +17,7 @@
 <meta property="og:description" content="前言接下来的这一段时间都将探索跟线程有关的内容，包括各种锁，对Thread的总结如下：  线程具有优先级，高优先级的线程优先于低优先级的线程执行，当在某个线程中创建新线程时，新线程的优先级被设置成当前线程的优先级；JVM启动时，默认有一个非守护线程（调用某个类的main方法）；线程能被标记为守护线程，每个线程都可以指定名称，未指定的情况下将由底层帮其生成一个新名称；有两种方式来创建线程，如下所示：">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/thread/thread-statue.png">
-<meta property="og:updated_time" content="2019-12-11T08:37:08.392Z">
+<meta property="og:updated_time" content="2019-12-11T08:39:35.355Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="尽力去探究Thread的方方面面">
 <meta name="twitter:description" content="前言接下来的这一段时间都将探索跟线程有关的内容，包括各种锁，对Thread的总结如下：  线程具有优先级，高优先级的线程优先于低优先级的线程执行，当在某个线程中创建新线程时，新线程的优先级被设置成当前线程的优先级；JVM启动时，默认有一个非守护线程（调用某个类的main方法）；线程能被标记为守护线程，每个线程都可以指定名称，未指定的情况下将由底层帮其生成一个新名称；有两种方式来创建线程，如下所示：">
@@ -202,8 +202,8 @@
 <p>线程具有<code>优先级</code>，高优先级的线程优先于低优先级的线程执行，当在某个线程中创建新线程时，新线程的优先级被设置成当前线程的优先级；JVM启动时，默认有一个非守护线程（调用某个类的main方法）；线程能被标记为<code>守护线程</code>，每个线程都可以<code>指定名称</code>，未指定的情况下将由底层帮其生成一个新名称；有两种方式来创建线程，如下所示：</p>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 在只有一个实例的情况下只能创建一个线程</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestA</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"TestA"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在只有一个实例的情况下可创建多个线程，这种方式更为常见</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestB</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"TestB"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="方方面面"><a href="#方方面面" class="headerlink" title="方方面面"></a><div><span>方方面面</span></div></h3><a id="more"></a>
-<p>探索Thread源码是基于<code>JDK1.8</code>，在探索之前先了解下<code>线程的状态</code>。</p>
+<a id="more"></a>
+<h3 id="方方面面"><a href="#方方面面" class="headerlink" title="方方面面"></a><div><span>方方面面</span></div></h3><p>探索Thread源码是基于<code>JDK1.8</code>，在探索之前先了解下<code>线程的状态</code>。</p>
 <ul>
 <li><p><code>新建（NEW）</code>：新创建一个对象，但还没有开始调start方法。</p>
 </li>
@@ -579,11 +579,11 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -603,15 +603,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
               </li>
              
               <li class="article-tag-list-item">
