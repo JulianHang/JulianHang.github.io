@@ -167,6 +167,195 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-map-different-compare" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/05/map-different-compare/">比较Map实现类的不同点</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/05/map-different-compare/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2019/11/05/map-different-compare/" class="archive-article-date">
+  	<time datetime="2019-11-05T08:22:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a><div><span>比较</span></div></h3><p>趁热打铁！比较最近学习到的几个Map实现类，也正好总结下！此比较是基于<code>JDK1.8</code>，直接用表格展示。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">比较点</th>
+<th style="text-align:center">HashMap</th>
+<th style="text-align:center">Hashtable</th>
+<th style="text-align:center">IdentityHashMap</th>
+<th style="text-align:center">LinkedHashMap</th>
+<th style="text-align:center">TreeMap</th>
+<th style="text-align:center">WeakHashMap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">数据结构</td>
+<td style="text-align:center">数组<br>链表<br>红黑树</td>
+<td style="text-align:center">数组<br>链表</td>
+<td style="text-align:center">数组<br>（哈希探针表）</td>
+<td style="text-align:center">数组<br>链表<br>红黑树</td>
+<td style="text-align:center">红黑树</td>
+<td style="text-align:center">数组<br>链表</td>
+</tr>
+<tr>
+<td style="text-align:center">是否有序/可重复</td>
+<td style="text-align:center">无序不可重复</td>
+<td style="text-align:center">无序不可重复</td>
+<td style="text-align:center">无序不可重复</td>
+<td style="text-align:center">默认按插入顺序排列<br>可按访问顺序排列<br>不可重复</td>
+<td style="text-align:center">默认按自然顺序<br>可指定比较器进行自定义排序<br>不可重复</td>
+<td style="text-align:center">无序不可重复</td>
+</tr>
+<tr>
+<td style="text-align:center">键值对为null</td>
+<td style="text-align:center">允许</td>
+<td style="text-align:center">不允许</td>
+<td style="text-align:center">允许</td>
+<td style="text-align:center">允许</td>
+<td style="text-align:center">默认排序中键不允许，值允许<br>自定义排序中键值对都允许</td>
+<td style="text-align:center">允许</td>
+</tr>
+<tr>
+<td style="text-align:center">默认初始容量</td>
+<td style="text-align:center">16</td>
+<td style="text-align:center">11</td>
+<td style="text-align:center">64</td>
+<td style="text-align:center">16</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">16</td>
+</tr>
+<tr>
+<td style="text-align:center">默认加载因子</td>
+<td style="text-align:center">0.75</td>
+<td style="text-align:center">0.75</td>
+<td style="text-align:center">1/3</td>
+<td style="text-align:center">0.75</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">0.75</td>
+</tr>
+<tr>
+<td style="text-align:center">扩容策略</td>
+<td style="text-align:center">2 * capacity</td>
+<td style="text-align:center">2 * capacity + 1</td>
+<td style="text-align:center">2 * capacity</td>
+<td style="text-align:center">2 * capacity</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">2 * capacity</td>
+</tr>
+<tr>
+<td style="text-align:center">计算hash方式</td>
+<td style="text-align:center">hash ^ (hash &gt;&gt;&gt; 16)</td>
+<td style="text-align:center">hash &amp; 0x7FFFFFFF</td>
+<td style="text-align:center">(hash &lt;&lt; 1) - (hash &lt;&lt; 8)</td>
+<td style="text-align:center">hash ^ (hash &gt;&gt;&gt; 16)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">有点复杂，就不贴了</td>
+</tr>
+<tr>
+<td style="text-align:center">计算索引</td>
+<td style="text-align:center">hash &amp; (capacity - 1)</td>
+<td style="text-align:center">hash % capacity</td>
+<td style="text-align:center">hash &amp; (capacity - 1)</td>
+<td style="text-align:center">hash &amp; (capacity - 1)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">hash &amp; (capacity - 1)</td>
+</tr>
+<tr>
+<td style="text-align:center">新增节点</td>
+<td style="text-align:center">尾插法</td>
+<td style="text-align:center">头插法</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">尾插法</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">头插法</td>
+</tr>
+</tbody>
+</table>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/05/map-different-compare/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-explain-enummap-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1042,122 +1231,6 @@
 
 
   
-    <article id="post-explain-binarytree" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/11/explain-binarytree/">初识二叉树</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/09/11/explain-binarytree/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/09/11/explain-binarytree/" class="archive-article-date">
-  	<time datetime="2019-09-11T08:27:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="树的概念"><a href="#树的概念" class="headerlink" title="树的概念"></a><div><span>树的概念</span></div></h3><p>探索二叉树前，先来认识下什么是树？用官方一点的话来说，<code>树是数据元素之间具有层次关系的非线性结构，是由n（n&gt;=0）个节点组成的有限集合</code>，n=0时称为空树。在任意一颗非空树中，它具有了以下特性：</p>
-<ul>
-<li><p>每棵树至多只有一个根节点。</p>
-</li>
-<li><p>由根节点构造出多个孩子节点，每个孩子节点只有一个父节点，而孩子节点又构造出多个节点。</p>
-</li>
-</ul>
-<p>先看张图，方便了解下树的一些专业术语。</p>
-<p class="customize-img"><img src="/assets/blogImg/algorithm/binarytree/tree-structure-1.png" alt="树结构"></p>
-<ul>
-<li><p><code>根节点</code>：根节点是没有父节点，图中的A节点。</p>
-</li>
-<li><p><code>孩子节点/子节点</code>：某个节点的孩子称为孩子节点，孩子节点/子节点是相对的，图中A的孩子节点有B、C、D，而B的孩子节点有E、F。</p>
-</li>
-<li><p><code>叶子节点</code>：某个节点没有孩子，图中的E、F、G、D。</p>
-</li>
-<li><p><code>节点的度</code>：某个节点的孩子节点个数，图中A有BCD（3）个孩子节点，B有EF（2）个孩子节点。</p>
-</li>
-<li><p><code>树的层次</code>：某个节点处于树中的层次，图中的A处于第1层。</p>
-</li>
-<li><p><code>树的高/深度</code>：树的最大层次，图中的高/深度为3。</p>
-</li>
-</ul>
-<p>接下来聊正题吧！</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/11/explain-binarytree/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1311,11 +1384,11 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1335,7 +1408,7 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1343,11 +1416,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+                <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
+                <a href="javascript:void(0)" class="js-tag color4">markdown</a>
               </li>
             
             <div class="clearfix"></div>
