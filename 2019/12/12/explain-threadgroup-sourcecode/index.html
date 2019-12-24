@@ -17,7 +17,7 @@
 <meta property="og:description" content="开门见山ThreadGroup在实际开发中很少用到，不过由于它跟Thread的关系比较密切，所以还是了解下为妙，揭开ThreadGroup的面纱是基于JDK1.8。通过阅读注释及相关文章，可以知道ThreadGroup的结构如下：  除了初始线程组（JVM所属）以外，每个线程组都有一个父线程组及子线程组，父线程组中有个成员变量（groups）来记录它所有的子线程组，所以线程组之间的关系被看作是一棵">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/thread-group/threadgroup-structure.png">
-<meta property="og:updated_time" content="2019-12-12T09:41:37.837Z">
+<meta property="og:updated_time" content="2019-12-15T03:56:12.410Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="揭开面纱-ThreadGroup">
 <meta name="twitter:description" content="开门见山ThreadGroup在实际开发中很少用到，不过由于它跟Thread的关系比较密切，所以还是了解下为妙，揭开ThreadGroup的面纱是基于JDK1.8。通过阅读注释及相关文章，可以知道ThreadGroup的结构如下：  除了初始线程组（JVM所属）以外，每个线程组都有一个父线程组及子线程组，父线程组中有个成员变量（groups）来记录它所有的子线程组，所以线程组之间的关系被看作是一棵">
@@ -199,7 +199,7 @@
       
         <h3 id="开门见山"><a href="#开门见山" class="headerlink" title="开门见山"></a><div><span>开门见山</span></div></h3><p>ThreadGroup在实际开发中很少用到，不过由于它跟Thread的关系比较密切，所以还是了解下为妙，揭开ThreadGroup的面纱是基于<code>JDK1.8</code>。通过阅读注释及相关文章，可以知道ThreadGroup的结构如下：</p>
 <p class="customize-img"><img src="/assets/blogImg/java/thread-group/threadgroup-structure.png" alt="线程组结构"></p>
-<p>除了初始线程组（JVM所属）以外，每个线程组都有一个父线程组及子线程组，父线程组中有个成员变量（groups）来记录它所有的子线程组，所以线程组之间的关系被看作是一棵<code>树</code>。线程组下有多个线程，我们可以将线程组理解成是对一组线程进行管理。</p>
+<p>除了初始线程组（JVM所属）以外，每个线程组都有一个父线程组及子线程组，父线程组中有个成员变量（groups）来记录它所有的子线程组，所以线程组之间的关系被看作是一棵<code>树</code>。线程组下有多个线程，我们可以将线程组理解成是对一组线程进行操作。</p>
 <a id="more"></a>
 <h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a><div><span>数据结构</span></div></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadGroup</span> <span class="keyword">implements</span> <span class="title">Thread</span>.<span class="title">UncaughtExceptionHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//父线程组</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ThreadGroup parent;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//线程组的名称</span></span><br><span class="line">    String name;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//线程组的最大优先级，该优先级不能大于父线程组的优先级</span></span><br><span class="line">    <span class="keyword">int</span> maxPriority;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//线程组是否已经销毁（清除）</span></span><br><span class="line">    <span class="keyword">boolean</span> destroyed;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//线程组是否是守护线程组</span></span><br><span class="line">    <span class="keyword">boolean</span> daemon;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//未启动的线程个数，即未调用start方法的线程个数</span></span><br><span class="line">    <span class="keyword">int</span> nUnstartedThreads = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//已启动的线程个数，即已调用start方法的线程个数</span></span><br><span class="line">    <span class="keyword">int</span> nthreads;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//已启动的线程个数，该数组会通过创建新数组拷贝源数组的方式进行扩容，新数组的容量是源数据的2倍</span></span><br><span class="line">    Thread threads[];</span><br><span class="line"></span><br><span class="line">    <span class="comment">//子线程组的个数</span></span><br><span class="line">    <span class="keyword">int</span> ngroups;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//存储所有子线程组</span></span><br><span class="line">    ThreadGroup groups[];</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 构造线程组，该构造方式通常是创建系统级别的线程组，如由底层C代码来构造初始线程组</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">ThreadGroup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">"system"</span>;</span><br><span class="line">    <span class="keyword">this</span>.maxPriority = Thread.MAX_PRIORITY;</span><br><span class="line">    <span class="keyword">this</span>.parent = <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 构造线程组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> name 线程组的名称</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadGroup</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>(Thread.currentThread().getThreadGroup(), name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 构造线程组并指定父线程组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> parant 父线程组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> name 线程组的名称</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadGroup</span><span class="params">(ThreadGroup parent, String name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>(checkParentAccess(parent), parent, name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 构造线程组并指定父线程组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> unused 未使用</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> parant 父线程组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> name 线程组的名称</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">ThreadGroup</span><span class="params">(Void unused, ThreadGroup parent, String name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.maxPriority = parent.maxPriority;</span><br><span class="line">    <span class="keyword">this</span>.daemon = parent.daemon;</span><br><span class="line">    <span class="keyword">this</span>.vmAllowSuspension = parent.vmAllowSuspension;</span><br><span class="line">    <span class="keyword">this</span>.parent = parent;</span><br><span class="line">    parent.add(<span class="keyword">this</span>); <span class="comment">//指定父线程组后，要将其添加到父线程组所属的子线程组数组中，维护其关系</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -531,11 +531,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -547,23 +551,19 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
               </li>
             
             <div class="clearfix"></div>

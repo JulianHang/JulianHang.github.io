@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/daliy-konwledge-point/20190812/for-1.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/daliy-konwledge-point/20190812/for-2.png">
-<meta property="og:updated_time" content="2019-11-05T09:39:12.806Z">
+<meta property="og:updated_time" content="2019-12-24T03:21:45.295Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="每日知识点20181212">
 <meta name="twitter:description" content="java javadoc只能为public和protected成员进行文档注释，private和默认权限的注释则会被忽略掉，不过可以用-private进行标记，以便把private成员的注释耶包括在内.  int x = Character.digit(‘c’, 16)：是把16进制的c转为10进制，结果是12，16进制中a、b、c、d、e、f分别代表10、11、12、13、14、15.  计算机">
@@ -203,7 +203,7 @@
 </li>
 <li><p>int x = Character.digit(‘c’, 16)：是把16进制的c转为10进制，结果是12，16进制中a、b、c、d、e、f分别代表10、11、12、13、14、15.</p>
 </li>
-<li><p>计算机中计算都是采用补码计算的。在计算机中的机器字长的最高位表示正负，0为正数，1为负数。正数的原码、反码和补码都一样，都等于原码。负数的反码就是在原码的基础上符号位不变其余位按位取反，负数的补码就是在反码的基础上+1.值得注意的是，计算机将数值10000000表示为最大负数-128.推荐大家看下为什么计算机中要采用补码来储存数据，这是我搜索当中觉得不错的一篇文章-<a href="https://blog.csdn.net/weixin_44734925/article/details/88432355" target="_blank" rel="noopener">为什么计算机采用补码形式进行数据的表示</a>.</p>
+<li><p>计算机中计算都是采用补码计算的。在计算机中的机器字长的最高位表示正负，0为正数，1为负数。正数的原码、反码和补码都一样，都等于原码。负数的原码是正数的原码将其最高位变成1即可，负数的反码就是在原码的基础上符号位不变其余位按位取反，负数的补码就是在反码的基础上+1.值得注意的是，计算机将数值10000000表示为最大负数-128.推荐大家看下为什么计算机中要采用补码来储存数据，这是我搜索当中觉得不错的一篇文章-<a href="https://blog.csdn.net/weixin_44734925/article/details/88432355" target="_blank" rel="noopener">为什么计算机采用补码形式进行数据的表示</a>.</p>
 </li>
 <li><p>对于byte或short值进行移位运算，得到的可能不是正确的结果。它们会被转换成int类型，在进行移位操作，然后被<code>截断</code>，赋值给原来的类型.如short i = -1; i &gt;&gt;&gt;= 10; 因为i是short类型，所以会被截断，最终的结果是-1.</p>
 </li>
@@ -232,6 +232,9 @@
 <p>很简单，以上是源码.</p>
 <p class="customize-img"><img src="/assets/blogImg/daliy-konwledge-point/20190812/for-2.png" alt="高级for-1"></p>
 <p>以上是编译后的字节码文件，不信你编一个试试.</p>
+<ul>
+<li>为什么说向上转型是运行时安全，向下转型是运行时非安全：假设代码能够正常编译，对于任意一个子类对象而言，都能将其子类引用类型转换成父类引用类型（多态），即使在运行时子类对象任意变化代码都能够正常运行，而在向下转型时，对于父类引用指向子类对象而言，我们并不知道具体是哪个子类对象，只能在运行时才能确定它，一旦子类对象类型不匹配则会抛出异常。</li>
+</ul>
 
       
 
@@ -562,11 +565,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -578,23 +585,19 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">leancloud</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">markdown</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
               </li>
             
             <div class="clearfix"></div>
