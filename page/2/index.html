@@ -167,6 +167,103 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-string-newString-compare" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/09/string-newString-compare/">深入理解String与new String</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/09/string-newString-compare/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2019/11/09/string-newString-compare/" class="archive-article-date">
+  	<time datetime="2019-11-09T15:41:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>字符串是最常用的类型之一，趁此机会准备探索下它的源码。有关该类的注释作一个总结：</p>
+<blockquote>
+<p>String-字符串，是个常量，它们被创建后<code>其值</code>就不允许被改变，由于它是不可变的，所以它们可以被共享，在内部提供了多个方法来操作字符串。</p>
+</blockquote>
+<p>探索之前我曾看过其他人写的有关于此的文章，发现<code>JDK1.7版本前后的内存模型</code>不一样，而这部分的内容还没有排上行程，简单来说，我还不懂…所以不敢妄下结论，这篇文章的内容也不会从这方面展开来讲，此次探索是基于<code>JDK1.8</code>。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/09/string-newString-compare/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-comparable-comparator-compare" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1120,104 +1217,9 @@
 
 
   
-    <article id="post-explain-linkedhashmap-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/25/explain-linkedhashmap-sourcecode/">探索LinkedHashMap底层实现</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/10/25/explain-linkedhashmap-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/10/25/explain-linkedhashmap-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-10-25T06:59:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>印象中对LinkedHashMap的使用次数好像也不多，参考了几篇文章发现它依赖于<code>HashMap</code>而存在，也就是说它在HashMap的基础上又增加了某些特性，比如说<code>有序</code>。既然是基于HashMap，那么它内部的数据结构也应该有数组 + 链表 + 红黑树，而刚才说它又加上了自己的有序特性，那么应该还有<code>一条链表来维护该顺序</code>，如下图所示：</p>
-<p class="customize-img"><img src="/assets/blogImg/java/linkedhashmap/data-structure.png" alt="LinkedHashMap数据结构"></p>
-<p>该图侧重于它是如何保持有序的，就像上面说的是一条链表，画的有点丑，不过应该不难理解。另外一方面，由于它是基于HashMap，所以在看这篇文章之前最好能对HashMap有个了解，加上接下来并不会过多的解释它的数据结构，更多的关注还是在有序及其他特性上，毕竟它的数据结构是偷来的，探索LinkedHashMap底层实现是基于<code>JDK1.8</code>。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/25/explain-linkedhashmap-sourcecode/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -1368,19 +1370,7 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1388,11 +1378,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
+                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1400,7 +1394,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
             
             <div class="clearfix"></div>

@@ -167,6 +167,103 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-explain-completablefuture-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/03/explain-completablefuture-sourcecode/">假装很懂CompletableFuture</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2020/03/03/explain-completablefuture-sourcecode/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2020/03/03/explain-completablefuture-sourcecode/" class="archive-article-date">
+  	<time datetime="2020-03-03T08:41:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="正题"><a href="#正题" class="headerlink" title="正题"></a><div><span>正题</span></div></h3><p>CompletableFuture是<code>JDK1.8</code>才出现的，至于是否拥有很强大的功能其实我也未在工作上实践过，不过话说回来，即使实践过当时的我也是看不懂地，因为我现在才有时间来对它做一个了解，在此之前先来看看它的父接口-CompletionStage与Future。对于CompletionStage来说，它被认为是一个执行的<code>阶段</code>，可以是同步或异步，每一个阶段完成的同时有可能触发其他阶段，也就是说阶段之间是可以相互依赖的，好比是流水作业，虽然它可以执行各种计算，即使是复杂的链式计算也是手到擒来，但也存在一些弊端，比如无法探测计算是否完成或获取计算的结果或等待其阶段执行完成，所以为了使其更健壮，它又实现了Future接口，可它又与Future的实现类有着区别，比如对于cancel来说，它会当作是异常执行完成。CompletableFuture是两者的结合物，提供的方法有很多种，简单总结下。</p>
+<blockquote>
+<p><code>带有后缀名为Async的方法</code>表示以异步的方式执行任务，通常情况下使用ForkJoinPool公共线程池；<code>带有前缀名为then的方法</code>表示阶段之间具有依赖关系，需要上一个阶段执行完毕后才能触发下一个阶段；<code>带有后缀名为Either的方法</code>表示在多重依赖下只会依赖其中任何一个阶段，即任何一个阶段执行完成即可执行当前阶段；</p>
+</blockquote>
+<p>在阅读源码之前，读者最好能把CompletableFuture、Completion、UniCompletion等之间的数据结构画出来，清晰的结构关系能够帮助理解，在下面的代码中会提到一些个人对相关类的理解与称谓。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/03/explain-completablefuture-sourcecode/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-explain-forkjoinpool-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1061,106 +1158,9 @@
 
 
   
-    <article id="post-string-newString-compare" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/09/string-newString-compare/">深入理解String与new String</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/09/string-newString-compare/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/11/09/string-newString-compare/" class="archive-article-date">
-  	<time datetime="2019-11-09T15:41:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>字符串是最常用的类型之一，趁此机会准备探索下它的源码。有关该类的注释作一个总结：</p>
-<blockquote>
-<p>String-字符串，是个常量，它们被创建后<code>其值</code>就不允许被改变，由于它是不可变的，所以它们可以被共享，在内部提供了多个方法来操作字符串。</p>
-</blockquote>
-<p>探索之前我曾看过其他人写的有关于此的文章，发现<code>JDK1.7版本前后的内存模型</code>不一样，而这部分的内容还没有排上行程，简单来说，我还不懂…所以不敢妄下结论，这篇文章的内容也不会从这方面展开来讲，此次探索是基于<code>JDK1.8</code>。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/11/09/string-newString-compare/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1311,19 +1311,7 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1331,11 +1319,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
+                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1343,7 +1335,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
             
             <div class="clearfix"></div>
