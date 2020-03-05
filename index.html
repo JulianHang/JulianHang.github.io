@@ -167,6 +167,99 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-explain-arrayblockingqueue-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/05/explain-arrayblockingqueue-sourcecode/">挖掘队列源码之ArrayBlockingQueue</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2020/03/05/explain-arrayblockingqueue-sourcecode/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2020/03/05/explain-arrayblockingqueue-sourcecode/" class="archive-article-date">
+  	<time datetime="2020-03-05T07:15:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>上一段时间一直在探索线程池的路上，如今准备踏入到队列，还是按照一开始的阅读方式。探索ArrayBlockingQueue是基于<code>JDK1.8</code>，从注释上可以得知是一个由<code>数组</code>支持的有界阻塞队列，按照先进先出的顺序，新元素被插入到队列的尾部，从队列头部获取元素，提供在将新元素放入到饱满的队列中会导致阻塞，直到队列出现新的位置才会被唤醒继续往下操作的方法，还支持在从空队列中获取元素会导致阻塞，直到队列出现元素才会被唤醒的方法，接下来直接进入主题吧。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/05/explain-arrayblockingqueue-sourcecode/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-explain-completablefuture-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1056,108 +1149,6 @@
 
 
   
-    <article id="post-explain-bytebuffer-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/26/explain-bytebuffer-sourcecode/">探索ByteBuffer底层实现</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/26/explain-bytebuffer-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/11/26/explain-bytebuffer-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-11-26T08:27:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>由于最近在了解IO相关知识，而正好看到了nio，这是我以前从来没接触过的，虽然它很早就出现了，所以先来看看有关于它的一些基础。探索<code>ByteBuffer</code>源代码是基于<code>JDK1.8</code>版本的，ByteBuffer的父类是<code>Buffer</code>，通过阅读注释后对Buffer总结如下：</p>
-<blockquote>
-<p>缓冲区是特定基本类型的元素的线性有限序列，除了内容之外，缓冲区的基本属性还包括<code>capacity</code>、<code>limit</code>、<code>position</code>、<code>mark</code>。假设缓冲区是一本1000页的书籍，你已经看到800页了，其中在500页处有个很重要的知识点，你做了个标记以便下次能够轻松找到它。那么capacity指代的就是1000，意思就是这本书的最大页数，缓冲区的最大容量，该属性值不会为负不会改变；limit指代的是800，意思是目前只学了这么多知识，可以理解为界限；position指代的是具体某一页，也就是你每看一页，position就会有所增加；mark很容易理解，指代的是我们标记到具体某一页。在实际代码中有读、写模式，我们将读模式比喻成复习，也就是说你可以从第0页复习到第800页，此时的postion从0-800，limit保持800不变，也可以从你所标记的点到第800页，此时的position从mark-800，但是切记不能从第0页复习而后直接跳到mark处，这样子就导致知识点的不连续性，简单来说<code>0 &lt;= mark &lt;= posiiton &lt;= limit &lt;= capacity</code>；将写模式比喻成继续学习新知识点，也就是从第801页继续往后看，position会逐步增加。对于只读缓冲区来说，不允许修改它的内容，但是limit、position、mark是可以变化的。最后一点是缓冲区属于非线程安全！</p>
-</blockquote>
-<p>提供一张图片方便理解。接下来在总结下ByteBuffer，以便对其有个大概性的了解。</p>
-<p class="customize-img"><img src="/assets/blogImg/java/bytebuffer/bytebuffer-variable.png" alt="Buffer相关变量"></p>
-<blockquote>
-<p><code>字节缓冲区</code>，可创建视图缓冲区，视图缓冲区指的是包含其他基本类型值的缓冲区，如CharBuffer，视图缓冲区的索引不是以字节为单位，而是根据其值的特定类型的大小决定的，如CharBuffer是2个字节。字节缓冲区可分为直接或间接，直接缓冲区的内容存放在堆外内存，JVM将尽最大努力直接执行原生IO操作，而间接缓冲区存放在堆内存中，交由JVM操作，与操作系统并未直接交互，直接缓冲区通常比间接缓冲区具有更高的分配和释放成本，简单来说，对于大型缓冲区来说直接分配直接缓冲区。</p>
-</blockquote>
-<p>概念性的内容就阐述到这里了，接着就直接进入源码世界吧！</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/11/26/explain-bytebuffer-sourcecode/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1315,11 +1306,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1327,11 +1318,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">talk</a>
+                <a href="javascript:void(0)" class="js-tag color5">algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1339,11 +1330,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
+                <a href="javascript:void(0)" class="js-tag color5">talk</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+                <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
               </li>
             
             <div class="clearfix"></div>
