@@ -167,6 +167,99 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-explain-linkedblockingqueue-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/06/explain-linkedblockingqueue-sourcecode/">挖掘队列源码之LinkedBlockingQueue</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2020/03/06/explain-linkedblockingqueue-sourcecode/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2020/03/06/explain-linkedblockingqueue-sourcecode/" class="archive-article-date">
+  	<time datetime="2020-03-06T08:28:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>探索LinkedBlockingQueue是基于<code>JDK1.8</code>，由注释可知是基于<code>单链表</code>的阻塞队列，至于其队列是否有界取决于其队列的容量大小，从严格意义上来说，它是<code>有界</code>队列，按照先进先出的顺序访问，新元素被插入到队列的尾部，从队列头部获取元素，提供在将新元素放入到饱满的队列中会导致阻塞，直到队列出现新的位置才会被唤醒继续往下操作的方法，还支持在从空队列中获取元素会导致阻塞，直到队列出现元素才会被唤醒的方法，通常情况下LinkedBlockingQueue比ArrayBlockingQueue具有更高的吞吐量，因为其内部采用了两个锁，意味着<code>读写分离</code>，所以效率上更快，但这同时也造成了队列的可预测性较差，接下来进入到主题吧。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/06/explain-linkedblockingqueue-sourcecode/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-explain-arrayblockingqueue-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -195,7 +288,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>上一段时间一直在探索线程池的路上，如今准备踏入到队列，还是按照一开始的阅读方式。探索ArrayBlockingQueue是基于<code>JDK1.8</code>，从注释上可以得知是一个由<code>数组</code>支持的有界阻塞队列，按照先进先出的顺序，新元素被插入到队列的尾部，从队列头部获取元素，提供在将新元素放入到饱满的队列中会导致阻塞，直到队列出现新的位置才会被唤醒继续往下操作的方法，还支持在从空队列中获取元素会导致阻塞，直到队列出现元素才会被唤醒的方法，接下来直接进入主题吧。</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>上一段时间一直在探索线程池的路上，如今准备踏入到队列，还是按照一开始的阅读方式。探索ArrayBlockingQueue是基于<code>JDK1.8</code>，从注释上可以得知是一个由<code>数组</code>支持的有界阻塞队列，按照先进先出的顺序，新元素被插入到队列的尾部，从队列头部获取元素，提供在将新元素放入到饱满的队列中会导致阻塞，直到队列出现新的位置才会被唤醒继续往下操作的方法，还支持在从空队列中获取元素会导致阻塞，直到队列出现元素才会被唤醒的方法。有一个点需要注意下，ArrayBlockingQueue在某些情况下插入新元素时会执行相当于循环的操作，怎么表述呢，当在数组的最后一个索引处上插入新元素后，那么插入下一个新元素的索引将会是0，有点类似循环，而由于LinkedBlockingQueue不同的数据结构并不会发生这种情况，还有一点就是ArrayBlockingQueue内部中只有一个锁，所以对于读写来说，同时只能有一个操作在执行，要么是读要么是写，而LinkedBlockingQueue采用的是两个锁的读写分离，好了，接下来直接进入主题吧。</p>
         
       
 
@@ -1042,113 +1135,6 @@
 
 
   
-    <article id="post-core-java-knowledge-20191107" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/26/core-java-knowledge-20191107/">每日知识点20191107</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/26/core-java-knowledge-20191107/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/11/26/core-java-knowledge-20191107/" class="archive-article-date">
-  	<time datetime="2019-11-26T08:34:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul>
-<li><p>Exception#fillInStackTrace：将当前调用栈信息填入到原来异常对象，相当于更新最新的抛出点（catch异常后又抛出的点）</p>
-</li>
-<li><p>try-finally某些情况下会吃掉抛出的异常</p>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException();</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>覆盖方法时，只能抛出在基类方法的异常说明里列出的那些异常或其子类或选择不抛出，但是此限制对构造器不起作用，派生类构造器可以抛出任何异常，只需要在异常说明中包含基类构造器的异常说明</p>
-</li>
-<li><p>Collections.nCopies能添加新元素，Collections.fill只能替换元素，无法添加新元素</p>
-</li>
-<li><p>通配符代表着持有具有某种具体类型的同构集合</p>
-</li>
-</ul>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">daily-konwledge-point-java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/11/26/core-java-knowledge-20191107/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1302,6 +1288,10 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
@@ -1311,10 +1301,6 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
