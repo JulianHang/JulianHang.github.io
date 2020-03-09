@@ -167,6 +167,99 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-explain-priorityblockingqueue-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/09/explain-priorityblockingqueue-sourcecode/">挖掘队列源码之PriorityBlockingQueue</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2020/03/09/explain-priorityblockingqueue-sourcecode/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2020/03/09/explain-priorityblockingqueue-sourcecode/" class="archive-article-date">
+  	<time datetime="2020-03-09T07:33:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>探索PriorityBlockingQueue是基于<code>JDK1.8</code>，它是基于<code>二叉堆</code>的无界阻塞队列，二叉堆又可以分成最大堆与最小堆，很显然，既然是优先级队列，那么优先级高者自然比优先级低者优先出队列，PriorityBlockingQueue采用的是数值越小优先级越高，即最小堆，利用每个元素的优先级进行排序，所以这不在是按照先进先出顺序了！对于无界来说，就不会存在队列饱满的情况了，它会进行扩容，自然也就不会发生阻塞的情况了，这是与ArrayBlockingQueue/LinkedBlockingQueue最大的区别了，不过在空队列的情况下仍然会发生阻塞直到出现新元素才会被唤醒继续执行。对于优先级队列而言，自然是在添加的时候比较每个元素的优先级高低，所以它要求每个元素必须继承Comparable或自定义比较器，更不能添加null。最后在说一点，接下来的内容将不会着重介绍二叉堆，它较为简单且之前的文章也简单介绍过，所以读者可以先了解下，有助于理解其中的方法，接下来进入主题。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/09/explain-priorityblockingqueue-sourcecode/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-explain-linkedblockingqueue-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1042,99 +1135,6 @@
 
 
   
-    <article id="post-read-computer-mind" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/03/read-computer-mind/">为入门操作系统而读-《计算机的心智-操作系统之哲学原理》</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/12/03/read-computer-mind/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/12/03/read-computer-mind/" class="archive-article-date">
-  	<time datetime="2019-12-03T10:27:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>为什么会想着入门操作系统呢？还是跟Java有关系，在深入学习的过程中发现很多点都会涉及到操作系统底层的知识，特别是并发这块内容，而笔者我现在只是刚刚起步学习就已经要了解与操作系统相关的内容，所以还是早点入坑吧。为什么是先看这本书呢？当然了，我不会无缘无故随便看一本，是经过从前人的推荐到知识点的考察才最终定下来！《计算机的心智-操作系统之哲学原理》这本书出版于09年，也算是一本年代已久的书籍，不过相对于计算机的诞生时间来说，它的知识点应该不会显得过时，该书在商城上可能买不到了，笔者也是找的PDF，Google一下就有了。打算借着这本书的知识点来对操作系统的入门做一个总结，同时也希望能够帮助其他有缘人吧。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">operating-system</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/essays//" class="article-tag-list-link color2">essays</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/03/read-computer-mind/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1288,15 +1288,15 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
