@@ -167,6 +167,129 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-core-java-knowledge-20190415" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/30/core-java-knowledge-20190415/">每日知识点20190415</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/05/30/core-java-knowledge-20190415/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2019/05/30/core-java-knowledge-20190415/" class="archive-article-date">
+  	<time datetime="2019-05-30T15:21:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul>
+<li><p>String v = map.putIfAbsent(“a”, “1”)：若map中不存在指定的key值(a)，则使用指定的key(a)和指定的value(1)进行填充，但此时返回的数据是<code>旧值</code>，所以是null，即v=null，当你真正调用map.get(“a”)时才返回指定的value值，即1.</p>
+</li>
+<li><p>String v = map.computeIfAbsent(“a”, “1”)：若map中不存在指定的key值(a)，则使用指定的key(a)和指定的value(1)进行填充，但此时返回的数据是<code>新值</code>，即v=1.</p>
+</li>
+<li><p>DateTimeFormatter.parse()：可以解析LocalDate、LocalTime、LocalDateTime.</p>
+</li>
+<li><p>MessageFormat：消息格式化，如MessageFormat.format(“hi, my name is {0}”, “zhangsan”)，不仅如此，占位符后面还可以跟一个类型和一个风格，它们之间用逗号隔开.单独将choice拿出来先讲讲，{1,choice,0#no house| 1#one hose | 2#two houses}，一个选择格式是由一个序列对构成的，每一个对包括一个<code>下限</code>和一个<code>格式字符串</code>，下面的列表中是其他的类型.</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">风格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">number</td>
+<td style="text-align:center">integer、currency、percent、$</td>
+</tr>
+<tr>
+<td style="text-align:center">time/date</td>
+<td style="text-align:center">short、medium、long、full、yyyy-MM-dd</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>注解中的所有元素值必须是编译期常量.</li>
+</ul>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">daily-konwledge-point-java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/30/core-java-knowledge-20190415/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-core-java-knowledge-20190226" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1071,99 +1194,6 @@
 
 
   
-    <article id="post-explain-activemq-soucecod" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/02/explain-activemq-soucecod/">简单喵下ActiveMQ生产者源码</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/09/02/explain-activemq-soucecod/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2018/09/02/explain-activemq-soucecod/" class="archive-article-date">
-  	<time datetime="2018-09-02T01:00:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a><div><span>前提</span></div></h3><p>前提前提大前提！准备一份源码呗，activemq生产者的源码。何为生产者？就是发消息的源头，谁来发送消息谁就是生产者。有了生产者自然就会有消费者，今天着重看看生产者的故事，后面的几篇文章咱们都会一一进行讲解，包括服务端、消费者以及<code>ACK</code>模式，<code>消息的传送机制</code>，至于其他的内容还有待发掘，因为目前我也只是了解了部分！生产者的源码大伙可以从网上百度下，只要能跑起来就可以了，如果可以的话最好知道对方写了什么，对代码有个简单的理解，否则下面讲解的内容可能跟你的需求会有很大的出入，也帮助不了你哈，另一方面也是浪费了作者的苦心啦！自我迷恋中，切勿当真，哈哈。最好最好或者你有兴趣的话，可以clone下我的代码，里面都添加了对应的注释，<a href="https://github.com/JulianHang/activemq-client.git" target="_blank" rel="noopener">源码下载</a>。最后一个前提，作者使用的代码工具是<code>IDEA</code>，采用DEBUG模式来查看源码，所以读者对工具的操作最好有个简单的了解。好了，不啰嗦了！
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">activemq</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/mq//" class="article-tag-list-link color3">mq</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/02/explain-activemq-soucecod/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
@@ -1325,11 +1355,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
