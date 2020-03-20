@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/keywords/cpu-mainmemory-relation.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/keywords/java-memory-model.png">
-<meta property="og:updated_time" content="2020-03-20T03:15:37.350Z">
+<meta property="og:updated_time" content="2020-03-20T03:31:36.016Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解volatile关键字">
 <meta name="twitter:description" content="前言在多线程并发编程中volatile扮演者重要的角色，它是轻量级的synchronized，在多处理器中保证了共享变量的可见性，执行成本更低，因为它不会引起线程的上下文切换和调用，简单来说就是多线程对共享变量的修改能让其他线程立即知晓而不需要花费线程切换的相关成本，这一切都由一个叫做内存模型的东西来控制，接下来涉及到的内容可能较为羞涩难懂，或者理解不到位，加油！">
@@ -253,7 +253,7 @@
 <blockquote>
 <p>voaltile读：当读一个volatile变量时，Java内存模型会把该线程对应的本地内存置为无效，接下来将从主内存中读取共享变量</p>
 </blockquote>
-<p>更为详细地说，使用volatile修饰的变量在汇编层面上加了Lock前缀的指令，该指令会引起高速缓存中的数据回写到主内存，在搭配上缓存一致性机制来导致其他CPU的高速缓存无效，当CPU对该变量进行操作时会重新从主内存中把数据读到高速缓存中</p>
+<p>更为详细地说，使用volatile修饰的变量在汇编层面上加了Lock前缀的指令，该指令会引起高速缓存中的数据回写到主内存，在搭配上缓存一致性机制来导致其他CPU的高速缓存无效，当CPU对该变量进行操作时会重新从主内存中把数据读到高速缓存中。</p>
 <h3 id="volatile特性"><a href="#volatile特性" class="headerlink" title="volatile特性"></a><div><span>volatile特性</span></div></h3><ul>
 <li><p>可见性：对一个volatile变量的读，总是能看到任意线程对该变量的写入</p>
 </li>
@@ -263,45 +263,13 @@
 </li>
 </ul>
 <p>以下是Java内存模型为了实现volatile内存语义而定义的重排序规则表</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">是否能重排序</th>
-<th style="text-align:center">第二个操作</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">第一个操作</td>
-<td style="text-align:center">普通读/写</td>
-<td style="text-align:center">volatile读</td>
-<td style="text-align:center">volatile写</td>
-</tr>
-<tr>
-<td style="text-align:center">普通读/写</td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center">NO </td>
-</tr>
-<tr>
-<td style="text-align:center">volatile读</td>
-<td style="text-align:center">NO</td>
-<td style="text-align:center">NO</td>
-<td style="text-align:center">NO</td>
-</tr>
-<tr>
-<td style="text-align:center">volatile写</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">NO</td>
-<td style="text-align:center">NO</td>
-</tr>
-</tbody>
-</table>
+<table><br>      <tr><br>        <td>是否能重排序</td><br>        <td colspan="2">第二个操作</td><br>    </tr><tr><br>    </tr><tr><br>        <td>第一个操作</td><br>        <td>普通读/写</td><br>        <td>volatile读</td><br>        <td>volatile写</td><br>    </tr><br>    <tr><br>        <td>普通读/写</td><br>        <td></td><br>        <td></td><br>        <td>NO</td><br>    </tr><br>    <tr><br>        <td>volatile读</td><br>        <td>NO</td><br>        <td>NO</td><br>        <td>NO</td><br>    </tr><br>    <tr><br>        <td>volatile写</td><br>        <td></td><br>        <td>NO</td><br>        <td>NO</td><br>    </tr><br></table>
+
 <p>表格中NO自然是表示禁止重排序，而对于空白处的前提是要遵守Java内存模型定义的happens-before/as-if-serial规定后方可重排序，当然了，在重排序的情况仍然可能会出现可见性问题（最常见的就是普通变量之间的操作），这种时候可以使用volatile关键字。前文我们提到禁止重排序实际上就是在指令序列中插入内存屏障，对于任意处理器平台来说会根据自身处理器的内存模型继续优化，也就是说虽然Java内存模型针对volatile关键字定义了插入内存屏障的策略，但到了不同的处理器可能会由于其处理器的特性而被省略，比如Java内存模型帮你加上了3个内存屏障，实际上到了处理器层面就只需要2个。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><div><span>总结</span></div></h3><p>以上大部分的知识点属于理论型，参考了相关书籍与文章，笔者只是对其概念与介绍做了一个整理与总结，若有错误请见谅。关于volatile关键字的理解说不上很难，只是涉及到的点很多很杂，个人认为最重要的还是懂得其原理，其他概念性的理论有个印象即可。</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a><div><span>参考资料</span></div></h3><p><a href="https://www.cnblogs.com/dolphin0520/p/3920373.html" target="_blank" rel="noopener">https://www.cnblogs.com/dolphin0520/p/3920373.html</a></p>
-<p>《Java编程思想》</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a><div><span>参考资料</span></div></h3><p>《Java编程思想》</p>
 <p>《Java并发编程的艺术》</p>
+<p><a href="https://www.cnblogs.com/dolphin0520/p/3920373.html" target="_blank" rel="noopener">https://www.cnblogs.com/dolphin0520/p/3920373.html</a></p>
 
       
 
@@ -619,10 +587,6 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
@@ -632,6 +596,10 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
