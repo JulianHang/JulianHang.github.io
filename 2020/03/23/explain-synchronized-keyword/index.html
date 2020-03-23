@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="奇思妙想">
 <meta property="og:description" content="前言synchronized是很早就有的关键字，很多人都称呼它为重量级锁，可我想知道为什么，也就是说关于synchronized在初期是什么样子的，基本上很多文章都没有提到，个人认为关于这些知识点可能只有早期的程序员才知晓，到目前为止我都没有查到相关资料，所以该篇文章可能会有所遗憾，有机会的情况下一定会进行补充。对于目前的synchronized来说，实际上做了很多优化，因为synchronize">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-23T02:19:09.243Z">
+<meta property="og:updated_time" content="2020-03-23T02:20:56.016Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="理解synchronized关键字">
 <meta name="twitter:description" content="前言synchronized是很早就有的关键字，很多人都称呼它为重量级锁，可我想知道为什么，也就是说关于synchronized在初期是什么样子的，基本上很多文章都没有提到，个人认为关于这些知识点可能只有早期的程序员才知晓，到目前为止我都没有查到相关资料，所以该篇文章可能会有所遗憾，有机会的情况下一定会进行补充。对于目前的synchronized来说，实际上做了很多优化，因为synchronize">
@@ -196,6 +196,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>synchronized是很早就有的关键字，很多人都称呼它为重量级锁，可我想知道为什么，也就是说关于synchronized在初期是什么样子的，基本上很多文章都没有提到，个人认为关于这些知识点可能只有早期的程序员才知晓，到目前为止我都没有查到相关资料，所以该篇文章可能会有所遗憾，有机会的情况下一定会进行补充。对于目前的synchronized来说，实际上做了很多优化，因为synchronized跟锁有很大关系，所以这些优化就是针对锁的优化，接下来说说已知的ynchronized知识点。</p>
+<a id="more"></a>
 <h3 id="synchronized底层实现"><a href="#synchronized底层实现" class="headerlink" title="synchronized底层实现"></a><div><span>synchronized底层实现</span></div></h3><p>在Java中，synchronized关键字可以保证在同一个时刻，只有一个线程可以执行某个方法或代码块，且先看看如何使用该关键字及对应方式的底层实现。</p>
 <h4 id="普通同步方法"><a href="#普通同步方法" class="headerlink" title="普通同步方法"></a>普通同步方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestSynchronized</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Hello"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        TestSynchronized ts = <span class="keyword">new</span> TestSynchronized();</span><br><span class="line">        ts.f();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"World"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将上面的代码反编译后：javap -v TestSynchronized ----&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * public synchronized void f();</span></span><br><span class="line"><span class="comment"> * descriptor: ()V</span></span><br><span class="line"><span class="comment"> * flags: ACC_PUBLIC, ACC_SYNCHRONIZED   </span></span><br><span class="line"><span class="comment"> * /</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * public void f1();</span></span><br><span class="line"><span class="comment"> * descriptor: ()V</span></span><br><span class="line"><span class="comment"> * flags: ACC_PUBLIC</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"> <span class="comment">// 对比下f与f1方法在被Java编译器翻译成字节码时的区别，关键就在于多了ACC_SYNCHRONIZED标志</span></span><br></pre></td></tr></table></figure>
 <p>从示例代码可知，普通同步方法使用<code>ACC_SYNCHRONIZED</code>标志来与普通方法做区分，有了该标志，线程调用指定方法时需要先获取锁（监视器），只有成功获取到锁的线程才能调用，最后在方法执行完毕后释放锁（即使方法抛出异常，依然会释放锁），在方法调用期间，其他线程无法进入。</p>
@@ -531,6 +532,14 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
@@ -540,10 +549,6 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -560,10 +565,6 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
             
             <div class="clearfix"></div>
