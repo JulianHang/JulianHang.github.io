@@ -167,6 +167,114 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-core-java-knowledge-20190609" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/25/core-java-knowledge-20190609/">每日知识点20181212</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/06/25/core-java-knowledge-20190609/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2019/06/25/core-java-knowledge-20190609/" class="archive-article-date">
+  	<time datetime="2019-06-25T11:52:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul>
+<li><p>javadoc只能为public和protected成员进行文档注释，private和默认权限的注释则会被忽略掉，不过可以用-private进行标记，以便把private成员的注释耶包括在内.</p>
+</li>
+<li><p>int x = Character.digit(‘c’, 16)：是把16进制的c转为10进制，结果是12，16进制中a、b、c、d、e、f分别代表10、11、12、13、14、15.</p>
+</li>
+<li><p>计算机中计算都是采用补码计算的。在计算机中的机器字长的最高位表示正负，0为正数，1为负数。正数的原码、反码和补码都一样，都等于原码。负数的原码是正数的原码将其最高位变成1即可，负数的反码就是在原码的基础上符号位不变其余位按位取反，负数的补码就是在反码的基础上+1.值得注意的是，计算机将数值10000000表示为最大负数-128.推荐大家看下为什么计算机中要采用补码来储存数据，这是我搜索当中觉得不错的一篇文章-<a href="https://blog.csdn.net/weixin_44734925/article/details/88432355" target="_blank" rel="noopener">为什么计算机采用补码形式进行数据的表示</a>.</p>
+</li>
+<li><p>对于byte或short值进行移位运算，得到的可能不是正确的结果。它们会被转换成int类型，在进行移位操作，然后被<code>截断</code>，赋值给原来的类型.如short i = -1; i &gt;&gt;&gt;= 10; 因为i是short类型，所以会被截断，最终的结果是-1.</p>
+</li>
+<li><p>Math.round：四舍五入.</p>
+</li>
+<li><p>如果在返回void的方法中没有return语句，那么在该方法的结尾处会有一个隐式的return.</p>
+</li>
+<li><p>对于一类中的成员最好使用private访问权限修饰符。若你直接让外部类去访问该属性，有一天如果想要改变获取该属性的方式，那外部类岂不是也要跟着修改，所以最好的方式是用private修改该属性，同时提供具有public修饰符的方法，该方法主要用来获取该属性，至于怎么获取就是你说了算，外部类只要调用该方法即可，即使哪一天获取属性的方式变化了，也只需要修改方法的内部代码即可，外部类的调用方法还是不变.</p>
+</li>
+</ul>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">daily-konwledge-point-java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/06/25/core-java-knowledge-20190609/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-primary-programmer-book-list" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1101,99 +1209,6 @@
 
 
   
-    <article id="post-leancloud-build" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/18/leancloud-build/">搭建基于leancloud的评论系统</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/11/18/leancloud-build/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2018/11/18/leancloud-build/" class="archive-article-date">
-  	<time datetime="2018-11-18T07:11:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="博客都有个评论系统"><a href="#博客都有个评论系统" class="headerlink" title="博客都有个评论系统"></a><div><span>博客都有个评论系统</span></div></h3><p>没啥好说的，但凡是个博客都应该有个评论系统。一开始找了个<code>多说</code>还是啥来着，要填写备案信息，好扯，只好绕路。又换了一个，<code>来必力</code>,搜了好几篇文章，都说不错不错，实际上给我的体验一般般，至少它的管理页面让我觉得不爽，当然了，我还是尝试了一波，因为懒，哈哈，结果居然不行！网上的一篇篇博客都TM是复制粘贴的，很难看出谁才是原创作者，没啥意思，真不知道是为了什么？别人的博客可以参考，复制就过分了，把我给气的，所以我的博客并没有放到百度的搜索库中，只有谷歌才能搜到，我宁愿别人没有看到自己的博客，也不想看着自己的成果被人一个个吞噬。后面又看了几篇文章，发现<code>leanCloud</code>这个评论系统是做的真可以，不是我吹牛，不管是文档还是管理端都很符合我的要求，脑子里一下子决定就是它了！当然了，它也没白白让我失望，花了2个晚上的时间就基本搞定了，体验真的好，它是免费的，啥都不用做，就只需要注册登录进去配置内容即可。
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">talk</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/essays//" class="article-tag-list-link color2">essays</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/18/leancloud-build/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
@@ -1347,15 +1362,11 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1363,7 +1374,7 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
+                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1380,6 +1391,10 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
             
             <div class="clearfix"></div>

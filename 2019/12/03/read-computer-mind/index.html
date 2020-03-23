@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="奇思妙想">
 <meta property="og:description" content="前言为什么会想着入门操作系统呢？还是跟Java有关系，在深入学习的过程中发现很多点都会涉及到操作系统底层的知识，特别是并发这块内容，而笔者我现在只是刚刚起步学习就已经要了解与操作系统相关的内容，所以还是早点入坑吧。为什么是先看这本书呢？当然了，我不会无缘无故随便看一本，是经过从前人的推荐到知识点的考察才最终定下来！《计算机的心智-操作系统之哲学原理》这本书出版于09年，也算是一本年代已久的书籍，不">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-03T10:27:16.129Z">
+<meta property="og:updated_time" content="2020-03-20T08:24:54.572Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="为入门操作系统而读-《计算机的心智-操作系统之哲学原理》">
 <meta name="twitter:description" content="前言为什么会想着入门操作系统呢？还是跟Java有关系，在深入学习的过程中发现很多点都会涉及到操作系统底层的知识，特别是并发这块内容，而笔者我现在只是刚刚起步学习就已经要了解与操作系统相关的内容，所以还是早点入坑吧。为什么是先看这本书呢？当然了，我不会无缘无故随便看一本，是经过从前人的推荐到知识点的考察才最终定下来！《计算机的心智-操作系统之哲学原理》这本书出版于09年，也算是一本年代已久的书籍，不">
@@ -208,7 +208,7 @@
 </li>
 <li><p><code>多线程的调度</code>：CPU通过给每个线程分配时间片来实现多线程的调度。时间片是CPU分配给各个线程的时间，因为时间片非常短，所以CPU通过不停地切换线程，让我们感觉多个线程是同时执行，时间片一般是几十毫秒。CPU通过时间片分配算法来循环执行任务，当前任务执行一个时间片后会切换到下一个任务。但是，在切换前会保存上一个任务的状态，以便下次切换回这个任务，可以再加载这个任务的状态，所以任务从保存到再加载的过程就是一次<code>上下文切换</code>。</p>
 </li>
-<li><p><code>内存架构</code>：由高速缓存、主存、磁盘等组成的一个内存架构。高速缓存的特点是低容量、高速度、高价格；主存的特点是中容量、中速度、中价格；磁盘则是大容量、地速度、低成本的存储媒介。</p>
+<li><p><code>内存架构</code>：由高速缓存、主存、磁盘等组成的一个内存架构。高速缓存的特点是低容量、高速度、高价格；主存的特点是中容量、中速度、中价格；磁盘则是大容量、低速度、低成本的存储媒介。</p>
 </li>
 <li><p><code>内存管理</code>：对内存架构进行管理，使程序在内存架构的任何一个层次上的存放对于用户来说都是一样的。用户无需担心自己的程序是存在高速缓存、主存、磁盘，反正运行、计算、输出的结果都是一样的。让内存管理实现这种媒介透明的手段就是<code>虚拟内存</code>。</p>
 </li>
@@ -543,15 +543,11 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -559,7 +555,7 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
+                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -576,6 +572,10 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
             
             <div class="clearfix"></div>

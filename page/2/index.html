@@ -167,6 +167,116 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-explain-binary-heap" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/10/explain-binary-heap/">认识堆</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2020/01/10/explain-binary-heap/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2020/01/10/explain-binary-heap/" class="archive-article-date">
+  	<time datetime="2020-01-10T03:00:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="堆的概念"><a href="#堆的概念" class="headerlink" title="堆的概念"></a><div><span>堆的概念</span></div></h3><p>堆实际上是一颗树，只不过在其基础上又加上新的性质，常见的堆有：二叉堆、二项堆、斐波那契堆等，其性质如下：</p>
+<ul>
+<li><p>是一颗树，百度百科/维基百科上都说是一颗完全二叉树，但实际中二项堆并不是</p>
+</li>
+<li><p>父节点的值总是<code>大于或等于</code>（<code>小于或等于</code>）任何一个子节点的值，注意始终都没有说子节点之间的关系，也就是说子节点之间的关系并不重要</p>
+</li>
+</ul>
+<p>针对性质二又可以分为<code>最大堆/大根堆</code>与<code>最小堆/小根堆</code>，解释如下：</p>
+<blockquote>
+<p><code>最大堆/大根堆</code>：堆中的父节点的值总是大于等于它的子节点</p>
+</blockquote>
+<blockquote>
+<p><code>最小堆/小根堆</code>：堆中的父节点的值总是小于等于它的子节点</p>
+</blockquote>
+<blockquote>
+<p><code>堆顶</code>：二叉树的第一个节点称为根节点，而二叉堆称为堆顶</p>
+</blockquote>
+<p>较为经常使用的是二叉堆，虽然通常说的堆结构即是指二叉堆，以至于两者的概念有点混淆，即使是百科也存在模糊不清，一会说是树又是完全二叉树？但我仍然还是想作一下区分，毕竟堆中还有其他的数据结构，而其数据结构必然符合堆的性质，所以我认为堆是一棵树！</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">algorithm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/01/10/explain-binary-heap/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-explain-threadgroup-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1039,99 +1149,6 @@
 
 
   
-    <article id="post-explain-hashset-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/05/explain-hashset-sourcecode/">探索HashSet底层实现</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/05/explain-hashset-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2019/11/05/explain-hashset-sourcecode/" class="archive-article-date">
-  	<time datetime="2019-11-05T12:59:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>HashSet的底层实现依赖于HashMap，所以它的数据结构也是<code>数组 + 链表 + 红黑树</code>，而对于它的类注释也没什么好总结的，探索HashSet底层实现是基于<code>JDK1.8</code>。仔细一想，HashSet存在的意义是什么？有时候需要添加元素时，也就是只有单个对象，并没有所谓的键值对，或许还有些用处，可这ArrayList也能做到啊！可是相比之下，HashSet由于有HashMap撑腰，它的性能要高于ArrayList，所以我认为HashSet是List和Map独有的特性结合后的产物。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/11/05/explain-hashset-sourcecode/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1285,15 +1302,11 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1301,7 +1314,7 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
+                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1318,6 +1331,10 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
             
             <div class="clearfix"></div>
