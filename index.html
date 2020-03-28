@@ -167,6 +167,99 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-explain-lock-sort" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/28/explain-lock-sort/">详细介绍各种锁</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2020/03/28/explain-lock-sort/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2020/03/28/explain-lock-sort/" class="archive-article-date">
+  	<time datetime="2020-03-28T03:02:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>通常情况下，每学习一块知识点我都会先找相应的文章来作铺垫，今天轮到锁相关介绍了，发现了一篇好文章，本想着直接贴个链接就完事了，想想自己还是好好总结下，下面的内容可能大部分摘自该文章<a href="https://www.cnblogs.com/jyroy/p/11365935.html" target="_blank" rel="noopener">锁的详细介绍</a>，对本文没兴趣的读者直接移至该链接即可，该篇文章说的我都认同了，速速开始吧。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/28/explain-lock-sort/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-explain-synchronized-keyword" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -195,7 +288,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>synchronized是很早就有的关键字，很多人都称呼它为重量级锁，可我想知道为什么，也就是说关于synchronized在初期是什么样子的，基本上很多文章都没有提到，个人认为关于这些知识点可能只有早期的程序员才知晓，到目前为止我都没有查到相关资料，所以该篇文章可能会有所遗憾，有机会的情况下一定会进行补充。对于目前的synchronized来说，实际上做了很多优化，因为synchronized跟锁有很大关系，所以这些优化就是针对锁的优化，接下来说说已知的ynchronized知识点。</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>synchronized是很早就有的关键字，很多人都称呼它为重量级锁，因为阻塞或唤醒一个线程会发生上下文切换，如果同步方法中的内容过于简单，那么频繁的上下文切换所带来的开销可能会使得系统的性能下降，所以为了减少获取锁和释放锁带来的性能消耗便作了优化，因为synchronized跟锁有很大关系，所以这些优化就是针对锁的优化，接下来说说已知的ynchronized知识点。</p>
         
       
 
@@ -1014,104 +1107,6 @@
 
 
   
-    <article id="post-explain-executor-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/13/explain-executor-sourcecode/">分析Executor家族成员</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2020/01/13/explain-executor-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2020/01/13/explain-executor-sourcecode/" class="archive-article-date">
-  	<time datetime="2020-01-13T15:32:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前奏"><a href="#前奏" class="headerlink" title="前奏"></a><div><span>前奏</span></div></h3><p><code>Executor</code>是家族中的老大，其下还有ExecutorService、Executors、ThreadPoolExecutor、ScheduledThreadPoolExecutor和ForkJoinPool，对于ForkJoinPool是在JDK1.7中新增的，其中可能还涉及到诸多理论，故而打算会另起文章进行说明。不管是在工作还是面试中，难免会耳闻线程池，简单说下个人对线程池的理解，后续将对Executor的家族成员做一一介绍，让我们开始旅程吧，此次探索基于<code>JDK1.8</code>。</p>
-<blockquote>
-<p><code>线程池</code>：将创建好的线程放到一个池中进行使用、调度及管理，等到任务一提交后就可以直接运行了，省去了创建线程的时间，同时使用者不必考虑如何管理线程，让使用者更加专注于任务。线程池中会涉及到核心线程数（corePoolSize）、最大线程数（maximumPoolSize）、队列，假设线程个数小于核心线程数，对于新提交的任务会直接创建新线程，当线程个数超过核心线程数且队列未满时，将新任务放入到队列中，等到空闲线程后再去执行，万一要是队列满了且线程数不超过最大线程数时，则会创建新线程执行任务，哪天要是大于最大线程数，则任务将被拒绝，对于拒绝可指定不同的策略，后续将会详细介绍。</p>
-</blockquote>
-<h3 id="家族成员"><a href="#家族成员" class="headerlink" title="家族成员"></a><div><span>家族成员</span></div></h3><p class="customize-img"><img src="/assets/blogImg/java/executor/executor-class-structure.png" alt="Executor家族成员"></p>
-<p>每个成员的地位很明确了，我们从Executors开始入手。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/13/explain-executor-sourcecode/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1265,7 +1260,7 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1273,11 +1268,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
              
               <li class="article-tag-list-item">

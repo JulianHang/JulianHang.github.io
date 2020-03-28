@@ -167,6 +167,100 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-explain-binary-code" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/25/explain-binary-code/">探索Integer.toBinaryString源码</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/06/25/explain-binary-code/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2019/06/25/explain-binary-code/" class="archive-article-date">
+  	<time datetime="2019-06-25T11:56:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="不解驱动着你"><a href="#不解驱动着你" class="headerlink" title="不解驱动着你"></a><div><span>不解驱动着你</span></div></h3><p>一般情况下我是不会主动去看源码的，除非是写专门的主题或者是遇到不懂的难题。果然了，于是带着好奇心尝试理解下源码，一会我先抛出问题，要是有同学一下子就明白了那就可以不用往下看了！还有一个前提就是最好对原码、补码、反码有所了解，因为计算机操作的数据就是以二进制的形式存在的，准确的说是用补码的形式来计算的！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">URShift</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = -<span class="number">1</span>;</span><br><span class="line">        System.out.println(Integer.toBinaryString(i));</span><br><span class="line"></span><br><span class="line">        i &gt;&gt;&gt;= <span class="number">10</span>;</span><br><span class="line">        System.out.println(Integer.toBinaryString(i));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">long</span> l = -<span class="number">1</span>;</span><br><span class="line">        System.out.println(Long.toBinaryString(l));</span><br><span class="line"></span><br><span class="line">        l &gt;&gt;&gt;= <span class="number">10</span>;</span><br><span class="line">        System.out.println(Long.toBinaryString(l));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">short</span> s = -<span class="number">1</span>;</span><br><span class="line">        System.out.println(Integer.toBinaryString(s));</span><br><span class="line"></span><br><span class="line">        s &gt;&gt;&gt;= <span class="number">10</span>;</span><br><span class="line">        System.out.println(Integer.toBinaryString(s));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">byte</span> b = -<span class="number">1</span>;</span><br><span class="line">        System.out.println(Integer.toBinaryString(b));</span><br><span class="line"></span><br><span class="line">        b &gt;&gt;&gt;= <span class="number">10</span>;</span><br><span class="line">        System.out.println(Integer.toBinaryString(b));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/06/25/explain-binary-code/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-core-java-knowledge-20190609" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1101,114 +1195,6 @@
 
 
   
-    <article id="post-core-java-knowledge-20181212" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/12/core-java-knowledge-20181212/">每日知识点20181212</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/12/12/core-java-knowledge-20181212/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2018/12/12/core-java-knowledge-20181212/" class="archive-article-date">
-  	<time datetime="2018-12-12T14:40:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul>
-<li><p>jdk-8u191-windows-x64：Java SE 8的第<code>191次更新</code>.</p>
-</li>
-<li><p>OpenJDK：Java SE的一个免费的开源实现，不包含浏览器集成或JavaFX（用于图形化界面）.</p>
-</li>
-<li><p>从Java 7开始，数字字面量加下划线：<code>1_000_000</code>，Java编译器会去除这些下划线.</p>
-</li>
-<li><p>Double.isNaN(x)：判断是否是非数值.</p>
-</li>
-<li><p>整型值和布尔值之间不能进行相互转换.</p>
-</li>
-<li><p>Character.isJavaIdentifierStart：指定的字符是否允许作为Java标识符的<code>首字母</code>.</p>
-</li>
-<li><p>Character.isJavaIdentifierPart：指定的字符是否允许作为Java标识符的<code>一部分</code>.</p>
-</li>
-</ul>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">daily-konwledge-point-java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/12/core-java-knowledge-20181212/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
@@ -1362,7 +1348,7 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1370,11 +1356,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
              
               <li class="article-tag-list-item">
