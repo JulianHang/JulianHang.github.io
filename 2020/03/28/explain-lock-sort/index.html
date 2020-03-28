@@ -8,21 +8,21 @@
   <link rel="dns-prefetch" href="http://zlia.tech">
   <title>详细介绍各种锁 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言通常情况下，每学习一块知识点我都会先找相应的文章来作铺垫，今天轮到锁相关介绍了，发现了一篇好文章，本想着直接贴个链接就完事了，想想自己还是好好总结下，下面的内容可能大部分摘自该文章锁的详细介绍，对本文没兴趣的读者直接移至该链接即可，该篇文章说的我都认同了，速速开始吧。">
+  <meta name="description" content="前言通常情况下，每学习一块知识点我都会先找相应的文章来作铺垫，今天轮到锁相关介绍了，发现了一篇好文章，本想着直接贴个链接就完事了，想想自己还是好好总结下，下面的内容可能大部分摘自该文章锁的详细介绍，对本文没兴趣的读者直接移至该链接即可，速速开始吧。">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="详细介绍各种锁">
 <meta property="og:url" content="http://zlia.tech/2020/03/28/explain-lock-sort/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="前言通常情况下，每学习一块知识点我都会先找相应的文章来作铺垫，今天轮到锁相关介绍了，发现了一篇好文章，本想着直接贴个链接就完事了，想想自己还是好好总结下，下面的内容可能大部分摘自该文章锁的详细介绍，对本文没兴趣的读者直接移至该链接即可，该篇文章说的我都认同了，速速开始吧。">
+<meta property="og:description" content="前言通常情况下，每学习一块知识点我都会先找相应的文章来作铺垫，今天轮到锁相关介绍了，发现了一篇好文章，本想着直接贴个链接就完事了，想想自己还是好好总结下，下面的内容可能大部分摘自该文章锁的详细介绍，对本文没兴趣的读者直接移至该链接即可，速速开始吧。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/lock/lock-sort.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/lock/pessimistic-lock.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/lock/optimism-lock.png">
-<meta property="og:updated_time" content="2020-03-28T03:02:57.471Z">
+<meta property="og:updated_time" content="2020-03-28T03:08:06.397Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="详细介绍各种锁">
-<meta name="twitter:description" content="前言通常情况下，每学习一块知识点我都会先找相应的文章来作铺垫，今天轮到锁相关介绍了，发现了一篇好文章，本想着直接贴个链接就完事了，想想自己还是好好总结下，下面的内容可能大部分摘自该文章锁的详细介绍，对本文没兴趣的读者直接移至该链接即可，该篇文章说的我都认同了，速速开始吧。">
+<meta name="twitter:description" content="前言通常情况下，每学习一块知识点我都会先找相应的文章来作铺垫，今天轮到锁相关介绍了，发现了一篇好文章，本想着直接贴个链接就完事了，想想自己还是好好总结下，下面的内容可能大部分摘自该文章锁的详细介绍，对本文没兴趣的读者直接移至该链接即可，速速开始吧。">
 <meta name="twitter:image" content="http://zlia.tech/assets/blogImg/java/lock/lock-sort.png">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
@@ -199,7 +199,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>通常情况下，每学习一块知识点我都会先找相应的文章来作铺垫，今天轮到锁相关介绍了，发现了一篇好文章，本想着直接贴个链接就完事了，想想自己还是好好总结下，下面的内容可能大部分摘自该文章<a href="https://www.cnblogs.com/jyroy/p/11365935.html" target="_blank" rel="noopener">锁的详细介绍</a>，对本文没兴趣的读者直接移至该链接即可，该篇文章说的我都认同了，速速开始吧。</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>通常情况下，每学习一块知识点我都会先找相应的文章来作铺垫，今天轮到锁相关介绍了，发现了一篇好文章，本想着直接贴个链接就完事了，想想自己还是好好总结下，下面的内容可能大部分摘自该文章<a href="https://www.cnblogs.com/jyroy/p/11365935.html" target="_blank" rel="noopener">锁的详细介绍</a>，对本文没兴趣的读者直接移至该链接即可，速速开始吧。</p>
 <a id="more"></a>
 <h3 id="进入正题"><a href="#进入正题" class="headerlink" title="进入正题"></a><div><span>进入正题</span></div></h3><p>Java中有好几种锁，什么悲观锁、乐观锁、自旋锁等，第一次看的时候觉得这是什么乱七八糟的，实际上每种锁在被设计时就考虑了其使用场景，也就是说锁的特性决定了它用于哪种场景下的效率会最高，所以只要理解了使用场景的理念，基本上掌握锁是没什么问题了。在上面提供的链接中作者结合了Java源码进行介绍，这边的话也会适当性的加入一些，接下来通过一张表格来对锁进行分组归类：</p>
 <p class="customize-img"><img src="/assets/blogImg/java/lock/lock-sort.png" alt="锁的分组归类"></p>
@@ -630,19 +630,19 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -654,15 +654,15 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">talk</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
             
             <div class="clearfix"></div>
