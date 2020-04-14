@@ -167,6 +167,100 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-explain-concurrenthashmap-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/14/explain-concurrenthashmap-sourcecode/">深入探索JDK8的ConcurrentHashMap</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2020/04/14/explain-concurrenthashmap-sourcecode/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2020/04/14/explain-concurrenthashmap-sourcecode/" class="archive-article-date">
+  	<time datetime="2020-04-14T09:23:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>HashMap的唯一鸡肋就是非线程安全，在如今的高并发场景下它能派上的用场也将越来越少，为了能兼有HashMap高效的存取能力的同时又能保证线程安全滋生了ConcurrentHashMap。在JDK1.8以前，数据结构仍然是数组、链表的方式，不过与Hashtable相比，它并不是对整个哈希表上锁，而是采用<code>分段锁</code>，很好理解，将定义好容量大小的哈希表<code>均分</code>成相等容量大小的一个小段，相当于一块大蛋糕被平均分成若干个均等的小蛋糕，也就是说当某个线程进入到其中一个段进行操作，其他线程可以并发操作其他段，虽然效率上提升了不少，但却不是最优的。探索ConcurrentHashMap底层实现是基于<code>JDK1.8</code>，它是直接将哈希表中某一个位置上的头节点进行锁定，是不是粒度比之前更小了，允许其他线程操作的节点更多了，效率自然也有不用说了。其实在这之前我看过很多有关于ConcurrentHashMap，发现它们要么是抄袭严重，要么关键的点没分析到位，总是点到为止，很少能见到有一两个亮眼或对某片代码有疑问的文章，所以这篇文章还是花费了挺多时间的，不过至少解除了心中的疑虑！</p>
+<p class="customize-img"><img src="/assets/blogImg/java/concurrenthashmap/concurrenthashmap-data-structure.png" alt="ConcurrentHashMap数据结构"></p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/14/explain-concurrenthashmap-sourcecode/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-explain-lock-sort" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1014,99 +1108,6 @@
 
 
   
-    <article id="post-thinking-under-epidemic" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/02/10/thinking-under-epidemic/">2020年疫情下的思考</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2020/02/10/thinking-under-epidemic/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2020/02/10/thinking-under-epidemic/" class="archive-article-date">
-  	<time datetime="2020-02-10T12:42:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>还在2019年时我就已经做好了未来2020年的整体个人规划，满打满算，可惜还是不敌突如其来的暴风雨-新冠状肺炎。笔者不是要来预测疫情要持续到何时，也不是要谈论什么八卦，更不是为了申诉各种不满的遭遇，于我而言，我是非常坚信我们能够战胜此次疫情，希望能够早日听到胜利的喜悦！我看过几篇关于疫情下公司的财务状况而导致员工如何的文章，这与笔者要讲的有那么一点关联，但更多的是引起读者<code>自身的思考</code>。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">talk</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/essays//" class="article-tag-list-link color2">essays</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/02/10/thinking-under-epidemic/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1260,19 +1261,19 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">

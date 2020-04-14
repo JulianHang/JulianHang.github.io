@@ -6,20 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>比较Map实现类的不同点 | 奇思妙想</title>
+  <title>Archives: 2020/4 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="比较趁热打铁！比较最近学习到的几个Map实现类，也正好总结下！此比较是基于JDK1.8，直接用表格展示。    比较点 HashMap Hashtable IdentityHashMap LinkedHashMap TreeMap WeakHashMap     数据结构 数组链表红黑树 数组链表 数组（哈希探针表） 数组链表红黑树 红黑树 数组链表   是否有序/可重复 无序不可重复 无序不可重">
-<meta name="keywords" content="java">
-<meta property="og:type" content="article">
-<meta property="og:title" content="比较Map实现类的不同点">
-<meta property="og:url" content="http://zlia.tech/2019/11/05/map-different-compare/index.html">
+  <meta name="description" content="record my life">
+<meta property="og:type" content="website">
+<meta property="og:title" content="奇思妙想">
+<meta property="og:url" content="http://zlia.tech/archives/2020/04/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="比较趁热打铁！比较最近学习到的几个Map实现类，也正好总结下！此比较是基于JDK1.8，直接用表格展示。    比较点 HashMap Hashtable IdentityHashMap LinkedHashMap TreeMap WeakHashMap     数据结构 数组链表红黑树 数组链表 数组（哈希探针表） 数组链表红黑树 红黑树 数组链表   是否有序/可重复 无序不可重复 无序不可重">
+<meta property="og:description" content="record my life">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-05T13:10:22.159Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="比较Map实现类的不同点">
-<meta name="twitter:description" content="比较趁热打铁！比较最近学习到的几个Map实现类，也正好总结下！此比较是基于JDK1.8，直接用表格展示。    比较点 HashMap Hashtable IdentityHashMap LinkedHashMap TreeMap WeakHashMap     数据结构 数组链表红黑树 数组链表 数组（哈希探针表） 数组链表红黑树 红黑树 数组链表   是否有序/可重复 无序不可重复 无序不可重">
+<meta name="twitter:title" content="奇思妙想">
+<meta name="twitter:description" content="record my life">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -167,14 +165,31 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-map-different-compare" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      比较Map实现类的不同点
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2020" class="archive-year">2020</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2020/04/14/explain-concurrenthashmap-sourcecode/" class="archive-article-date">
+  	<time datetime="2020-04-14T09:23:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-14</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2020/04/14/explain-concurrenthashmap-sourcecode/">深入探索JDK8的ConcurrentHashMap</a>
     </h1>
   
 
@@ -183,123 +198,11 @@
 <!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/05/map-different-compare/" class="pageViews">0</span>
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2020/04/14/explain-concurrenthashmap-sourcecode/" class="pageViews">0</span>
   </a>
 
-        
-        <a href="/2019/11/05/map-different-compare/" class="archive-article-date">
-  	<time datetime="2019-11-05T08:22:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a><div><span>比较</span></div></h3><p>趁热打铁！比较最近学习到的几个Map实现类，也正好总结下！此比较是基于<code>JDK1.8</code>，直接用表格展示。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">比较点</th>
-<th style="text-align:center">HashMap</th>
-<th style="text-align:center">Hashtable</th>
-<th style="text-align:center">IdentityHashMap</th>
-<th style="text-align:center">LinkedHashMap</th>
-<th style="text-align:center">TreeMap</th>
-<th style="text-align:center">WeakHashMap</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">数据结构</td>
-<td style="text-align:center">数组<br>链表<br>红黑树</td>
-<td style="text-align:center">数组<br>链表</td>
-<td style="text-align:center">数组<br>（哈希探针表）</td>
-<td style="text-align:center">数组<br>链表<br>红黑树</td>
-<td style="text-align:center">红黑树</td>
-<td style="text-align:center">数组<br>链表</td>
-</tr>
-<tr>
-<td style="text-align:center">是否有序/可重复</td>
-<td style="text-align:center">无序不可重复</td>
-<td style="text-align:center">无序不可重复</td>
-<td style="text-align:center">无序不可重复</td>
-<td style="text-align:center">默认按插入顺序排列<br>可按访问顺序排列<br>不可重复</td>
-<td style="text-align:center">默认按自然顺序<br>可指定比较器进行自定义排序<br>不可重复</td>
-<td style="text-align:center">无序不可重复</td>
-</tr>
-<tr>
-<td style="text-align:center">键值对为null</td>
-<td style="text-align:center">允许</td>
-<td style="text-align:center">不允许</td>
-<td style="text-align:center">允许</td>
-<td style="text-align:center">允许</td>
-<td style="text-align:center">默认排序中键不允许，值允许<br>自定义排序中键值对都允许</td>
-<td style="text-align:center">允许</td>
-</tr>
-<tr>
-<td style="text-align:center">默认初始容量</td>
-<td style="text-align:center">16</td>
-<td style="text-align:center">11</td>
-<td style="text-align:center">64</td>
-<td style="text-align:center">16</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">16</td>
-</tr>
-<tr>
-<td style="text-align:center">默认加载因子</td>
-<td style="text-align:center">0.75</td>
-<td style="text-align:center">0.75</td>
-<td style="text-align:center">1/3</td>
-<td style="text-align:center">0.75</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">0.75</td>
-</tr>
-<tr>
-<td style="text-align:center">扩容策略</td>
-<td style="text-align:center">2 * capacity</td>
-<td style="text-align:center">2 * capacity + 1</td>
-<td style="text-align:center">2 * capacity</td>
-<td style="text-align:center">2 * capacity</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">2 * capacity</td>
-</tr>
-<tr>
-<td style="text-align:center">计算hash方式</td>
-<td style="text-align:center">hash ^ (hash &gt;&gt;&gt; 16)</td>
-<td style="text-align:center">hash &amp; 0x7FFFFFFF</td>
-<td style="text-align:center">(hash &lt;&lt; 1) - (hash &lt;&lt; 8)</td>
-<td style="text-align:center">hash ^ (hash &gt;&gt;&gt; 16)</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">有点复杂，就不贴了</td>
-</tr>
-<tr>
-<td style="text-align:center">计算索引</td>
-<td style="text-align:center">hash &amp; (capacity - 1)</td>
-<td style="text-align:center">hash % capacity</td>
-<td style="text-align:center">hash &amp; (capacity - 1)</td>
-<td style="text-align:center">hash &amp; (capacity - 1)</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">hash &amp; (capacity - 1)</td>
-</tr>
-<tr>
-<td style="text-align:center">新增节点</td>
-<td style="text-align:center">尾插法</td>
-<td style="text-align:center">头插法</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">尾插法</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">头插法</td>
-</tr>
-</tbody>
-</table>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -311,7 +214,7 @@
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -324,152 +227,17 @@
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/11/05/map-different-compare/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2019/11/05/explain-hashset-sourcecode/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          探索HashSet底层实现
-        
-      </div>
-    </a>
   
   
-    <a href="/2019/11/05/explain-enummap-sourcecode/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">探索EnumMap底层实现</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
-  
     
-    <section id="comments" class="comments">
-	  <style>
-        .comments{margin:30px;padding:10px;background:#fff}
-        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-      </style>
-      <div id="vcomment" class="comment"></div>
-<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
-<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-   new Valine({
-            av: AV,
-            el: '#vcomment',
-            notify: notify,
-            verify: verify,
-            app_id: "JoYcsWmKGGeDS1gi583VdmYm-gzGzoHsz",
-            app_key: "F9y6cyWlw9WVSFOEw3rnxfXY",
-            placeholder: "扯淡吧",
-            avatar: "",
-            avatar_cdn: "",
-            pageSize: 15
-    });
-    if(window.location.hash){
-        var checkExist = setInterval(function() {
-           if ($(window.location.hash).length) {
-              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
-              clearInterval(checkExist);
-           }
-        }, 100);
-    }
-	
-</script>
-    </section>
-	
-  
 
 
           </div>
@@ -493,8 +261,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

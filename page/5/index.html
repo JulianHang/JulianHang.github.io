@@ -167,6 +167,102 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-explain-arraylist-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/16/explain-arraylist-sourcecode/">探索ArrayList底层实现</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/08/16/explain-arraylist-sourcecode/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2019/08/16/explain-arraylist-sourcecode/" class="archive-article-date">
+  	<time datetime="2019-08-16T08:08:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a><div><span>背景</span></div></h3><p>想进步，想学习了，反正面试都要问的，还不如早点看了好。探索<code>ArrayList</code>源代码是基于<code>JDK1.8</code>版本的，相比以前的版本不知道有没有优化，毕竟没看过之前版本的底层代码。</p>
+<h3 id="简单说明下"><a href="#简单说明下" class="headerlink" title="简单说明下"></a><div><span>简单说明下</span></div></h3><p>一般看底层代码前我都习惯先阅读下该类的<code>注释说明</code>，也不知道在哪里养成的习惯。相信大家都写过应用代码，既然写过，那也深知注释对于一个使用者来说是多么的重要，决定了它是否能够正确的使用，所以这是一个好习惯。</p>
+<h4 id="阅读注释"><a href="#阅读注释" class="headerlink" title="阅读注释"></a>阅读注释</h4><p class="customize-img"><img src="/assets/blogImg/java/arraylist/arraylist-comment-1.png" alt="ArrayList注释-1"></p>
+<p>看到这不知道你们有没有很惊讶，反正我倒是一惊，所以我说看注释很重要！！！如果是你写代码给别人看，除了看具体代码之外，看注释就是最好的理解方式了，一语道破很多原理，要求不高的我都觉得可以不用看代码实现了，所以接下来会继续阅读注释。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/16/explain-arraylist-sourcecode/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-explain-binary-code" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1085,116 +1181,6 @@
 
 
   
-    <article id="post-core-java-knowledge-20181213" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/14/core-java-knowledge-20181213/">每日知识点20181213</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/12/14/core-java-knowledge-20181213/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2018/12/14/core-java-knowledge-20181213/" class="archive-article-date">
-  	<time datetime="2018-12-13T16:18:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul>
-<li><p>s.substring(a,b)的长度：b-a.</p>
-</li>
-<li><p>String.join(“/“,”a”,”b”,”c”)：a/b/c.</p>
-</li>
-<li><p><code>字符串常量</code>是共享的，而+或substring等操作产生的结果并不是共享的，所以会导致拼接后的结果随便相同，但引用的地址却不是同一个.</p>
-</li>
-<li><p>Scanner in = new Scanner(System.in),String name = in.next(); //该方法以空格为分隔符，即空格符的之间的内容需要多次获取.</p>
-</li>
-<li><p>上面的读取控制台输入不适合密码，毕竟是明文，所以可采用Console类.但是Console不能在Eclipse或ide中的控制台使用，会报错.必须使用原始控制台，如在终端中编译运行Java代码即可使用.</p>
-</li>
-<li><p>float用<code>24</code>位来表示精确度，int用<code>32</code>位来表示精确度，故当将int转换成float时可能会丢失精度.</p>
-</li>
-<li><p>如果将一个类声明为final，只有其中的方法自动地成为final，而不包括域.</p>
-</li>
-<li><p>编译器对带有文件分割符和扩展名.java的文件进行操作，而java解释器加载类（带有分隔符）.</p>
-</li>
-</ul>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">daily-konwledge-point-java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/14/core-java-knowledge-20181213/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
@@ -1348,19 +1334,19 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
