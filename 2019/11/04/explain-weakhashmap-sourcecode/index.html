@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="奇思妙想">
 <meta property="og:description" content="前言探索WeakHashMap底层实现是基于JDK1.8，它的数据结构是数组 + 链表。就不贴它的注释了，直接总结一下吧：  WeakHashMap基于弱键实现了Map接口，也就是说，当某个键不在使用时会被丢弃，对应的键值对将会被自动移除。如何确定不在使用取决于GC是否运行，而对于GC何时运行我们并不知道，所以某个键何时被丢弃我们也不得而知，至于GC如何运行就是另外一个话题了，有可能导致上一分钟与">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-05T06:34:25.218Z">
+<meta property="og:updated_time" content="2020-03-31T02:34:09.721Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="探索WeakHashMap底层实现">
 <meta name="twitter:description" content="前言探索WeakHashMap底层实现是基于JDK1.8，它的数据结构是数组 + 链表。就不贴它的注释了，直接总结一下吧：  WeakHashMap基于弱键实现了Map接口，也就是说，当某个键不在使用时会被丢弃，对应的键值对将会被自动移除。如何确定不在使用取决于GC是否运行，而对于GC何时运行我们并不知道，所以某个键何时被丢弃我们也不得而知，至于GC如何运行就是另外一个话题了，有可能导致上一分钟与">
@@ -224,7 +224,7 @@
 </li>
 <li><p>在添加节点，值对象最好不要与任何的键直接或间接的关联，否则GC无法丢弃该键</p>
 </li>
-<li><p>WeakHashMap#ReferendeQueue是用来查看哈希表中哪些键被丢球了，以便哈希表能够及时更新</p>
+<li><p>WeakHashMap#ReferendeQueue是用来查看哈希表中哪些键被丢弃了，以便哈希表能够及时更新</p>
 </li>
 <li><p>WeakHashMap的容量必须是2的幂次方</p>
 </li>
@@ -562,15 +562,19 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -587,10 +591,6 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
             
             <div class="clearfix"></div>

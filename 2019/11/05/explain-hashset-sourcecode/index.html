@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="奇思妙想">
 <meta property="og:description" content="前言HashSet的底层实现依赖于HashMap，所以它的数据结构也是数组 + 链表 + 红黑树，而对于它的类注释也没什么好总结的，探索HashSet底层实现是基于JDK1.8。仔细一想，HashSet存在的意义是什么？有时候需要添加元素时，也就是只有单个对象，并没有所谓的键值对，或许还有些用处，可这ArrayList也能做到啊！可是相比之下，HashSet由于有HashMap撑腰，它的性能要高于">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-05T12:59:05.138Z">
+<meta property="og:updated_time" content="2020-03-31T07:15:20.856Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="探索HashSet底层实现">
 <meta name="twitter:description" content="前言HashSet的底层实现依赖于HashMap，所以它的数据结构也是数组 + 链表 + 红黑树，而对于它的类注释也没什么好总结的，探索HashSet底层实现是基于JDK1.8。仔细一想，HashSet存在的意义是什么？有时候需要添加元素时，也就是只有单个对象，并没有所谓的键值对，或许还有些用处，可这ArrayList也能做到啊！可是相比之下，HashSet由于有HashMap撑腰，它的性能要高于">
@@ -206,6 +206,8 @@
 <li><p>HashSet允许存放空元素</p>
 </li>
 <li><p>HashSet底层基于HashMap</p>
+</li>
+<li><p>两个相等的对象，即hashCode与equals都相等的情况，HashMap底层只是进行值替换，并未理睬键，所以就呈现了在往HashSet添加相等的对象时，只添加了第一个对象，第二个对象并未添加</p>
 </li>
 </ul>
 <h3 id="重点关注"><a href="#重点关注" class="headerlink" title="重点关注"></a><div><span>重点关注</span></div></h3><p><code>基于HashMap</code></p>
@@ -539,15 +541,19 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -564,10 +570,6 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
               </li>
             
             <div class="clearfix"></div>
