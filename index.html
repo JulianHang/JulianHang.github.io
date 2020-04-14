@@ -195,7 +195,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>HashMap的唯一鸡肋就是非线程安全，在如今的高并发场景下它能派上的用场也将越来越少，为了能兼有HashMap高效的存取能力的同时又能保证线程安全滋生了ConcurrentHashMap。在JDK1.8以前，数据结构仍然是数组、链表的方式，不过与Hashtable相比，它并不是对整个哈希表上锁，而是采用<code>分段锁</code>，很好理解，将定义好容量大小的哈希表<code>均分</code>成相等容量大小的一个小段，相当于一块大蛋糕被平均分成若干个均等的小蛋糕，也就是说当某个线程进入到其中一个段进行操作，其他线程可以并发操作其他段，虽然效率上提升了不少，但却不是最优的。探索ConcurrentHashMap底层实现是基于<code>JDK1.8</code>，它是直接将哈希表中某一个位置上的头节点进行锁定，是不是粒度比之前更小了，允许其他线程操作的节点更多了，效率自然也有不用说了。其实在这之前我看过很多有关于ConcurrentHashMap，发现它们要么是抄袭严重，要么关键的点没分析到位，总是点到为止，很少能见到有一两个亮眼或对某片代码有疑问的文章，所以这篇文章还是花费了挺多时间的，不过至少解除了心中的疑虑！</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>HashMap的唯一鸡肋就是非线程安全，在如今的高并发场景下它能派上的用场也将越来越少，为了兼有HashMap高效的存取能力的同时又能保证线程安全滋生了ConcurrentHashMap。在JDK1.8以前，数据结构仍然是数组、链表的方式，不过与Hashtable相比，它并不是对整个哈希表上锁，而是采用<code>分段锁</code>，很好理解，将定义好容量大小的哈希表<code>均分</code>成相等容量大小的一个小段，相当于一块大蛋糕被平均分成若干个均等的小蛋糕，也就是说当某个线程进入到其中一个段进行操作，其他线程可以并发操作其他段，虽然效率上提升了不少，但却不是最优的。探索ConcurrentHashMap底层实现是基于<code>JDK1.8</code>，它是直接将哈希表中某一个位置上的头节点进行锁定，是不是粒度比之前更小了，允许其他线程操作的节点更多了，效率自然也有不用说了。其实在这之前我看过很多有关于ConcurrentHashMap，发现它们要么是抄袭严重，要么关键的点没分析到位，总是点到为止，很少能见到有一两个亮眼或对某片代码有疑问的文章，所以这篇文章还是花费了挺多时间的，不过至少解除了心中的疑虑！</p>
 <p class="customize-img"><img src="/assets/blogImg/java/concurrenthashmap/concurrenthashmap-data-structure.png" alt="ConcurrentHashMap数据结构"></p>
         
       
@@ -1261,15 +1261,15 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1285,11 +1285,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
+                <a href="javascript:void(0)" class="js-tag color5">talk</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">talk</a>
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
