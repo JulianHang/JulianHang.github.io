@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>阅读《Java虚拟机规范》第一章节-xxx | 奇思妙想</title>
+  <title>阅读《Java虚拟机规范》前的唠叨 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="record my life">
+  <meta name="description" content="针对我为什么要读首先压根就谈不上自己很厉害，什么Java基础已经很精通了，工作快三年了，依然还是个弟弟级别的水平。实际上我是有自己的一个规划，整个知识脉络的先后顺序，细心的人可以发现从开始写博客到后续的文章都有一个明显的个人，比如先是集合、再到线程、线程池、队列、锁等等，好了好了，说重点了。由于最近看了周志明老师的《深入理解Java虚拟机》第四版，同时为了加深自己对虚拟机的理解，重点是要了解什么是">
 <meta name="keywords" content="jvm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="阅读《Java虚拟机规范》第一章节-xxx">
+<meta property="og:title" content="阅读《Java虚拟机规范》前的唠叨">
 <meta property="og:url" content="http://zlia.tech/2020/05/24/study-jvm/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="record my life">
+<meta property="og:description" content="针对我为什么要读首先压根就谈不上自己很厉害，什么Java基础已经很精通了，工作快三年了，依然还是个弟弟级别的水平。实际上我是有自己的一个规划，整个知识脉络的先后顺序，细心的人可以发现从开始写博客到后续的文章都有一个明显的个人，比如先是集合、再到线程、线程池、队列、锁等等，好了好了，说重点了。由于最近看了周志明老师的《深入理解Java虚拟机》第四版，同时为了加深自己对虚拟机的理解，重点是要了解什么是">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-24T02:19:35.158Z">
+<meta property="og:updated_time" content="2020-05-24T02:21:44.658Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="阅读《Java虚拟机规范》第一章节-xxx">
-<meta name="twitter:description" content="record my life">
+<meta name="twitter:title" content="阅读《Java虚拟机规范》前的唠叨">
+<meta name="twitter:description" content="针对我为什么要读首先压根就谈不上自己很厉害，什么Java基础已经很精通了，工作快三年了，依然还是个弟弟级别的水平。实际上我是有自己的一个规划，整个知识脉络的先后顺序，细心的人可以发现从开始写博客到后续的文章都有一个明显的个人，比如先是集合、再到线程、线程池、队列、锁等等，好了好了，说重点了。由于最近看了周志明老师的《深入理解Java虚拟机》第四版，同时为了加深自己对虚拟机的理解，重点是要了解什么是">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -174,7 +174,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      阅读《Java虚拟机规范》第一章节-xxx
+      阅读《Java虚拟机规范》前的唠叨
     </h1>
   
 
@@ -188,14 +188,17 @@
 
         
         <a href="/2020/05/24/study-jvm/" class="archive-article-date">
-  	<time datetime="2020-05-24T02:19:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-24</time>
+  	<time datetime="2020-05-24T02:21:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-24</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h3 id="针对我为什么要读"><a href="#针对我为什么要读" class="headerlink" title="针对我为什么要读"></a><div><span>针对我为什么要读</span></div></h3><p>首先压根就谈不上自己很厉害，什么Java基础已经很精通了，工作快三年了，依然还是个弟弟级别的水平。实际上我是有自己的一个规划，整个知识脉络的先后顺序，细心的人可以发现从开始写博客到后续的文章都有一个明显的个人，比如先是集合、再到线程、线程池、队列、锁等等，好了好了，说重点了。由于最近看了周志明老师的《深入理解Java虚拟机》第四版，同时为了加深自己对虚拟机的理解，重点是要了解什么是标准，都定义了哪些规范，其实老师还预言了以后大多数的语言都将以<code>虚拟机</code>作为底层的运行媒介，为什么说是虚拟机而不是Java虚拟机，严格上来说是跨语言的全栈虚拟机，管你是Java还是Scala、C、C++、JS，反正ORACLE官方已经宣布了这款实验室产品-<code>Graal VM</code>，还真有可能会是一大趋势，已经有好几种语言都是基于Java虚拟机来实现的…说不定哪一天就来个翻天覆地的大变化！</p>
+<h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a><div><span>准备</span></div></h3><p>个人建议不要一上来就开始读，最好像我一样先去看看周志明老师的书籍，毕竟是经典之作，直接看第四版就可以了，看完后脑子里有一个概念，接下来你就知道该做什么了。</p>
+<h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a><div><span>结束语</span></div></h3><p>在阅读Java虚拟机规范时最好能有自己的理解，<code>形成总结</code>，不要以为你看一遍就完事了，总有一天你还会飞越此地重新勘察，这都是前辈们的宝贵意见，虽然现在感觉没什么作用，到了以后你就明白了。接下来将按照Java虚拟机规范的章节划分成多篇文章，主要用来阐述自己的理解，就像上面说的总结！</p>
+
       
 
       
@@ -512,7 +515,7 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -520,11 +523,7 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -532,7 +531,7 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
+                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -549,6 +548,10 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
               </li>
             
             <div class="clearfix"></div>
