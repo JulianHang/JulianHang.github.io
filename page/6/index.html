@@ -167,6 +167,99 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-explain-qps-knowledge" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/07/explain-qps-knowledge/">我叫QPS，初次见面</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/04/07/explain-qps-knowledge/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2019/04/07/explain-qps-knowledge/" class="archive-article-date">
+  	<time datetime="2019-04-07T05:33:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="自我介绍"><a href="#自我介绍" class="headerlink" title="自我介绍"></a><div><span>自我介绍</span></div></h3><p>QPS，query per second，<code>每秒的请求数</code>。当我看到这里的时候很不明白，每秒？按照我的理解应该是计算开始的时间到1秒钟这中间的请求数，但是怎么算是开始的时间，是指服务启动的时间还是第一次请求开始的时间，至少对于我来说讲述的并不是很明确。在比如，有一个时间线，第二秒的后500ms到第三秒的前500ms这样子也算是一个每秒的区间，那这之间的请求数算是咋回事呢？在说说QPS的目的，有人说是为了防止恶意刷取，增加项目负载，既然是控制刷取，那么我觉得这个控制应该是从别人第一次请求的时间开始算起，当它在1秒内多次请求达到上限后被服务限制了，这才算是合理的，所以我觉得应该是<code>从第一次请求开始的时间经过1秒后的请求数</code>，纯属个人理解。最近接触的项目中有提到QPS，说是恶意刷取，更准确的讲应该是用来做<code>流量控制</code>，这个词语给人的感觉更专业！而它算的时间也是从第一次请求开始算起的。
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/essays//" class="article-tag-list-link color2">essays</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/07/explain-qps-knowledge/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-core-java-knowledge-20190211" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1060,99 +1153,6 @@
 
 
   
-    <article id="post-markdown-understand" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/23/markdown-understand/">尝尝markdown源码的味道</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2018/05/23/markdown-understand/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2018/05/23/markdown-understand/" class="archive-article-date">
-  	<time datetime="2018-05-22T16:16:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="一切动力源于好奇"><a href="#一切动力源于好奇" class="headerlink" title="一切动力源于好奇"></a><div><span>一切动力源于好奇</span></div></h3><p>为什么要写md的原理呢？因为md的语法本来就很有局限性，想要整个高大上的页面就显得很鸡肋，所以需要我们自己去定义一些语法来解析生成对应的标签。原本以为github或者google上应该有个现成什么的，至少也要有个大体的方向，可惜我是个菜鸟表示看不懂各位大神所描述的，看不懂看不懂，故打算自己看下源码，要求不高，大部分看懂就可以了，特地写了此篇文章来阐述自己对源码的理解，同时也为需要的人提供一些小小的帮助，嘻嘻！
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">talk</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/essays//" class="article-tag-list-link color2">essays</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/23/markdown-understand/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
@@ -1306,11 +1306,11 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1318,7 +1318,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1334,15 +1338,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">jvm</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+                <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
               </li>
             
             <div class="clearfix"></div>

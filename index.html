@@ -167,6 +167,99 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-study-jvm-gc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/05/study-jvm-gc/">JVM之垃圾收集器</a>
+    </h1>
+  
+
+
+<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
+<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2020/08/05/study-jvm-gc/" class="pageViews">0</span>
+  </a>
+
+        
+        <a href="/2020/08/05/study-jvm-gc/" class="archive-article-date">
+  	<time datetime="2020-08-05T15:20:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>《Java虚拟机规范》中并没有关于垃圾收集器的相关章节，所以本篇文章的内容将完全参考周志明老师的书籍，目的同样是归纳总结形成自己的理解。虚拟机的运行时数据区可划分为程序计数器、Java虚拟机栈、本地方法栈、堆、方法区，其中前三者随着线程的创建而建立，后两者随着虚拟机的启动而创建，所以在线程结束时，这部分的内容也会随之回收，而对于<code>堆</code>与<code>方法区</code>来说，有多少类需要加载都只能在运行时才能确定，这部分的内存需要动态分配与回收，所以垃圾收集器关注的正是这部分的内存区域该如何管理。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/08/05/study-jvm-gc/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-study-jvm-runtime-data-area" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1005,99 +1098,6 @@
 
 
   
-    <article id="post-explain-arrayblockingqueue-sourcecode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/05/explain-arrayblockingqueue-sourcecode/">挖掘队列源码之ArrayBlockingQueue</a>
-    </h1>
-  
-
-
-<!--上面是 yilia 主题的标题 下面是我自己添加的阅读量 html 代码 -->
-<!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2020/03/05/explain-arrayblockingqueue-sourcecode/" class="pageViews">0</span>
-  </a>
-
-        
-        <a href="/2020/03/05/explain-arrayblockingqueue-sourcecode/" class="archive-article-date">
-  	<time datetime="2020-03-05T07:15:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>上一段时间一直在探索线程池的路上，如今准备踏入到队列，还是按照一开始的阅读方式。探索ArrayBlockingQueue是基于<code>JDK1.8</code>，从注释上可以得知是一个由<code>数组</code>支持的有界阻塞队列，按照先进先出的顺序，新元素被插入到队列的尾部，从队列头部获取元素，提供在将新元素放入到饱满的队列中会导致阻塞，直到队列出现新的位置才会被唤醒继续往下操作的方法，还支持在从空队列中获取元素会导致阻塞，直到队列出现元素才会被唤醒的方法。有一个点需要注意下，ArrayBlockingQueue在某些情况下插入新元素时会执行相当于循环的操作，怎么表述呢，当在数组的最后一个索引处上插入新元素后，那么插入下一个新元素的索引将会是0，有点类似循环，而由于LinkedBlockingQueue不同的数据结构并不会发生这种情况，还有一点就是ArrayBlockingQueue内部中只有一个锁，所以对于读写来说，同时只能有一个操作在执行，要么是读要么是写，而LinkedBlockingQueue采用的是两个锁的读写分离，好了，接下来直接进入主题吧。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rearend//" class="article-tag-list-link color3">rearend</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/05/explain-arrayblockingqueue-sourcecode/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1251,11 +1251,11 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
+                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">notice</a>
+                <a href="javascript:void(0)" class="js-tag color4">activemq</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1263,7 +1263,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
+                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">notice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1279,15 +1283,11 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">jvm</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">photoshop</a>
+                <a href="javascript:void(0)" class="js-tag color2">operating-system</a>
               </li>
             
             <div class="clearfix"></div>
