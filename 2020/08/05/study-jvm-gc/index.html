@@ -28,7 +28,7 @@
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/jvm/gc/cms.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/jvm/gc/g1-region.png">
 <meta property="og:image" content="http://zlia.tech/assets/blogImg/java/jvm/gc/g1.png">
-<meta property="og:updated_time" content="2020-08-05T15:20:15.225Z">
+<meta property="og:updated_time" content="2020-08-06T02:53:57.725Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM之垃圾收集器">
 <meta name="twitter:description" content="前言《Java虚拟机规范》中并没有关于垃圾收集器的相关章节，所以本篇文章的内容将完全参考周志明老师的书籍，目的同样是归纳总结形成自己的理解。虚拟机的运行时数据区可划分为程序计数器、Java虚拟机栈、本地方法栈、堆、方法区，其中前三者随着线程的创建而建立，后两者随着虚拟机的启动而创建，所以在线程结束时，这部分的内容也会随之回收，而对于堆与方法区来说，有多少类需要加载都只能在运行时才能确定，这部分的内">
@@ -362,7 +362,7 @@
 <p>使用场景：适用于大内存的应用且可控停顿时间的应用程序。</p>
 </blockquote>
 <h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a><div><span>结束语</span></div></h3><p>以上的几款收集器都只是停留在理论上，更多的还是应该根据不同的应用进行实际测试才能得出最合适的结论，高版本的JDK中还出现了ZGC收集器，理解起来挺费劲的，有兴趣的读者可以去了解下，毕竟JDK9还没玩的人怎么敢去碰这些呢。</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a><div><span>参考</span></div></h3><p>《深入Java虚拟机》<br>《实战Java虚拟机》<br><a href="https://mp.weixin.qq.com/s/_AKQs-xXDHlk84HbwKUzOw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/_AKQs-xXDHlk84HbwKUzOw</a></p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a><div><span>参考链接</span></div></h3><p>《深入Java虚拟机》<br>《实战Java虚拟机》<br><a href="https://mp.weixin.qq.com/s/_AKQs-xXDHlk84HbwKUzOw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/_AKQs-xXDHlk84HbwKUzOw</a></p>
 
       
 
@@ -680,7 +680,7 @@ if(true){
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
+                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -688,7 +688,7 @@ if(true){
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color2">daily-konwledge-point-java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -697,6 +697,10 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">notice</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -709,10 +713,6 @@ if(true){
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">talk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
               </li>
              
               <li class="article-tag-list-item">
