@@ -6,20 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://zlia.tech">
-  <title>Comparable VS Comparator | 奇思妙想</title>
+  <title>JVM之类加载机制 | 奇思妙想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言在阅读TreeMap源码时发现了Comparable与Comparator，光是名字看起来就很像，既然都是比较器，那有何区别呢？实际上我对于比较器的使用场景并不是很多，所以这篇还是借鉴了别人的想法。 比较通过下面的这段代码来说明问题。 123456789101112131415161718192021222324252627public class Test &amp;#123;    public">
-<meta name="keywords" content="java">
+  <meta name="description" content="前言Java虚拟机把描述类的数据从Class文件加载到内存，并对数据进行校验、解析和初始化，最终形成可以直接被虚拟机使用的Java类型，这个过程被称作虚拟机的类加载机制，类的整个生命周期包括加载、验证、准备、解析、初始化、使用和卸载，其中验证、准备、解析统称为连接，如图所示：">
+<meta name="keywords" content="jvm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Comparable VS Comparator">
-<meta property="og:url" content="http://zlia.tech/2019/11/06/comparable-comparator-compare/index.html">
+<meta property="og:title" content="JVM之类加载机制">
+<meta property="og:url" content="http://zlia.tech/2020/08/07/study-jvm-load/index.html">
 <meta property="og:site_name" content="奇思妙想">
-<meta property="og:description" content="前言在阅读TreeMap源码时发现了Comparable与Comparator，光是名字看起来就很像，既然都是比较器，那有何区别呢？实际上我对于比较器的使用场景并不是很多，所以这篇还是借鉴了别人的想法。 比较通过下面的这段代码来说明问题。 123456789101112131415161718192021222324252627public class Test &amp;#123;    public">
+<meta property="og:description" content="前言Java虚拟机把描述类的数据从Class文件加载到内存，并对数据进行校验、解析和初始化，最终形成可以直接被虚拟机使用的Java类型，这个过程被称作虚拟机的类加载机制，类的整个生命周期包括加载、验证、准备、解析、初始化、使用和卸载，其中验证、准备、解析统称为连接，如图所示：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-06T10:45:42.075Z">
+<meta property="og:image" content="http://zlia.tech/assets/blogImg/java/jvm/load/lifecycle.png.png">
+<meta property="og:updated_time" content="2020-08-07T03:39:58.155Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Comparable VS Comparator">
-<meta name="twitter:description" content="前言在阅读TreeMap源码时发现了Comparable与Comparator，光是名字看起来就很像，既然都是比较器，那有何区别呢？实际上我对于比较器的使用场景并不是很多，所以这篇还是借鉴了别人的想法。 比较通过下面的这段代码来说明问题。 123456789101112131415161718192021222324252627public class Test &amp;#123;    public">
+<meta name="twitter:title" content="JVM之类加载机制">
+<meta name="twitter:description" content="前言Java虚拟机把描述类的数据从Class文件加载到内存，并对数据进行校验、解析和初始化，最终形成可以直接被虚拟机使用的Java类型，这个过程被称作虚拟机的类加载机制，类的整个生命周期包括加载、验证、准备、解析、初始化、使用和卸载，其中验证、准备、解析统称为连接，如图所示：">
+<meta name="twitter:image" content="http://zlia.tech/assets/blogImg/java/jvm/load/lifecycle.png.png">
   
     <link rel="alternative" href="/atom.xml" title="奇思妙想" type="application/atom+xml">
   
@@ -167,14 +169,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-comparable-comparator-compare" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-study-jvm-load" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Comparable VS Comparator
+      JVM之类加载机制
     </h1>
   
 
@@ -183,26 +185,44 @@
 <!-- span 给的 id 是文章的 url 作为唯一的 key 值 -->
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数：<span id="/2019/11/06/comparable-comparator-compare/" class="pageViews">0</span>
+      <i class="icon-smile icon"></i> 阅读数：<span id="/2020/08/07/study-jvm-load/" class="pageViews">0</span>
   </a>
 
         
-        <a href="/2019/11/06/comparable-comparator-compare/" class="archive-article-date">
-  	<time datetime="2019-11-06T10:45:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-06</time>
+        <a href="/2020/08/07/study-jvm-load/" class="archive-article-date">
+  	<time datetime="2020-08-07T03:39:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-07</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>在阅读TreeMap源码时发现了Comparable与Comparator，光是名字看起来就很像，既然都是比较器，那有何区别呢？实际上我对于比较器的使用场景并不是很多，所以这篇还是借鉴了别人的想法。</p>
-<h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a><div><span>比较</span></div></h3><p>通过下面的这段代码来说明问题。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Apple appleOne = <span class="keyword">new</span> Apple(<span class="number">1</span>, <span class="string">"red"</span>);</span><br><span class="line">        Apple appleTwo = <span class="keyword">new</span> Apple(<span class="number">2</span>, <span class="string">"green"</span>);</span><br><span class="line">        appleOne.compareTo(appleTwo);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Apple</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Apple</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</span><br><span class="line">    <span class="keyword">private</span> String color;</span><br><span class="line"></span><br><span class="line">    Apple(<span class="keyword">int</span> size, String color)&#123;</span><br><span class="line">        <span class="keyword">this</span>.size = size;</span><br><span class="line">        <span class="keyword">this</span>.color = color;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Apple o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> size &gt; o.size ? <span class="number">1</span> : <span class="number">0</span>; <span class="comment">//比较Apple的大小</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//getter、setter</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>Java虚拟机把描述类的数据从Class文件加载到内存，并对数据进行校验、解析和初始化，最终形成可以直接被虚拟机使用的Java类型，这个过程被称作虚拟机的<code>类加载机制</code>，类的整个生命周期包括加载、验证、准备、解析、初始化、使用和卸载，其中验证、准备、解析统称为连接，如图所示：</p>
+<p class="customize-img"><img src="/assets/blogImg/java/jvm/load/lifecycle.png.png" alt="类的生命周期"></p>
 <a id="more"></a>
-<p>代码上挺简单的，只是比较了Apple的大小，现在来思考一下，哪一天突然想比较Apple的颜色了，那岂不是要改代码了，而对于新需求我们通常说现有代码尽量保持不变，通过新增类的方式来满足，所以Comparable的缺点很明显，一旦某个类指定了比较方式后就无法做修改（除非是修改代码…），即使能修改代码我们也不知道会不会造成新的问题或新的需求产生，所以这是行不通的。而对于Comparator来说，它就显得更加灵活了，支持多个比较器，只要新增类即可，看如下的代码展示：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Apple appleOne = <span class="keyword">new</span> Apple(<span class="number">1</span>, <span class="string">"red"</span>);</span><br><span class="line">        Apple appleTwo = <span class="keyword">new</span> Apple(<span class="number">2</span>, <span class="string">"green"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//比较Apple的大小</span></span><br><span class="line">        AppleCompareSize acs = <span class="keyword">new</span> AppleCompareSize();</span><br><span class="line">        acs.compare(appleOne, appleTwo);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//比较Apple的颜色</span></span><br><span class="line">        AppleCompareColor acc = <span class="keyword">new</span> AppleCompareColor();</span><br><span class="line">        acc.compare(appleOne, appleTwo);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Apple</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</span><br><span class="line">    <span class="keyword">private</span> String color;</span><br><span class="line"></span><br><span class="line">    Apple(<span class="keyword">int</span> size, String color) &#123;</span><br><span class="line">        <span class="keyword">this</span>.size = size;</span><br><span class="line">        <span class="keyword">this</span>.color = color;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//getter、setter</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AppleCompareSize</span> <span class="keyword">implements</span> <span class="title">Comparator</span>&lt;<span class="title">Apple</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Apple o1, Apple o2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> o1.getSize() &gt; o2.getSize() ? <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AppleCompareColor</span> <span class="keyword">implements</span> <span class="title">Comparator</span>&lt;<span class="title">Apple</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Apple o1, Apple o2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> o1.getColor().compareTo(o2.getColor());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>应该很容易就能看出效果了，即使别人已经写好了一个比较器，对于新需求，我们只要增加即可，并不会出现修改或污染其他人代码的情况。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><div><span>总结</span></div></h3><p>Comparator与Comaparable的最大区别在于<code>Comparator能够定义多种不同的比较策略</code>，即新增多个比较来，同时避免往比较对象（Apple）中添加其他代码（比较）</p>
+<h3 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a><div><span>类加载过程</span></div></h3><ul>
+<li>加载</li>
+</ul>
+<p>通过类的完全限定名来获取定义类的二进制字节流，在《Java虚拟机规范》中并没有明确规定要如何获取二进制字节流，也就是说你可以以任意的方式获取，比如可以从压缩包、网络或者利用动态代理生成，然后将字节流所代表的静态存储结构转换为方法区的运行时数据结构，最后在内存中生成一个代表这个类的Class对象。</p>
+<ul>
+<li>验证</li>
+</ul>
+<p>该阶段是确保字节流中包含的信息符合《Java虚拟机规范》的约束要求，保证这些信息被当作代码运行后不会危害虚拟机的安全，否则很可能因为载入了有错误的或有恶意的字节码而导致整个系统崩溃，主要包括文件格式验证、元数据验证、字节码验证、符号引用验证。</p>
+<ul>
+<li>准备</li>
+</ul>
+<p>该阶段是为类中定义的变量分配内存并设置类变量初始值（简单来说就是i = 5，这里赋初始值是0，而5将会在初始化阶段进行赋值），注意这里并不包括实例变量。</p>
+<ul>
+<li>解析</li>
+</ul>
+<p>该阶段是虚拟机将常量池内的符号引用替换为直接引用的过程，其中符号引用指的是一组符号来表示所引用的目标，符号可以是任何形式的字面量，直接引用指的是可以直接指向目标的指针、相对偏移量或者一个能间接定位到目标的句柄，主要包括类或接口的解析、字段解析、方法解析。</p>
+<ul>
+<li>初始化</li>
+</ul>
+<p>简单来说就是执行程序代码，初始化类变量。</p>
+<h3 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a><div><span>类加载器</span></div></h3><p>该小节就不作过多的描述了，专门找了一篇写的通俗易懂的文章，结合源码阐述了都有哪些类加载器、双亲委派模型的机制、如何自定义类加载器，我就不在费劲去做功课啦，贴上链接-<a href="https://blog.csdn.net/javazejian/article/details/73413292" target="_blank" rel="noopener">类加载器的底层分析</a>。</p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a><div><span>参考链接</span></div></h3><p>《深入Java虚拟机》</p>
+<p><a href="https://blog.csdn.net/javazejian/article/details/73413292" target="_blank" rel="noopener">https://blog.csdn.net/javazejian/article/details/73413292</a></p>
 
       
 
@@ -216,7 +236,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
         		</li>
       		
 		</ul>
@@ -283,7 +303,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2019/11/06/comparable-comparator-compare/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://zlia.tech/2020/08/07/study-jvm-load/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -297,18 +317,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/11/09/string-newString-compare/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          深入理解String与new String
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/11/06/explain-linkedhashset-sourcecode/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">探索LinkedHashSet底层实现</div>
+    <a href="/2020/08/05/study-jvm-gc/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JVM之垃圾收集器</div>
       <i class="icon-circle-right"></i>
     </a>
   

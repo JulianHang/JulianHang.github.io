@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zlia.tech/"/>
-  <updated>2020-08-06T02:53:57.725Z</updated>
+  <updated>2020-08-07T03:39:58.155Z</updated>
   <id>http://zlia.tech/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JVM之类加载机制</title>
+    <link href="http://zlia.tech/2020/08/07/study-jvm-load/"/>
+    <id>http://zlia.tech/2020/08/07/study-jvm-load/</id>
+    <published>2020-08-07T03:39:58.000Z</published>
+    <updated>2020-08-07T03:39:58.155Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><div><span>前言</span></div></h3><p>Java虚拟机把描述类的数据从Class文件加载到内存，并对数据进行校验、解析和初始化，最终形成可以直接被虚拟机使用的Java类型，这个过程被称作虚拟机的<code>类加载机制</code>，类的整个生命周期包括加载、验证、准备、解析、初始化、使用和卸载，其中验证、准备、解析统称为连接，如图所示：</p><p class="customize-img"><img src="/assets/blogImg/java/jvm/load/lifecycle.png.png" alt="类的生命周期"></p><a id="more"></a><h3 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a><div><span>类加载过程</span></div></h3><ul><li>加载</li></ul><p>通过类的完全限定名来获取定义类的二进制字节流，在《Java虚拟机规范》中并没有明确规定要如何获取二进制字节流，也就是说你可以以任意的方式获取，比如可以从压缩包、网络或者利用动态代理生成，然后将字节流所代表的静态存储结构转换为方法区的运行时数据结构，最后在内存中生成一个代表这个类的Class对象。</p><ul><li>验证</li></ul><p>该阶段是确保字节流中包含的信息符合《Java虚拟机规范》的约束要求，保证这些信息被当作代码运行后不会危害虚拟机的安全，否则很可能因为载入了有错误的或有恶意的字节码而导致整个系统崩溃，主要包括文件格式验证、元数据验证、字节码验证、符号引用验证。</p><ul><li>准备</li></ul><p>该阶段是为类中定义的变量分配内存并设置类变量初始值（简单来说就是i = 5，这里赋初始值是0，而5将会在初始化阶段进行赋值），注意这里并不包括实例变量。</p><ul><li>解析</li></ul><p>该阶段是虚拟机将常量池内的符号引用替换为直接引用的过程，其中符号引用指的是一组符号来表示所引用的目标，符号可以是任何形式的字面量，直接引用指的是可以直接指向目标的指针、相对偏移量或者一个能间接定位到目标的句柄，主要包括类或接口的解析、字段解析、方法解析。</p><ul><li>初始化</li></ul><p>简单来说就是执行程序代码，初始化类变量。</p><h3 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a><div><span>类加载器</span></div></h3><p>该小节就不作过多的描述了，专门找了一篇写的通俗易懂的文章，结合源码阐述了都有哪些类加载器、双亲委派模型的机制、如何自定义类加载器，我就不在费劲去做功课啦，贴上链接-<a href="https://blog.csdn.net/javazejian/article/details/73413292" target="_blank" rel="noopener">类加载器的底层分析</a>。</p><h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a><div><span>参考链接</span></div></h3><p>《深入Java虚拟机》</p><p><a href="https://blog.csdn.net/javazejian/article/details/73413292" target="_blank" rel="noopener">https://blog.csdn.net/javazejian/article/details/73413292</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;&lt;div&gt;&lt;span&gt;前言&lt;/span&gt;&lt;/div&gt;&lt;/h3&gt;&lt;p&gt;Java虚拟机把描述类的数据从Class文件加载到内存，并对数据进行校验、解析和初始化，最终形成可以直接被虚拟机使用的Java类型，这个过程被称作虚拟机的&lt;code&gt;类加载机制&lt;/code&gt;，类的整个生命周期包括加载、验证、准备、解析、初始化、使用和卸载，其中验证、准备、解析统称为连接，如图所示：&lt;/p&gt;
+&lt;p class=&quot;customize-img&quot;&gt;&lt;img src=&quot;/assets/blogImg/java/jvm/load/lifecycle.png.png&quot; alt=&quot;类的生命周期&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="rearend" scheme="http://zlia.tech/categories/rearend/"/>
+    
+    
+      <category term="jvm" scheme="http://zlia.tech/tags/jvm/"/>
+    
+  </entry>
   
   <entry>
     <title>JVM之垃圾收集器</title>
@@ -470,42 +493,6 @@
     
     
       <category term="operating-system" scheme="http://zlia.tech/tags/operating-system/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>每日知识点20191107</title>
-    <link href="http://zlia.tech/2019/11/26/core-java-knowledge-20191107/"/>
-    <id>http://zlia.tech/2019/11/26/core-java-knowledge-20191107/</id>
-    <published>2019-11-26T08:34:07.000Z</published>
-    <updated>2019-11-26T08:34:07.855Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="java"><a href="#java" class="headerlink" title="java"></a><div><span>java</span></div></h3><ul><li><p>Exception#fillInStackTrace：将当前调用栈信息填入到原来异常对象，相当于更新最新的抛出点（catch异常后又抛出的点）</p></li><li><p>try-finally某些情况下会吃掉抛出的异常</p></li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException();</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li><p>覆盖方法时，只能抛出在基类方法的异常说明里列出的那些异常或其子类或选择不抛出，但是此限制对构造器不起作用，派生类构造器可以抛出任何异常，只需要在异常说明中包含基类构造器的异常说明</p></li><li><p>Collections.nCopies能添加新元素，Collections.fill只能替换元素，无法添加新元素</p></li><li><p>通配符代表着持有具有某种具体类型的同构集合</p></li></ul><a id="more"></a><ul><li>下面的代码摘抄自编程思想P550</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestS</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标准输入、输出和错误IO流进行重定向</span></span><br><span class="line"><span class="comment">     * 一开始只有in.out中有数据，而test.out中是空内容，执行完程序后，test.out中的数据和in.out是一致的</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        PrintStream console = System.out;</span><br><span class="line">        BufferedInputStream in = <span class="keyword">new</span> BufferedInputStream(<span class="keyword">new</span> FileInputStream(<span class="string">"in.out"</span>));</span><br><span class="line">        PrintStream out = <span class="keyword">new</span> PrintStream(<span class="keyword">new</span> BufferedOutputStream(<span class="keyword">new</span> FileOutputStream(<span class="string">"test.out"</span>)));</span><br><span class="line">        System.setIn(in);<span class="comment">//默认是从控制台读取数据，但是这里进行了重定向，于是从in.out中读取数据</span></span><br><span class="line">        System.setOut(out);<span class="comment">//默认是将数据写入到控制台，但是这里进行了重定向，于是写入到test.out中</span></span><br><span class="line">        System.setErr(out);<span class="comment">//同上</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//默认情况下是从控制台读取数据，然而这里是读取in.out文件中的数据</span></span><br><span class="line">        BufferedReader br = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(System.in));</span><br><span class="line">        String s ;</span><br><span class="line">        <span class="keyword">while</span>((s = br.readLine()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">            System.out.println(s);</span><br><span class="line">        &#125;</span><br><span class="line">        out.close();</span><br><span class="line">        System.setOut(console);<span class="comment">//切换到默认情况下</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li><p>容错：发生故障时，如何让系统继续运行</p></li><li><p>高可用：系统中断时，如何尽快恢复</p></li><li><p>灾备：系统毁灭时，如何抢救数据</p></li><li><p>TestA.class.isAssignableFrom(TestB.class)：TestA与TestB是同一个类类型或TestA是TestB的父类或TestA是TestB的父接口</p></li><li><p>java中采用高位优先（大端模式）进行存储字节数据，也就是高位存储在低地址，低位存储在高地址上</p></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;java&quot;&gt;&lt;a href=&quot;#java&quot; class=&quot;headerlink&quot; title=&quot;java&quot;&gt;&lt;/a&gt;&lt;div&gt;&lt;span&gt;java&lt;/span&gt;&lt;/div&gt;&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Exception#fillInStackTrace：将当前调用栈信息填入到原来异常对象，相当于更新最新的抛出点（catch异常后又抛出的点）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;try-finally某些情况下会吃掉抛出的异常&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; RuntimeException();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125; &lt;span class=&quot;keyword&quot;&gt;finally&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;覆盖方法时，只能抛出在基类方法的异常说明里列出的那些异常或其子类或选择不抛出，但是此限制对构造器不起作用，派生类构造器可以抛出任何异常，只需要在异常说明中包含基类构造器的异常说明&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Collections.nCopies能添加新元素，Collections.fill只能替换元素，无法添加新元素&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;通配符代表着持有具有某种具体类型的同构集合&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-      <category term="rearend" scheme="http://zlia.tech/categories/rearend/"/>
-    
-    
-      <category term="daily-konwledge-point-java" scheme="http://zlia.tech/tags/daily-konwledge-point-java/"/>
     
   </entry>
   
